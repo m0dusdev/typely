@@ -12,11 +12,14 @@ import java.util.List;
 
 public  class Io {
 
+    static String syntaxFromFile = "PLAIN";
+
     /**
      * Save - saves gets text from current Pane - saves text to file.
      */
+
     static void save() {
-        String toSave = MainScreen.je.getText(); // obtain text from current tabs Jeditorpane
+        //String toSave = MainScreen.je.getText(); // obtain text from current tabs Jeditorpane
 
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
@@ -28,7 +31,7 @@ public  class Io {
                 PrintWriter out = new PrintWriter(file);
 
                 // write string to file
-                out.write(toSave);
+                //out.write(toSave);
                 out.flush();
                 out.close();
             } catch (FileNotFoundException f){
@@ -47,11 +50,29 @@ public  class Io {
 
             // get selected file location  - add to String type list - strip "[]" - add to text area
             String path = fileChooser.getSelectedFile().getPath();
-            List<String> lines = Files.readAllLines(Paths.get(path), Charset.defaultCharset());
-            String toSend = lines.toString().replaceAll("^.|.$", "");
 
-            // create new instance of the note class with text from file passed - add tab to tab pane
-            MainScreen.tabbedPane.add(path, new Note(toSend));
+            if(path.contains(".py")){
+                syntaxFromFile = "SYNTAX_STYLE_PYTHON";
+
+            }else if(path.contains(".java")){
+                syntaxFromFile = "SYNTAX_STYLE_JAVA";
+
+            }else if(path.contains(".html")){
+                syntaxFromFile = "SYNTAX_STYLE_HTML";
+
+            }else if(path.contains(".css")){
+                syntaxFromFile = "SYNTAX_STYLE_CSS";
+
+            }else if(path.contains(".txt")){
+                syntaxFromFile = "SYNTAX_STYLE_PLAIN";
+
+            // ADDMORE SYNTAX
+
+                List<String> lines = Files.readAllLines(Paths.get(path), Charset.defaultCharset());
+                String toSend = lines.toString().replaceAll("^.|.$", "");
+
+                // create new instance of the note class with text from file passed - add tab to tab pane
+                MainScreen.newTab(path, syntaxFromFile, toSend);
+            }
         }
-    }
-}
+}}

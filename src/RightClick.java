@@ -98,7 +98,7 @@ public class RightClick extends MouseAdapter {
         clearAction = new AbstractAction("Clear") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainScreen.je.setText("");
+                //MainScreen.je.get
             }
         };
 
@@ -120,7 +120,7 @@ public class RightClick extends MouseAdapter {
         newTabAction = new AbstractAction("New Tab") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainScreen.newTab("Note"+ MainScreen.tabCount);
+                MainScreen.newTab("Note"+ MainScreen.tabCount, null, null);
             }
         };
 

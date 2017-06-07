@@ -1,37 +1,46 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 
 /**
  * A class used to display Information about the program
  * @author William March - s4916313
  */
 
-public class About extends JDialog  {
+public class About extends JDialog   {
 
     // shadow grey
 
-    private JTextPane jt;
+    private JLabel jt;
 
     About() {
-        this.setSize(135,50);
+
+        Icon icon = new ImageIcon("ic_clear_black_48dp.png");
+        this.setLayout(new BorderLayout());
+        this.setTitle("About ed-it");
+
+        this.setSize(500,150);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
 
         // hide on close
         this.setDefaultCloseOperation(1);
+        jt= new JLabel();
 
-        jt = new JTextPane();
-        jt.setEditable(false);
-        jt.setContentType("text/html");
-        jt.setText("<html><strong>Simple java notepad</strong></html>");
+        jt.setFont(Uicolor.plain);
+        jt.setBackground(Uicolor.DEFAULT_PRIMARY);
+        jt.setForeground(Uicolor.TEXT_PRIMARY);
 
-        jt.setBackground(Uicolor.dialogC);
 
-        this.add(jt);
+
+        jt.setText("         Ed-it text editor beta V0.1  : Aurthor William March - moduspc@gmail.com");
+
+        jt.setBackground(Uicolor.LIGHT_PRIMARY);
+
+        this.add(jt, SwingConstants.CENTER);
     }
 
-    public static void main(String[] args){
-        SwingUtilities.invokeLater(()-> new About());
-    }
 }
 

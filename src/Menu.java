@@ -18,12 +18,57 @@ public class Menu extends JMenuBar{
         fMenu = new JMenu(" File ");
         fMenu.setMnemonic(KeyEvent.VK_F);
 
-        // new item
-        JMenuItem nMenui = new JMenuItem(" New note ");
-        nMenui.setMnemonic(KeyEvent.VK_N);
+            // new item
+            JMenuItem nMenui = new JMenu(" New");
+            nMenui.setMnemonic(KeyEvent.VK_N);
 
-        // new item listen
-        nMenui.addActionListener((e) -> MainScreen.newTab("Note" + MainScreen.tabCount));
+                JMenuItem pythonItem = new JMenuItem("Python file");
+                nMenui.add(pythonItem);
+                pythonItem.addActionListener((e)-> MainScreen.newTab("temp.py", "SYNTAX_STYLE_PYTHON", "#!/usr/bin/env python\n\n" +
+                        "# -*- coding: utf-8 -*-\n" +
+                        "\n" +
+                        "\"\"\"This is a awesome\n" +
+                        "        python script!\"\"\"\n\n"));
+
+                JMenuItem javaItem = new JMenuItem("Java file");
+                nMenui.add(javaItem);
+                javaItem.addActionListener((e)-> MainScreen.newTab("Main.java", "SYNTAX_STYLE_JAVA", "public class Main {\n" +
+                        "\t\n" +
+                        "\tpublic Main(){}\n" +
+                        "\n" +
+                        "\tpublic void greet() {\n" +
+                        "\t\tsystem.out.println(\"Hello\");\t\n" +
+                        "\t}\n" +
+                        "\n" +
+                        "\tpublic static void main(String[] args) {\n" +
+                        "\t\tMain helloWorld = new Main();\n" +
+                        "\t\thelloWorld.greet();\n" +
+                        "\t}\n" +
+                        "}"));
+
+                JMenuItem htmlItem = new JMenuItem("HTML file");
+                nMenui.add(htmlItem);
+                htmlItem.addActionListener((e -> MainScreen.newTab("index.html", "SYNTAX_STYLE_HTML", "<!DOCTYPE html>\n" +
+                        "<html>\n" +
+                        "\t<body>\n" +
+                        "\n" +
+                        "\t\t<h1>My First Heading</h1>\n" +
+                        "\n" +
+                        "\t\t<p>My first paragraph.</p>\n" +
+                        "\n" +
+                        "\t</body>\n" +
+                        "</html>\n")));
+
+                JMenuItem cssItem = new JMenuItem("CSS file");
+                nMenui.add(cssItem);
+                cssItem.addActionListener((e -> MainScreen.newTab("style.css", "SYNTAX_STYLE_CSS", "")));
+
+
+
+
+
+
+        // new files
 
         // add
         fMenu.add(nMenui);
@@ -68,7 +113,7 @@ public class Menu extends JMenuBar{
         JMenuItem clMenui = new JMenuItem("Clear Tab");
 
         // listen
-        clMenui.addActionListener((e -> MainScreen.je.setText("")));
+        //clMenui.addActionListener((e -> MainScreen.je.setText("")));
 
         // add
         tMenu.add(clMenui);
