@@ -20,7 +20,11 @@ public class Note extends JInternalFrame {
 
     public Note(String tfi, String sfi) {
 
-        textArea = new RSyntaxTextArea(20,60);
+        // remove internall frame border
+        ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
+        this.setBorder(null);
+
+
         this.textFromIo = tfi;
         this.syntaxFromIo = sfi;
 
@@ -29,14 +33,17 @@ public class Note extends JInternalFrame {
         JPanel cp = new JPanel(new BorderLayout());
         this.setVisible(true);
 
-        // remove internall frame border
-        ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
-        this.setBorder(null);
+
 
         textArea = new RSyntaxTextArea(20, 60);
-
+        textArea = new RSyntaxTextArea(20,60);
         textArea.setCodeFoldingEnabled(true);
+        textArea.setAnimateBracketMatching(true);
+        textArea.setCloseCurlyBraces(true);
+        textArea.setCloseMarkupTags(true);
+        textArea.setAutoIndentEnabled(true);
         RTextScrollPane sp = new RTextScrollPane(textArea);
+        sp.setViewportView(textArea);
         cp.add(sp);
         textArea.setVisible(true);
         setContentPane(cp);
@@ -44,6 +51,7 @@ public class Note extends JInternalFrame {
         pack();
 
         create();
+
 
 
     }
@@ -66,11 +74,9 @@ public class Note extends JInternalFrame {
         }
     }
 
-    private void getText(){
-
-        String text = textArea.getText();
+    public String getText(){
+        return textArea.getText();
     }
-
 
 }
 

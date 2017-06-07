@@ -1,3 +1,5 @@
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.Charset;
@@ -18,8 +20,9 @@ public  class Io {
      * Save - saves gets text from current Pane - saves text to file.
      */
 
-    static void save() {
-        //String toSave = MainScreen.je.getText(); // obtain text from current tabs Jeditorpane
+    static void save(String toSave) {
+        // add fiel referecen
+
 
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
@@ -72,7 +75,7 @@ public  class Io {
                 String toSend = lines.toString().replaceAll("^.|.$", "");
 
                 // create new instance of the note class with text from file passed - add tab to tab pane
-                MainScreen.newTab(path, syntaxFromFile, toSend);
+                MainScreen.handle("FILE 1", "SYNTAX_STYLE_LATEX", null, 1);
             }
         }
 }}

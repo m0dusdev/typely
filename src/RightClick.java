@@ -120,7 +120,7 @@ public class RightClick extends MouseAdapter {
         newTabAction = new AbstractAction("New Tab") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainScreen.newTab("Note"+ MainScreen.tabCount, null, null);
+                MainScreen.handle("Temp.txt", null, null, 1);
             }
         };
 

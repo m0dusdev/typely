@@ -1,6 +1,11 @@
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.*;
+import javax.print.attribute.standard.MediaSize;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -15,17 +20,19 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 
 public class MainScreen extends JFrame  {
 
-    private static JInternalFrame je; // current notepad in focus
-    private static RSyntaxTextArea rs;
+
+    static JInternalFrame c;
     static int tabCount = 1;
-    
     static int current;
     static JTabbedPane tabbedPane = new JTabbedPane();
+
+    public static java.util.List<RSyntaxTextArea> frameList = new ArrayList<>();
+
+
 
     public MainScreen() {
 
         super("NotePad");
-
 
         //tabbedPane setup
 
@@ -72,37 +79,63 @@ public class MainScreen extends JFrame  {
      * Creates a new instance of the Note class - updates tab count set current editorpane
      * @param title set title for new tab
      */
-   public static void newTab(String title, String syntax, String send) {
-       tabbedPane.addTab(title, new Note(send, syntax));
-       tabCount++;
-       je = (JInternalFrame)tabbedPane.getComponentAt(current);
 
-       RTextScrollPane rs;
+    static void handle (String title, String syntax, String send, int flag) {
+
+        switch (flag) {
+
+            // new
+            case 1: // New Tab operation
+                Note n = new Note(send, syntax);
+                tabbedPane.addTab(title, n);
+                tabCount++;
+
+                c = (JInternalFrame) tabbedPane.getComponentAt(current);
+
+                RSyntaxTextArea rsyntaxRef;
+
+                rsyntaxRef = (RSyntaxTextArea)c.getMostRecentFocusOwner();
+
+                rsyntaxRef.setText("hello");
 
 
+
+
+
+
+
+
+
+
+
+            case 2:
+                break;
+
+
+        }
 
    }
 
-    public static void main(String[] args)
-    {
-        SwingUtilities.invokeLater(() -> {
+    public static void main(String[] args) {
+       SwingUtilities.invokeLater(() -> {
+           // set appropriate look and feel
+           try {
+               UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+           } catch (ClassNotFoundException ex) {
+           } catch (InstantiationException ex) {
+           } catch (IllegalAccessException ex) {
+           } catch (UnsupportedLookAndFeelException ex) {
+           }
+           JFrame frame = new MainScreen();
+           frame.setSize(1280, 800);
+           frame.setDefaultCloseOperation(3);
+           frame.setLocationRelativeTo(null);
+           frame.setVisible(true);
 
+           // kick off with a new frame
+           handle("C:\\Users\\Public\\Documents\\Shared Virtual Machines" + tabCount, "SYNTAX_STYLE_PYTHON", null, 1);
+       });
 
-            // set appropriate look and feel
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (ClassNotFoundException ex) {
-            } catch (InstantiationException ex) {
-            } catch (IllegalAccessException ex) {
-            } catch (UnsupportedLookAndFeelException ex) {
-            }
-                JFrame frame = new MainScreen();
-                frame.setSize(1280, 800);
-                frame.setDefaultCloseOperation(3);
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-                newTab("C:\\Users\\Public\\Documents\\Shared Virtual Machines"+ tabCount, "SYNTAX_STYLE_PYTHON", null);
-        });
     }
 }
 
