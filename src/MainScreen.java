@@ -21,7 +21,7 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 public class MainScreen extends JFrame  {
 
 
-    static JInternalFrame c;
+
     static int tabCount = 1;
     static int current;
     static JTabbedPane tabbedPane = new JTabbedPane();
@@ -80,41 +80,15 @@ public class MainScreen extends JFrame  {
      * @param title set title for new tab
      */
 
-    static void handle (String title, String syntax, String send, int flag) {
-
-        switch (flag) {
-
-            // new
-            case 1: // New Tab operation
+    static void handle (String title, String syntax, String send) {
                 Note n = new Note(send, syntax);
                 tabbedPane.addTab(title, n);
+                /** System.out.println(send + send + title + n); test **/
                 tabCount++;
 
-                c = (JInternalFrame) tabbedPane.getComponentAt(current);
-
-                RSyntaxTextArea rsyntaxRef;
-
-                rsyntaxRef = (RSyntaxTextArea)c.getMostRecentFocusOwner();
-
-                rsyntaxRef.setText("hello");
+    }
 
 
-
-
-
-
-
-
-
-
-
-            case 2:
-                break;
-
-
-        }
-
-   }
 
     public static void main(String[] args) {
        SwingUtilities.invokeLater(() -> {
@@ -133,7 +107,7 @@ public class MainScreen extends JFrame  {
            frame.setVisible(true);
 
            // kick off with a new frame
-           handle("C:\\Users\\Public\\Documents\\Shared Virtual Machines" + tabCount, "SYNTAX_STYLE_PYTHON", null, 1);
+           handle("C:\\Users\\Public\\Documents\\Shared Virtual Machines" + tabCount, "SYNTAX_STYLE_PYTHON", null);
        });
 
     }

@@ -1,11 +1,14 @@
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import javax.swing.filechooser.FileFilter;
+
 
 /**
  * A class that deals with file Io
@@ -15,14 +18,26 @@ import java.util.List;
 public  class Io {
 
     static String syntaxFromFile = "PLAIN";
+    static String toSave;
 
     /**
      * Save - saves gets text from current Pane - saves text to file.
      */
 
-    static void save(String toSave) {
-        // add fiel referecen
+    static void save() {
 
+        // obtain reference of currently selected RSyntax
+        JInternalFrame c;
+        c = (JInternalFrame) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
+
+
+
+        RSyntaxTextArea rsyntaxRef;
+        rsyntaxRef = (RSyntaxTextArea)c.getMostRecentFocusOwner();
+
+
+
+        toSave = rsyntaxRef.getText();
 
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
@@ -34,7 +49,7 @@ public  class Io {
                 PrintWriter out = new PrintWriter(file);
 
                 // write string to file
-                //out.write(toSave);
+                out.write(toSave);
                 out.flush();
                 out.close();
             } catch (FileNotFoundException f){
@@ -48,11 +63,26 @@ public  class Io {
      * @throws IOException
      */
     static void open() throws IOException{
-        JFileChooser fileChooser = new JFileChooser();
+
+        JFileChooser fileChooser;
+
+
+        fileChooser = new JFileChooser("c:");
+        fileChooser.setDialogType(1);
+
+
         if (fileChooser.showOpenDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
 
             // get selected file location  - add to String type list - strip "[]" - add to text area
             String path = fileChooser.getSelectedFile().getPath();
+
+            File tempFile = fileChooser.getSelectedFile();
+
+            System.out.println(path);
+            List<String> lines = Files.readAllLines(Paths.get(path), Charset.defaultCharset());
+            String toSend = lines.toString().replaceAll("^.|.$", "");
+
+
 
             if(path.contains(".py")){
                 syntaxFromFile = "SYNTAX_STYLE_PYTHON";
@@ -71,11 +101,8 @@ public  class Io {
 
             // ADDMORE SYNTAX
 
-                List<String> lines = Files.readAllLines(Paths.get(path), Charset.defaultCharset());
-                String toSend = lines.toString().replaceAll("^.|.$", "");
-
                 // create new instance of the note class with text from file passed - add tab to tab pane
-                MainScreen.handle("FILE 1", "SYNTAX_STYLE_LATEX", null, 1);
+                MainScreen.handle(path, syntaxFromFile, toSend);
             }
         }
 }}

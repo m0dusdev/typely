@@ -12,8 +12,8 @@ import java.awt.*;
 
 public class Note extends JInternalFrame {
 
-    private String textFromIo = "";
-    private String syntaxFromIo = "SYNTAX_STLYE_PLANE";
+    private String textFromIo;
+    private String syntaxFromIo;
 
 
     public RSyntaxTextArea textArea;
@@ -36,7 +36,7 @@ public class Note extends JInternalFrame {
 
 
         textArea = new RSyntaxTextArea(20, 60);
-        textArea = new RSyntaxTextArea(20,60);
+
         textArea.setCodeFoldingEnabled(true);
         textArea.setAnimateBracketMatching(true);
         textArea.setCloseCurlyBraces(true);
@@ -59,26 +59,13 @@ public class Note extends JInternalFrame {
     public void create(){
         // set text area to contents of file from Io
         textArea.setText(this.textFromIo);
+        System.out.print("null\n\n\n" +textArea.getText());
+        //textArea.setSyntaxEditingStyle(syntaxFromIo);
 
-        if (syntaxFromIo.contains("JAVA")){
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        } else if( syntaxFromIo.contains("PYTHON")){
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
 
-        } else if( syntaxFromIo.contains("HTML")){
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
 
-        } else if( syntaxFromIo.contains("CSS")){
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS);
 
-        }
-    }
-
-    public String getText(){
-        return textArea.getText();
-    }
-
-}
+}}
 
 
 

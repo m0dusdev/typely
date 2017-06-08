@@ -28,7 +28,7 @@ public class Menu extends JMenuBar{
                         "# -*- coding: utf-8 -*-\n" +
                         "\n" +
                         "\"\"\"This is a awesome\n" +
-                        "        python script!\"\"\"\n\n", 1));
+                        "        python script!\"\"\"\n\n" ));
 
                 JMenuItem javaItem = new JMenuItem("Java file");
                 nMenui.add(javaItem);
@@ -44,7 +44,7 @@ public class Menu extends JMenuBar{
                         "\t\tMain helloWorld = new Main();\n" +
                         "\t\thelloWorld.greet();\n" +
                         "\t}\n" +
-                        "}", 1));
+                        "}"));
 
                 JMenuItem htmlItem = new JMenuItem("HTML file");
                 nMenui.add(htmlItem);
@@ -57,11 +57,11 @@ public class Menu extends JMenuBar{
                         "\t\t<p>My first paragraph.</p>\n" +
                         "\n" +
                         "\t</body>\n" +
-                        "</html>\n", 1)));
+                        "</html>\n")));
 
                 JMenuItem cssItem = new JMenuItem("CSS file");
                 nMenui.add(cssItem);
-                cssItem.addActionListener((e -> MainScreen.handle("style.css", "SYNTAX_STYLE_CSS", "", 1)));
+                cssItem.addActionListener((e -> MainScreen.handle("style.css", "SYNTAX_STYLE_CSS", "")));
 
 
 
@@ -87,7 +87,7 @@ public class Menu extends JMenuBar{
 
         // save listen
         sMenui.addActionListener(event -> {
-                MainScreen.handle(null,null, null,  0);
+                Io.save();
         });
 
         // open item
