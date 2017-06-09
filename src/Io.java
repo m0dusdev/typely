@@ -27,17 +27,11 @@ public  class Io {
     static void save() {
 
         // obtain reference of currently selected RSyntax
-        JInternalFrame c;
-        c = (JInternalFrame) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
+        toSave = MainScreen.currentR.getText();
 
 
 
-        RSyntaxTextArea rsyntaxRef;
-        rsyntaxRef = (RSyntaxTextArea)c.getMostRecentFocusOwner();
 
-
-
-        toSave = rsyntaxRef.getText();
 
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
@@ -54,6 +48,9 @@ public  class Io {
                 out.close();
             } catch (FileNotFoundException f){
                 f.printStackTrace();
+            } finally {
+                JInternalFrame je;
+                je = (JInternalFrame) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
             }
         }
     }
@@ -79,10 +76,20 @@ public  class Io {
             File tempFile = fileChooser.getSelectedFile();
 
             System.out.println(path);
+
+
             List<String> lines = Files.readAllLines(Paths.get(path), Charset.defaultCharset());
-            String toSend = lines.toString().replaceAll("^.|.$", "");
 
 
+            StringBuilder buffer = new StringBuilder();
+            for (String Final : lines) {
+                buffer.append(Final + "\n");
+            }
+
+
+            String fileText = buffer.toString();
+
+            System.err.print(buffer);
 
             if(path.contains(".py")){
                 syntaxFromFile = "SYNTAX_STYLE_PYTHON";
@@ -99,10 +106,16 @@ public  class Io {
             }else if(path.contains(".txt")){
                 syntaxFromFile = "SYNTAX_STYLE_PLAIN";
 
-            // ADDMORE SYNTAX
-
-                // create new instance of the note class with text from file passed - add tab to tab pane
-                MainScreen.handle(path, syntaxFromFile, toSend);
+            } else if (path.contains(".h")) {
+                syntaxFromFile = "SYNTAX_STYLE_C";
             }
+
+            MainScreen.tabbedPane.add(path, new Note(fileText, syntaxFromFile, false));
+
+            MainScreen.tabbedPane.setSelectedIndex(MainScreen.current + 1);
+
+
+
+
         }
 }}

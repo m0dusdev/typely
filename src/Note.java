@@ -14,19 +14,20 @@ public class Note extends JInternalFrame {
 
     private String textFromIo;
     private String syntaxFromIo;
+    public boolean hasSaved = false;
 
 
     public RSyntaxTextArea textArea;
 
-    public Note(String tfi, String sfi) {
+    public Note(String tfi, String sfi, boolean save) {
 
         // remove internall frame border
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
 
-
-        this.textFromIo = tfi;
-        this.syntaxFromIo = sfi;
+        hasSaved = save;
+        textFromIo = tfi;
+        syntaxFromIo = sfi;
 
         System.out.println("text "+ tfi + " syntax " + sfi);
 
@@ -34,38 +35,68 @@ public class Note extends JInternalFrame {
         this.setVisible(true);
 
 
+        textArea = new RSyntaxTextArea(20, 300);
+        textArea.add(new JButton("me"), SwingConstants.CENTER);
 
-        textArea = new RSyntaxTextArea(20, 60);
-
-        textArea.setCodeFoldingEnabled(true);
-        textArea.setAnimateBracketMatching(true);
-        textArea.setCloseCurlyBraces(true);
-        textArea.setCloseMarkupTags(true);
-        textArea.setAutoIndentEnabled(true);
         RTextScrollPane sp = new RTextScrollPane(textArea);
         sp.setViewportView(textArea);
         cp.add(sp);
         textArea.setVisible(true);
         setContentPane(cp);
 
+        if (sfi.contains("JAVA")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        } else if (sfi.contains("PYTHON")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
+        } else if (sfi.contains("HTML")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
+        } else if (sfi.contains("CSS")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS);
+        } else if (sfi.contains("JAVASCRIPT")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT);
+        } else if (sfi.contains("LATEX")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LATEX);
+        } else if (sfi.contains("C")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_C);
+        } else {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
+        }
+
+        textArea.setText(tfi);
+
+        textArea.setCodeFoldingEnabled(true);
+        textArea.setAnimateBracketMatching(true);
+        textArea.setCloseCurlyBraces(true);
+        textArea.setCloseMarkupTags(true);
+        textArea.setAutoIndentEnabled(true);
+        textArea.setBackground(Uicolor.LIGHT_PRIMARY);
+        textArea.setCurrentLineHighlightColor(Uicolor.DEFAULT_PRIMARY);
+        //textArea.setFont(Uicolor.plain);
+        textArea.setAntiAliasingEnabled(true);
+        textArea.setRoundedSelectionEdges(false);
+        textArea.setForeground(Uicolor.TEXT_PRIMARY);
+
         pack();
-
-        create();
-
 
 
     }
 
-    public void create(){
-        // set text area to contents of file from Io
-        textArea.setText(this.textFromIo);
-        System.out.print("null\n\n\n" +textArea.getText());
-        //textArea.setSyntaxEditingStyle(syntaxFromIo);
+    private static void setStyles() {
+        // set styles
+
+    }
 
 
+    private boolean getSaved() {
+        return this.hasSaved;
+    }
+
+    private void setSaved(Boolean saved) {
+        this.hasSaved = saved;
+    }
 
 
-}}
+}
 
 
 

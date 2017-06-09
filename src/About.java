@@ -16,9 +16,10 @@ public class About extends JDialog   {
 
     About() {
 
-        Icon icon = new ImageIcon("ic_clear_black_48dp.png");
+
         this.setLayout(new BorderLayout());
         this.setTitle("About ed-it");
+
 
         this.setSize(500,150);
         this.setLocationRelativeTo(null);

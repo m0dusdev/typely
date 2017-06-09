@@ -18,4 +18,5 @@ public @interface Uicolor {
 
     // fonts
     Font plain = new Font(Font.SANS_SERIF, Font.ITALIC, 13);
+
 }

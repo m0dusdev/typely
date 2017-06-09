@@ -1,6 +1,8 @@
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -25,6 +27,7 @@ public class MainScreen extends JFrame  {
     static int tabCount = 1;
     static int current;
     static JTabbedPane tabbedPane = new JTabbedPane();
+    public static RSyntaxTextArea currentR = new RSyntaxTextArea();
 
     public static java.util.List<RSyntaxTextArea> frameList = new ArrayList<>();
 
@@ -32,7 +35,24 @@ public class MainScreen extends JFrame  {
 
     public MainScreen() {
 
-        super("NotePad");
+        super("ed-it");
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                super.windowOpened(e);
+                CloseDialog cl = new CloseDialog();
+                int tempResult = cl.show();
+
+                if (tempResult == 1) {
+                    // yes option
+                } else if (tempResult == 2) {
+                    dispose(); // no option
+                } else if (tempResult == 3) {
+
+                }
+            }
+        });
 
         //tabbedPane setup
 
@@ -65,15 +85,15 @@ public class MainScreen extends JFrame  {
                 JTabbedPane pane = (JTabbedPane) e.getSource();
 
                 current = pane.getSelectedIndex();
+            currentR = getRarea();
 
-                // if no tabs are left then reset tab count
-                if(current == -1){
-                    current = 0;
-                }
+            if (current == -1) current = current + 1;
+
             });
         setContentPane(tabbedPane);
         pack();
     }
+
 
     /**
      * Creates a new instance of the Note class - updates tab count set current editorpane
@@ -81,11 +101,20 @@ public class MainScreen extends JFrame  {
      */
 
     static void handle (String title, String syntax, String send) {
-                Note n = new Note(send, syntax);
-                tabbedPane.addTab(title, n);
-                /** System.out.println(send + send + title + n); test **/
+        //Note n = new Note(send, syntax);
+        tabbedPane.addTab(title, new Note(send, syntax, false));
+        System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + "   Title is -  " + title);
                 tabCount++;
 
+    }
+
+    // return reference to the current syntax pane in focus
+    static RSyntaxTextArea getRarea() {
+        JInternalFrame je;
+        je = (JInternalFrame) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
+        RSyntaxTextArea rsc;
+        rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
+        return rsc;
     }
 
 
@@ -107,7 +136,7 @@ public class MainScreen extends JFrame  {
            frame.setVisible(true);
 
            // kick off with a new frame
-           handle("C:\\Users\\Public\\Documents\\Shared Virtual Machines" + tabCount, "SYNTAX_STYLE_PYTHON", null);
+           handle("temp.txt", "PLAIN", null);
        });
 
     }
