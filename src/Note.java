@@ -83,6 +83,29 @@ public class Note extends JInternalFrame {
 
     }
 
+    public void setSyntax(String syntax) {
+        if (syntax.contains("JAVA")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+            System.out.print(syntax);
+
+        } else if (syntax.contains("PYTHON")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
+            System.out.print(syntax);
+        } else if (syntax.contains("XML")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
+            System.out.print(syntax);
+        } else if (syntax.contains("LATEX")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LATEX);
+            System.out.print(syntax);
+        } else if (syntax.contains("CSS")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS);
+            System.out.print(syntax);
+        } else if (syntax.contains("HTML")) {
+            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
+            System.out.print(syntax);
+        }
+    }
+
     private static void setStyles() {
         // set styles
 

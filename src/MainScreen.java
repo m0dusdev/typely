@@ -23,14 +23,14 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 
 public class MainScreen extends JFrame  {
 
-
+    static boolean justAddedTab = false;
 
     static int tabCount = 1;
     static int current;
     static JTabbedPane tabbedPane = new JTabbedPane();
     public static RSyntaxTextArea currentR = new RSyntaxTextArea();
 
-    public static java.util.List<RSyntaxTextArea> frameList = new ArrayList<>();
+
 
 
 
@@ -86,7 +86,7 @@ public class MainScreen extends JFrame  {
                 JTabbedPane pane = (JTabbedPane) e.getSource();
 
                 current = pane.getSelectedIndex();
-            currentR = getRarea();
+
 
             if (current == -1) current = current + 1;
 
@@ -107,25 +107,19 @@ public class MainScreen extends JFrame  {
         System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + "   Title is -  " + title);
                 tabCount++;
 
+
     }
 
     // return reference to the current syntax pane in focus
     static RSyntaxTextArea getRarea() {
+        // get current tab
+
         JInternalFrame je;
         je = (JInternalFrame) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
         RSyntaxTextArea rsc;
         rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
         return rsc;
     }
-
-    public static void setSyntax(String syntax) {
-        RSyntaxTextArea tempset = getRarea();
-
-        if (syntax.contains("JAVA")) {
-            tempset.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        }
-    }
-
 
 
     public static void main(String[] args) {

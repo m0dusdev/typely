@@ -28,9 +28,7 @@ public  class Io {
 
         // obtain reference of currently selected RSyntax
         toSave = MainScreen.currentR.getText();
-
-
-
+        System.out.print(toSave);
 
 
         JFileChooser fileChooser = new JFileChooser();
@@ -48,9 +46,6 @@ public  class Io {
                 out.close();
             } catch (FileNotFoundException f){
                 f.printStackTrace();
-            } finally {
-                JInternalFrame je;
-                je = (JInternalFrame) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
             }
         }
     }
@@ -113,6 +108,7 @@ public  class Io {
             MainScreen.tabbedPane.add(path, new Note(fileText, syntaxFromFile, false));
 
             MainScreen.tabbedPane.setSelectedIndex(MainScreen.current + 1);
+            MainScreen.justAddedTab = true;
 
 
 
