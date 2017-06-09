@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.security.interfaces.RSAKey;
 import java.util.*;
 import javax.print.attribute.standard.MediaSize;
 import javax.swing.*;
@@ -117,6 +118,14 @@ public class MainScreen extends JFrame  {
         return rsc;
     }
 
+    public static void setSyntax(String syntax) {
+        RSyntaxTextArea tempset = getRarea();
+
+        if (syntax.contains("JAVA")) {
+            tempset.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        }
+    }
+
 
 
     public static void main(String[] args) {
@@ -136,7 +145,7 @@ public class MainScreen extends JFrame  {
            frame.setVisible(true);
 
            // kick off with a new frame
-           handle("temp.txt", "PLAIN", null);
+           handle("temp.txt " + tabCount, "PLAIN", null);
        });
 
     }

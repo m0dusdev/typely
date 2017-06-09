@@ -1,4 +1,5 @@
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -14,17 +15,12 @@ public class Menu extends JMenuBar{
     public  Menu() {
 
         // file menu icons
-        ImageIcon pyImg = new ImageIcon("images/pycon..jpg");
-        ImageIcon javaImg = new ImageIcon("images/javacon..jpg");
-        ImageIcon htmlImg = new ImageIcon("images/htmlicon..jpg");
-        ImageIcon cssImg = new ImageIcon("images/cssicon..jpg");
-        ImageIcon cImg = new ImageIcon("images/ccon..jpg");
-        ImageIcon latexImg = new ImageIcon("images/latexicon...jpg");
 
 
-        JMenu fMenu; // file
-        JMenu tMenu; // tab
-        JMenu hMenu; // help
+        JMenu fMenu;         // file
+        JMenu tMenu;        //  tab
+        JMenu hMenu;       //   help
+        JMenuItem sMenu;  //    syntax
 
         // file menu
         fMenu = new JMenu(" File ");
@@ -34,7 +30,12 @@ public class Menu extends JMenuBar{
         JMenuItem nMenui = new JMenu(" New");
         nMenui.setMnemonic(KeyEvent.VK_N);
 
-        JMenuItem pythonItem = new JMenuItem("Python file", pyImg);
+        JMenuItem plainItem = new JMenuItem("Text file");
+        nMenui.add(plainItem);
+        plainItem.addActionListener((e -> MainScreen.handle("file.txt", "SYNTAX_STYLE_PLAIN", "")));
+
+
+        JMenuItem pythonItem = new JMenuItem("Python file");
         nMenui.add(pythonItem);
         pythonItem.addActionListener((e)-> MainScreen.handle("temp.py", "SYNTAX_STYLE_PYTHON", "#!/usr/bin/env python\n\n" +
                 "# -*- coding: utf-8 -*-\n" +
@@ -43,23 +44,82 @@ public class Menu extends JMenuBar{
                 "        python script!\"\"\"\n\n" ));
 
 
-        JMenuItem javaItem = new JMenuItem("Java file", javaImg);
-        nMenui.add(javaItem);
-        javaItem.addActionListener((e)-> MainScreen.handle("Main.java", "SYNTAX_STYLE_JAVA", "public class Main {\n" +
-                "\t\n" +
-                "\tpublic Main(){}\n" +
-                "\n" +
-                "\tpublic void greet() {\n" +
-                "\t\tsystem.out.println(\"Hello\");\t\n" +
-                "\t}\n" +
-                "\n" +
-                "\tpublic static void main(String[] args) {\n" +
-                "\t\tMain helloWorld = new Main();\n" +
-                "\t\thelloWorld.greet();\n" +
-                "\t}\n" +
-                "}"));
+        JMenu javaItem = new JMenu("Java file");
 
-        JMenuItem htmlItem = new JMenuItem("HTML file", htmlImg);
+        JMenuItem javaSwingItem = new JMenuItem("Swing template");
+        javaItem.add(javaSwingItem);
+        javaSwingItem.addActionListener((e) -> MainScreen.handle("Frame.java", "SYNTAX_STYLE_JAVA", "\n" +
+                "import java.awt.event.WindowAdapter;\n" +
+                "import java.awt.event.WindowEvent;\n" +
+                "import javax.swing.*;\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "public class Frame extends JFrame {\n" +
+                "\n" +
+                "    private JPanel panel;\n" +
+                "\n" +
+                "    public Frame(){\n" +
+                "        super(\"gui\"); // title\n" +
+                "\n" +
+                "        setSize(800,600);\n" +
+                "        setDefaultCloseOperation(3); // exit on close\n" +
+                "\n" +
+                "        panel = new JPanel();\n" +
+                "        // on window close\n" +
+                "        this.addWindowListener(new WindowAdapter() {\n" +
+                "            @Override\n" +
+                "            public void windowClosed(WindowEvent e) {\n" +
+                "                super.windowOpened(e);\n" +
+                "\n" +
+                "            }\n" +
+                "        });\n" +
+                "\n" +
+                "        this.add(panel, SwingConstants.CENTER);\n" +
+                "        this.setJMenuBar(new Menu());\n" +
+                "\n" +
+                "\n" +
+                "        setVisible(true);\n" +
+                "    }\n" +
+                "\n" +
+                "\n" +
+                "    // JmenuBar\n" +
+                "    class Menu extends JMenuBar {\n" +
+                "        Menu(){\n" +
+                "            // File item\n" +
+                "            JMenu file = new JMenu(\"File\");\n" +
+                "\n" +
+                "                // Inside file\n" +
+                "                JMenuItem item1 = new JMenuItem(\"item 1\");\n" +
+                "                item1.addActionListener((e)-> System.err.print(\"Action\"));\n" +
+                "                file.add(item1);\n" +
+                "\n" +
+                "            // Add file to class\n" +
+                "            this.add(file);\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "\n" +
+                "\n" +
+                "    public static void main(String[] args){\n" +
+                "        SwingUtilities.invokeLater(()-> {\n" +
+                "            // set appropriate look and feel\n" +
+                "            try {\n" +
+                "                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());\n" +
+                "            } catch (ClassNotFoundException ex) {\n" +
+                "            } catch (InstantiationException ex) {\n" +
+                "            } catch (IllegalAccessException ex) {\n" +
+                "            } catch (UnsupportedLookAndFeelException ex) {\n" +
+                "            }\n" +
+                "\n" +
+                "            new Frame();\n" +
+                "        });\n" +
+                "    }\n" +
+                "\n" +
+                "}"));
+        nMenui.add(javaItem);
+
+        JMenuItem htmlItem = new JMenuItem("HTML file");
         nMenui.add(htmlItem);
         htmlItem.addActionListener((e -> MainScreen.handle("index.html", "SYNTAX_STYLE_HTML", "<!DOCTYPE html>\n" +
                 "<html>\n" +
@@ -72,216 +132,17 @@ public class Menu extends JMenuBar{
                 "\t</body>\n" +
                 "</html>\n")));
 
-        JMenuItem cssItem = new JMenuItem("CSS file", cssImg);
+        JMenuItem cssItem = new JMenuItem("CSS file");
         nMenui.add(cssItem);
         cssItem.addActionListener((e -> MainScreen.handle("style.css", "SYNTAX_STYLE_CSS", "")));
 
-        JMenuItem latexItem = new JMenuItem("LaTeX file", latexImg);
+        JMenuItem latexItem = new JMenuItem("LaTeX file");
         nMenui.add(latexItem);
-        latexItem.addActionListener((e -> MainScreen.handle("page.tex", "SYNTAX_STYLE_LATEX", "\\documentclass{article}\n" +
-                "\n" +
-                "\\usepackage{fancyhdr} % Required for custom headers\n" +
-                "\\usepackage{lastpage} % Required to determine the last page for the footer\n" +
-                "\\usepackage{extramarks} % Required for headers and footers\n" +
-                "\\usepackage{graphicx} % Required to insert images\n" +
-                "\\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template\n" +
-                "\n" +
-                "% Margins\n" +
-                "\\topmargin=-0.45in\n" +
-                "\\evensidemargin=0in\n" +
-                "\\oddsidemargin=0in\n" +
-                "\\textwidth=6.5in\n" +
-                "\\textheight=9.0in\n" +
-                "\\headsep=0.25in \n" +
-                "\n" +
-                "\\linespread{1.1} % Line spacing\n" +
-                "\n" +
-                "% Set up the header and footer\n" +
-                "\\pagestyle{fancy}\n" +
-                "\\lhead{\\hmwkAuthorName} % Top left header\n" +
-                "\\chead{\\hmwkClass\\ (\\hmwkClassInstructor\\ \\hmwkClassTime): \\hmwkTitle} % Top center header\n" +
-                "\\rhead{\\firstxmark} % Top right header\n" +
-                "\\lfoot{\\lastxmark} % Bottom left footer\n" +
-                "\\cfoot{} % Bottom center footer\n" +
-                "\\rfoot{Page\\ \\thepage\\ of\\ \\pageref{LastPage}} % Bottom right footer\n" +
-                "\\renewcommand\\headrulewidth{0.4pt} % Size of the header rule\n" +
-                "\\renewcommand\\footrulewidth{0.4pt} % Size of the footer rule\n" +
-                "\n" +
-                "\\setlength\\parindent{0pt} % Removes all indentation from paragraphs\n" +
-                "\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "%\tDOCUMENT STRUCTURE COMMANDS\n" +
-                "%\tSkip this unless you know what you're doing\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "% Header and footer for when a page split occurs within a problem environment\n" +
-                "\\newcommand{\\enterProblemHeader}[1]{\n" +
-                "\\nobreak\\extramarks{#1}{#1 continued on next page\\ldots}\\nobreak\n" +
-                "\\nobreak\\extramarks{#1 (continued)}{#1 continued on next page\\ldots}\\nobreak\n" +
-                "}\n" +
-                "\n" +
-                "% Header and footer for when a page split occurs between problem environments\n" +
-                "\\newcommand{\\exitProblemHeader}[1]{\n" +
-                "\\nobreak\\extramarks{#1 (continued)}{#1 continued on next page\\ldots}\\nobreak\n" +
-                "\\nobreak\\extramarks{#1}{}\\nobreak\n" +
-                "}\n" +
-                "\n" +
-                "\\setcounter{secnumdepth}{0} % Removes default section numbers\n" +
-                "\\newcounter{homeworkProblemCounter} % Creates a counter to keep track of the number of problems\n" +
-                "\n" +
-                "\\newcommand{\\homeworkProblemName}{}\n" +
-                "\\newenvironment{homeworkProblem}[1][Problem \\arabic{homeworkProblemCounter}]{ % Makes a new environment called homeworkProblem which takes 1 argument (custom name) but the default is \"Problem #\"\n" +
-                "\\stepcounter{homeworkProblemCounter} % Increase counter for number of problems\n" +
-                "\\renewcommand{\\homeworkProblemName}{#1} % Assign \\homeworkProblemName the name of the problem\n" +
-                "\\section{\\homeworkProblemName} % Make a section in the document with the custom problem count\n" +
-                "\\enterProblemHeader{\\homeworkProblemName} % Header and footer within the environment\n" +
-                "}{\n" +
-                "\\exitProblemHeader{\\homeworkProblemName} % Header and footer after the environment\n" +
-                "}\n" +
-                "\n" +
-                "\\newcommand{\\problemAnswer}[1]{ % Defines the problem answer command with the content as the only argument\n" +
-                "\\noindent\\framebox[\\columnwidth][c]{\\begin{minipage}{0.98\\columnwidth}#1\\end{minipage}} % Makes the box around the problem answer and puts the content inside\n" +
-                "}\n" +
-                "\n" +
-                "\\newcommand{\\homeworkSectionName}{}\n" +
-                "\\newenvironment{homeworkSection}[1]{ % New environment for sections within homework problems, takes 1 argument - the name of the section\n" +
-                "\\renewcommand{\\homeworkSectionName}{#1} % Assign \\homeworkSectionName to the name of the section from the environment argument\n" +
-                "\\subsection{\\homeworkSectionName} % Make a subsection with the custom name of the subsection\n" +
-                "\\enterProblemHeader{\\homeworkProblemName\\ [\\homeworkSectionName]} % Header and footer within the environment\n" +
-                "}{\n" +
-                "\\enterProblemHeader{\\homeworkProblemName} % Header and footer after the environment\n" +
-                "}\n" +
-                "   \n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "%\tNAME AND CLASS SECTION\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "\\newcommand{\\hmwkTitle}{Assignment\\ \\#1} % Assignment title\n" +
-                "\\newcommand{\\hmwkDueDate}{Monday,\\ January\\ 1,\\ 2012} % Due date\n" +
-                "\\newcommand{\\hmwkClass}{BIO\\ 101} % Course/class\n" +
-                "\\newcommand{\\hmwkClassTime}{10:30am} % Class/lecture time\n" +
-                "\\newcommand{\\hmwkClassInstructor}{Jones} % Teacher/lecturer\n" +
-                "\\newcommand{\\hmwkAuthorName}{John Smith} % Your name\n" +
-                "\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "%\tTITLE PAGE\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "\\title{\n" +
-                "\\vspace{2in}\n" +
-                "\\textmd{\\textbf{\\hmwkClass:\\ \\hmwkTitle}}\\\\\n" +
-                "\\normalsize\\vspace{0.1in}\\small{Due\\ on\\ \\hmwkDueDate}\\\\\n" +
-                "\\vspace{0.1in}\\large{\\textit{\\hmwkClassInstructor\\ \\hmwkClassTime}}\n" +
-                "\\vspace{3in}\n" +
-                "}\n" +
-                "\n" +
-                "\\author{\\textbf{\\hmwkAuthorName}}\n" +
-                "\\date{} % Insert date here if you want it to appear below your name\n" +
-                "\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "\\begin{document}\n" +
-                "\n" +
-                "\\maketitle\n" +
-                "\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "%\tTABLE OF CONTENTS\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "%\\setcounter{tocdepth}{1} % Uncomment this line if you don't want subsections listed in the ToC\n" +
-                "\n" +
-                "\\newpage\n" +
-                "\\tableofcontents\n" +
-                "\\newpage\n" +
-                "\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "%\tPROBLEM 1\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "% To have just one problem per page, simply put a \\clearpage after each problem\n" +
-                "\n" +
-                "\\begin{homeworkProblem}\n" +
-                "\\lipsum[1]\\vspace{10pt} % Question\n" +
-                "\n" +
-                "\\problemAnswer{ % Answer\n" +
-                "\\begin{center}\n" +
-                "\\includegraphics[width=0.75\\columnwidth]{example_figure} % Example image\n" +
-                "\\end{center}\n" +
-                "\n" +
-                "\\lipsum[2]\n" +
-                "}\n" +
-                "\\end{homeworkProblem}\n" +
-                "\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "%\tPROBLEM 2\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "\\begin{homeworkProblem}[Exercise \\#\\arabic{homeworkProblemCounter}] % Custom section title\n" +
-                "\\lipsum[3] % Question\n" +
-                "\n" +
-                "%--------------------------------------------\n" +
-                "\n" +
-                "\\begin{homeworkSection}{(a)} % Section within problem\n" +
-                "\\lipsum[4]\\vspace{10pt} % Question\n" +
-                "\n" +
-                "\\problemAnswer{ % Answer\n" +
-                "\\lipsum[5]\n" +
-                "}\n" +
-                "\\end{homeworkSection}\n" +
-                "\n" +
-                "%--------------------------------------------\n" +
-                "\n" +
-                "\\begin{homeworkSection}{(b)} % Section within problem\n" +
-                "\\problemAnswer{ % Answer\n" +
-                "\\lipsum[6]\n" +
-                "}\n" +
-                "\\end{homeworkSection}\n" +
-                "\n" +
-                "%--------------------------------------------\n" +
-                "\n" +
-                "\\end{homeworkProblem}\n" +
-                "\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "%\tPROBLEM 3\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "\\begin{homeworkProblem}[Prob. \\Roman{homeworkProblemCounter}] % Roman numerals\n" +
-                "\n" +
-                "%--------------------------------------------\n" +
-                "\n" +
-                "\\begin{homeworkSection}{\\homeworkProblemName:~(a)} % Using the problem name elsewhere\n" +
-                "\\problemAnswer{ % Answer\n" +
-                "\\lipsum[7]\n" +
-                "}\n" +
-                "\\end{homeworkSection}\n" +
-                "\n" +
-                "%--------------------------------------------\n" +
-                "\n" +
-                "\\begin{homeworkSection}{\\homeworkProblemName:~(b)}\n" +
-                "\\lipsum[8]\\vspace{10pt} % Question\n" +
-                "\n" +
-                "\\problemAnswer{ % Answer\n" +
-                "\\lipsum[9]\n" +
-                "}\n" +
-                "\\end{homeworkSection}\n" +
-                "\n" +
-                "%--------------------------------------------\n" +
-                "\n" +
-                "\\end{homeworkProblem}\n" +
-                "\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "%\tPROBLEM 4\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "\\begin{homeworkProblem}[Prob. \\Roman{homeworkProblemCounter}] % Roman numerals\n" +
-                "\\problemAnswer{ % Answer\n" +
-                "\\lipsum[10]\n" +
-                "}\n" +
-                "\\end{homeworkProblem}\n" +
-                "\n" +
-                "%----------------------------------------------------------------------------------------\n" +
-                "\n" +
-                "\\end{document}\n")));
+        latexItem.addActionListener((e -> MainScreen.handle("page.tex", "SYNTAX_STYLE_LATEX", "/begin document")));
+
+        JMenuItem xmlItem = new JMenuItem("XML file");
+        nMenui.add(xmlItem);
+        xmlItem.addActionListener((e -> MainScreen.handle("schema.xml", "SYNTAX_STYLE_HTML", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>")));
 
 
         // new files
@@ -348,7 +209,7 @@ public class Menu extends JMenuBar{
                 Io.save();
 
                 MainScreen.tabbedPane.remove(MainScreen.current);
-                MainScreen.current--;
+
             } else if (option == 1) {
                 System.out.print(option);
                 MainScreen.tabbedPane.remove(MainScreen.current);
@@ -373,11 +234,19 @@ public class Menu extends JMenuBar{
         // add
         hMenu.add(aMenui);
 
+
+        sMenu = new JMenu("Syntax");
+        JMenuItem javaSyntax = new JMenuItem("Java");
+        javaSyntax.addActionListener((e) -> MainScreen.setSyntax("JAVA"));
+        sMenu.add(javaSyntax);
+
         // add menus to bar
         add(fMenu);
 
         add(tMenu);
 
         add(hMenu);
+
+        add(sMenu);
     }
 }

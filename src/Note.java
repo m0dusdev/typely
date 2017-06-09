@@ -75,6 +75,8 @@ public class Note extends JInternalFrame {
         textArea.setAntiAliasingEnabled(true);
         textArea.setRoundedSelectionEdges(false);
         textArea.setForeground(Uicolor.TEXT_PRIMARY);
+        textArea.setBracketMatchingEnabled(true);
+        textArea.setDragEnabled(true);
 
         pack();
 
