@@ -34,8 +34,10 @@ public  class Io {
         toSave = MainScreen.currentR.getText();
         System.out.print(toSave);
 
+        String path = MainScreen.tabbedPane.getTitleAt(MainScreen.current);
 
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File(path));
         if (fileChooser.showSaveDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
 
             try {

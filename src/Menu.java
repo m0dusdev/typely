@@ -161,8 +161,6 @@ public class Menu extends JMenuBar{
         nMenui.add(fromclipSyntax);
 
 
-        // new files
-
         // add
         fMenu.add(nMenui);
         fMenu.add(new JSeparator());
@@ -217,22 +215,19 @@ public class Menu extends JMenuBar{
         JMenuItem cMenui = new JMenuItem("Close Tab ");
         // listen
         cMenui.addActionListener((e -> {
-            CloseDialog c = new CloseDialog();
+            CloseDialog c = new CloseDialog("Save tab", "Tab might not be saved");
 
+            // handle close dialog
             int option = c.show();
-            if (option == 0) {
-                System.out.print(option);
-                Io.save();
-
-                MainScreen.tabbedPane.remove(MainScreen.current);
-
-            } else if (option == 1) {
-                System.out.print(option);
-                MainScreen.tabbedPane.remove(MainScreen.current);
-            } else {
-
+            switch (option) {
+                case (0):
+                    Io.save();
+                    MainScreen.tabbedPane.remove(MainScreen.current);
+                    break;
+                case (1):
+                    MainScreen.tabbedPane.remove(MainScreen.current);
+                    break;
             }
-
         }));
 
         // add

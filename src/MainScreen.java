@@ -24,7 +24,6 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 public class MainScreen extends JFrame  {
 
     static boolean justAddedTab = false;
-
     static int tabCount = 1;
     static int current;
     static JTabbedPane tabbedPane = new JTabbedPane();
@@ -42,7 +41,7 @@ public class MainScreen extends JFrame  {
             @Override
             public void windowClosed(WindowEvent e) {
                 super.windowOpened(e);
-                CloseDialog cl = new CloseDialog();
+                CloseDialog cl = new CloseDialog("test", "test");
                 int tempResult = cl.show();
 
                 if (tempResult == 1) {
@@ -57,11 +56,13 @@ public class MainScreen extends JFrame  {
 
         //tabbedPane setup
 
+
         tabbedPane.setBackground(Uicolor.ACCENT_COLOR);
         tabbedPane.setForeground(Uicolor.LIGHT_PRIMARY);
         tabbedPane.setFont(Uicolor.plain);
         tabbedPane.setFocusable(false);
         tabbedPane.setVisible(true);
+
 
         tabbedPane.setUI(new BasicTabbedPaneUI() {
             @Override
@@ -83,8 +84,10 @@ public class MainScreen extends JFrame  {
         // gets currently selected tab as index
         tabbedPane.addChangeListener((e)-> {
 
-                JTabbedPane pane = (JTabbedPane) e.getSource();
+            if (current != -1) {
+            }
 
+                JTabbedPane pane = (JTabbedPane) e.getSource();
                 current = pane.getSelectedIndex();
 
             JInternalFrame je;
@@ -96,10 +99,9 @@ public class MainScreen extends JFrame  {
             rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
 
             currentR = rsc;
+        });
 
-            if (current == -1) current = current + 1;
 
-            });
         setContentPane(tabbedPane);
         pack();
     }
