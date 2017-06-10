@@ -94,7 +94,7 @@ public class MainScreen extends JFrame  {
         tabbedPane.addTab(title, new Note(send, syntax, false));
         System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + "   Title is -  " + title);
                 tabCount++;
-
+        tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 
     }
 

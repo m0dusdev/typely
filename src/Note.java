@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.List;
 
 /**
  * NotePad class - New instance created on each new tabbedpane Tab
@@ -38,17 +39,14 @@ public class Note extends JInternalFrame {
 
         JPanel cp = new JPanel(new BorderLayout());
         this.setVisible(true);
-
-
         textArea = new RSyntaxTextArea(20, 300);
-
-
         RTextScrollPane sp = new RTextScrollPane(textArea);
         sp.setViewportView(textArea);
         cp.add(sp);
         textArea.setVisible(true);
         setContentPane(cp);
 
+        // apply syntax
         if (sfi.contains("JAVA")) {
             textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         } else if (sfi.contains("PYTHON")) {
@@ -80,55 +78,52 @@ public class Note extends JInternalFrame {
         String stylePath = "src/styles";
 
         try {
-            Map<String, String> map = new HashMap<>();
             java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
             StringBuilder styleBuffer = new StringBuilder();
-
 
             int i = 0;
             for (String temp : lines) {
                 temp = lines.get(i);
                 i++;
-                System.out.print(temp);
+                System.out.print(temp + "\n");
                 if (temp.contains("setCodeFoldingEnabled") && temp.contains("true")) {
-                    // set code folding to enabled
+                    // setCodeFoldingEnabled true
                     textArea.setCodeFoldingEnabled(true);
-                    System.out.print("\n\ncode fold true\n\n");
 
                 } else if (temp.contains("setCodeFoldingEnabled") && temp.contains("false")) {
-                    // set code folding to disabled
+                    // setCodeFoldingEnabled false
                     textArea.setCodeFoldingEnabled(false);
 
                 } else if (temp.contains("setAnimateBracketMatching") && temp.contains("true")) {
-                    // set code folding to disabled
+                    // setAnimateBracketMatching true
                     textArea.setAnimateBracketMatching(true);
 
                 } else if (temp.contains("setAnimateBracketMatching") && temp.contains("false")) {
-                    // set code folding to disabled
+                    // setAnimateBracketMatching false
                     textArea.setAnimateBracketMatching(false);
                 } else if (temp.contains("setCloseCurlyBraces") && temp.contains("true")) {
-                    // set code folding to disabled
+                    // setCloseCurlyBraces true
                     textArea.setCloseCurlyBraces(true);
                 } else if (temp.contains("setCloseCurlyBraces") && temp.contains("false")) {
-                    // set code folding to disabled
+                    // setCloseCurlyBraces false
                     textArea.setCloseCurlyBraces(false);
                 } else if (temp.contains("setAutoIndentEnabled") && temp.contains("true")) {
-                    // set code folding to disabled
+                    // setAutoIndentEnabled true
                     textArea.setAutoIndentEnabled(true);
                 } else if (temp.contains("setAutoIndentEnabled") && temp.contains("false")) {
-                    // set code folding to disabled
+                    // setAutoIndentEnabled false
                     textArea.setAutoIndentEnabled(false);
                 } else if (temp.contains("setAntiAliasingEnabled") && temp.contains("true")) {
-                    // set code folding to disabled
+                    // setAntiAliasingEnabled true
                     textArea.setAntiAliasingEnabled(true);
                 } else if (temp.contains("setAntiAliasingEnabled") && temp.contains("false")) {
-                    // set code folding to disabled
+                    // setAntiAliasingEnabled false
                     textArea.setAntiAliasingEnabled(false);
                 } else if (temp.contains("setDragEnabled") && temp.contains("true")) {
-                    // set code folding to disabled
+                    // setDragEnabled true
                     textArea.setDragEnabled(true);
                 } else if (temp.contains("setDragEnabled") && temp.contains("false")) {
-                    // set code folding to disabled
+                    // setDragEnabled false
                     textArea.setDragEnabled(false);
 
 
@@ -254,6 +249,7 @@ public class Note extends JInternalFrame {
                         textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
                     } else textArea.setCurrentLineHighlightColor(Uicolor.BOLD_GREY);
                 }
+
             }
 
 
@@ -281,6 +277,8 @@ public class Note extends JInternalFrame {
 
         } catch (IOException fileFucked) {
             fileFucked.printStackTrace();
+            CloseDialog cl = new CloseDialog("Preference file is missing", "File ");
+
         }
 
     }

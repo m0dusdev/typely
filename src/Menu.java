@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * This class builds a menu bar and handles the actions associated with it.
@@ -17,7 +20,6 @@ public class Menu extends JMenuBar{
     public  Menu() {
 
         // file menu icons
-
 
         JMenu fMenu;         // file
         JMenu tMenu;        //  tab
@@ -166,6 +168,7 @@ public class Menu extends JMenuBar{
 
 
 
+
         // add
         fMenu.add(nMenui);
         fMenu.add(new JSeparator());
@@ -199,6 +202,27 @@ public class Menu extends JMenuBar{
             }
 
         });
+
+        // Preferences
+        JMenuItem prefItem = new JMenuItem("Preferences");
+        fMenu.add(new JSeparator());
+        fMenu.add(prefItem);
+        prefItem.addActionListener((e -> {
+            String stylePath = "src/styles";
+            try {
+                java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
+                StringBuilder styleBuffer = new StringBuilder();
+
+                for (String temp : lines) {
+                    styleBuffer.append(temp + "\n");
+                }
+                MainScreen.handle("prefs.css", "SYNTAX_STYLE_CSS", styleBuffer.toString());
+
+            } catch (IOException ioe) {
+                // never thrown
+            }
+
+        }));
 
 
         // Tab menu
