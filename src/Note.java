@@ -67,6 +67,7 @@ public class Note extends JInternalFrame {
             textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
         }
 
+        textArea.setText(tfi);
 
         pack();
 
@@ -82,10 +83,177 @@ public class Note extends JInternalFrame {
             Map<String, String> map = new HashMap<>();
             java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
             StringBuilder styleBuffer = new StringBuilder();
-            System.out.print(lines.get(0) + "\n");
 
+
+            int i = 0;
             for (String temp : lines) {
-                styleBuffer.append(temp + "\n");
+                temp = lines.get(i);
+                i++;
+                System.out.print(temp);
+                if (temp.contains("setCodeFoldingEnabled") && temp.contains("true")) {
+                    // set code folding to enabled
+                    textArea.setCodeFoldingEnabled(true);
+                    System.out.print("\n\ncode fold true\n\n");
+
+                } else if (temp.contains("setCodeFoldingEnabled") && temp.contains("false")) {
+                    // set code folding to disabled
+                    textArea.setCodeFoldingEnabled(false);
+
+                } else if (temp.contains("setAnimateBracketMatching") && temp.contains("true")) {
+                    // set code folding to disabled
+                    textArea.setAnimateBracketMatching(true);
+
+                } else if (temp.contains("setAnimateBracketMatching") && temp.contains("false")) {
+                    // set code folding to disabled
+                    textArea.setAnimateBracketMatching(false);
+                } else if (temp.contains("setCloseCurlyBraces") && temp.contains("true")) {
+                    // set code folding to disabled
+                    textArea.setCloseCurlyBraces(true);
+                } else if (temp.contains("setCloseCurlyBraces") && temp.contains("false")) {
+                    // set code folding to disabled
+                    textArea.setCloseCurlyBraces(false);
+                } else if (temp.contains("setAutoIndentEnabled") && temp.contains("true")) {
+                    // set code folding to disabled
+                    textArea.setAutoIndentEnabled(true);
+                } else if (temp.contains("setAutoIndentEnabled") && temp.contains("false")) {
+                    // set code folding to disabled
+                    textArea.setAutoIndentEnabled(false);
+                } else if (temp.contains("setAntiAliasingEnabled") && temp.contains("true")) {
+                    // set code folding to disabled
+                    textArea.setAntiAliasingEnabled(true);
+                } else if (temp.contains("setAntiAliasingEnabled") && temp.contains("false")) {
+                    // set code folding to disabled
+                    textArea.setAntiAliasingEnabled(false);
+                } else if (temp.contains("setDragEnabled") && temp.contains("true")) {
+                    // set code folding to disabled
+                    textArea.setDragEnabled(true);
+                } else if (temp.contains("setDragEnabled") && temp.contains("false")) {
+                    // set code folding to disabled
+                    textArea.setDragEnabled(false);
+
+
+                } else if (temp.contains("setRoundedSelectionEdges") && temp.contains("true")) {
+                    // set code folding to disabled
+                    textArea.setRoundedSelectionEdges(true);
+                } else if (temp.contains("setRoundedSelectionEdges") && temp.contains("false")) {
+                    // set code folding to disabled
+                    textArea.setRoundedSelectionEdges(false);
+
+                } else if (temp.contains("setBracketMatchingEnabled") && temp.contains("true")) {
+                    // set code folding to disabled
+                    textArea.setBracketMatchingEnabled(true);
+                } else if (temp.contains("setBracketMatchingEnabled") && temp.contains("false")) {
+                    // set code folding to disabled
+                    textArea.setBracketMatchingEnabled(false);
+                }
+
+
+                /**
+                 * SYNTAX PANEL BACKGROUND COLORS
+                 */
+
+                // background
+                else if (temp.contains("setBackground")) {
+                    if (temp.contains(("bold-grey"))) {
+                        textArea.setBackground(Uicolor.BOLD_GREY);
+                    } else if (temp.contains("grey")) {
+                        textArea.setBackground(Uicolor.GREY);
+                    } else if (temp.contains("light-grey")) {
+                        textArea.setBackground(Uicolor.LIGHT_GREY);
+                    } else if (temp.contains("dark-grey")) {
+                        textArea.setBackground(Uicolor.DARK_GREY);
+                    } else if (temp.contains("bold-blue")) {
+                        textArea.setBackground(Uicolor.BOLD_BLUE);
+                    } else if (temp.contains("blue")) {
+                        textArea.setBackground(Uicolor.BLUE);
+                    } else if (temp.contains("light-blue")) {
+                        textArea.setBackground(Uicolor.LIGHT_BLUE);
+                    } else if (temp.contains("dark-blue")) {
+                        textArea.setBackground(Uicolor.DARK_BLUE);
+                    } else if (temp.contains("bold-teal")) {
+                        textArea.setBackground(Uicolor.BOLD_TEAL);
+                    } else if (temp.contains("light-teal")) {
+                        textArea.setBackground(Uicolor.LIGHT_TEAL);
+                    } else if (temp.contains("teal")) {
+                        textArea.setBackground(Uicolor.TEAL);
+                    } else if (temp.contains("dark-green")) {
+                        textArea.setBackground(Uicolor.DARK_GREEN);
+                    } else if (temp.contains("green")) {
+                        textArea.setBackground(Uicolor.GREEN);
+                    } else if (temp.contains("light-green")) {
+                        textArea.setBackground(Uicolor.LIGHT_GREEN);
+                    } else if (temp.contains("dark-green")) {
+                        textArea.setBackground(Uicolor.DARK_GREEN);
+                    } else this.textArea.setForeground(Uicolor.LIGHT_GREY);
+
+                    // Foreground
+                } else if (temp.contains("setForeground")) {
+                    if (temp.contains("bold-green")) {
+                        textArea.setForeground(Uicolor.GREEN);
+                    } else if (temp.contains("grey")) {
+                        textArea.setForeground(Uicolor.GREY);
+                    } else if (temp.contains("light-grey")) {
+                        textArea.setForeground(Uicolor.LIGHT_GREY);
+                    } else if (temp.contains("dark-grey")) {
+                        textArea.setForeground(Uicolor.DARK_GREY);
+                    } else if (temp.contains("bold-blue")) {
+                        textArea.setForeground(Uicolor.BOLD_BLUE);
+                    } else if (temp.contains("blue")) {
+                        textArea.setForeground(Uicolor.BLUE);
+                    } else if (temp.contains("light-blue")) {
+                        textArea.setForeground(Uicolor.LIGHT_BLUE);
+                    } else if (temp.contains("dark-blue")) {
+                        textArea.setForeground(Uicolor.DARK_BLUE);
+                    } else if (temp.contains("bold-teal")) {
+                        textArea.setForeground(Uicolor.BOLD_TEAL);
+                    } else if (temp.contains("light-teal")) {
+                        textArea.setForeground(Uicolor.LIGHT_TEAL);
+                    } else if (temp.contains("teal")) {
+                        textArea.setForeground(Uicolor.TEAL);
+                    } else if (temp.contains("dark-green")) {
+                        textArea.setForeground(Uicolor.DARK_GREEN);
+                    } else if (temp.contains("green")) {
+                        textArea.setForeground(Uicolor.GREEN);
+                    } else if (temp.contains("light-green")) {
+                        textArea.setForeground(Uicolor.LIGHT_GREEN);
+                    } else if (temp.contains("dark-green")) {
+                        textArea.setForeground(Uicolor.DARK_GREEN);
+                    } else textArea.setForeground(Uicolor.GREY);
+
+                    // highlight
+                } else if (temp.contains("setHighlighter")) {
+                    if (temp.contains("bold-green")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
+                    } else if (temp.contains("grey")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.GREY);
+                    } else if (temp.contains("light-grey")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREY);
+                    } else if (temp.contains("dark-grey")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREY);
+                    } else if (temp.contains("bold-blue")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.BOLD_BLUE);
+                    } else if (temp.contains("blue")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.BLUE);
+                    } else if (temp.contains("light-blue")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_BLUE);
+                    } else if (temp.contains("dark-blue")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.DARK_BLUE);
+                    } else if (temp.contains("bold-teal")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.BOLD_TEAL);
+                    } else if (temp.contains("light-teal")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_TEAL);
+                    } else if (temp.contains("teal")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.TEAL);
+                    } else if (temp.contains("dark-green")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
+                    } else if (temp.contains("green")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
+                    } else if (temp.contains("light-green")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREEN);
+                    } else if (temp.contains("dark-green")) {
+                        textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
+                    } else textArea.setCurrentLineHighlightColor(Uicolor.BOLD_GREY);
+                }
             }
 
 
