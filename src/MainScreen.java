@@ -3,12 +3,6 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.security.interfaces.RSAKey;
-import java.util.*;
-import javax.print.attribute.standard.MediaSize;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -29,14 +23,12 @@ public class MainScreen extends JFrame  {
     static JTabbedPane tabbedPane = new JTabbedPane();
     public static RSyntaxTextArea currentR = new RSyntaxTextArea();
 
-
-
-
-
     public MainScreen() {
 
         super("ed-it");
 
+
+        // listen for close
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -57,22 +49,7 @@ public class MainScreen extends JFrame  {
         //tabbedPane setup
 
 
-        tabbedPane.setBackground(Uicolor.ACCENT_COLOR);
-        tabbedPane.setForeground(Uicolor.LIGHT_PRIMARY);
-        tabbedPane.setFont(Uicolor.plain);
-        tabbedPane.setFocusable(false);
-        tabbedPane.setVisible(true);
 
-
-        tabbedPane.setUI(new BasicTabbedPaneUI() {
-            @Override
-            protected void installDefaults() {
-                super.installDefaults();
-                highlight = Uicolor.ACCENT_COLOR;
-                lightHighlight = Uicolor.LIGHT_PRIMARY;
-                focus = Uicolor.DEFAULT_PRIMARY;
-            }
-        });
 
         // set menu bar
         setJMenuBar(new Menu());

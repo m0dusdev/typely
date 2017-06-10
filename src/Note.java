@@ -3,7 +3,13 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 /**
  * NotePad class - New instance created on each new tabbedpane Tab
@@ -24,7 +30,6 @@ public class Note extends JInternalFrame {
         // remove internall frame border
         ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
-
         hasSaved = save;
         textFromIo = tfi;
         syntaxFromIo = sfi;
@@ -36,7 +41,7 @@ public class Note extends JInternalFrame {
 
 
         textArea = new RSyntaxTextArea(20, 300);
-        textArea.add(new JButton("me"), SwingConstants.CENTER);
+
 
         RTextScrollPane sp = new RTextScrollPane(textArea);
         sp.setViewportView(textArea);
@@ -62,64 +67,55 @@ public class Note extends JInternalFrame {
             textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
         }
 
-        textArea.setText(tfi);
-
-        textArea.setCodeFoldingEnabled(true);
-        textArea.setAnimateBracketMatching(true);
-        textArea.setCloseCurlyBraces(true);
-        textArea.setCloseMarkupTags(true);
-        textArea.setAutoIndentEnabled(true);
-        textArea.setBackground(Uicolor.LIGHT_PRIMARY);
-        textArea.setCurrentLineHighlightColor(Uicolor.DEFAULT_PRIMARY);
-        //textArea.setFont(Uicolor.plain);
-        textArea.setAntiAliasingEnabled(true);
-        textArea.setRoundedSelectionEdges(false);
-        textArea.setForeground(Uicolor.TEXT_PRIMARY);
-        textArea.setBracketMatchingEnabled(true);
-        textArea.setDragEnabled(true);
 
         pack();
 
+        getStyle();
+
 
     }
 
-    public void setSyntax(String syntax) {
-        if (syntax.contains("JAVA")) {
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-            System.out.print(syntax);
+    private void getStyle() {
+        String stylePath = "src/styles";
 
-        } else if (syntax.contains("PYTHON")) {
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
-            System.out.print(syntax);
-        } else if (syntax.contains("XML")) {
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
-            System.out.print(syntax);
-        } else if (syntax.contains("LATEX")) {
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LATEX);
-            System.out.print(syntax);
-        } else if (syntax.contains("CSS")) {
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS);
-            System.out.print(syntax);
-        } else if (syntax.contains("HTML")) {
-            textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
-            System.out.print(syntax);
+        try {
+            Map<String, String> map = new HashMap<>();
+            java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
+            StringBuilder styleBuffer = new StringBuilder();
+            System.out.print(lines.get(0) + "\n");
+
+            for (String temp : lines) {
+                styleBuffer.append(temp + "\n");
+            }
+
+
+            System.err.print(styleBuffer.toString());
+
+            String fromStyle = styleBuffer.toString();
+
+
+            MainScreen.tabbedPane.setBackground(Uicolor.DARK_GREY);
+            MainScreen.tabbedPane.setForeground(Uicolor.LIGHT_GREY);
+            MainScreen.tabbedPane.setFont(Uicolor.plain);
+            MainScreen.tabbedPane.setFocusable(false);
+            MainScreen.tabbedPane.setVisible(true);
+
+
+            MainScreen.tabbedPane.setUI(new BasicTabbedPaneUI() {
+                @Override
+                protected void installDefaults() {
+                    super.installDefaults();
+                    highlight = Uicolor.BOLD_GREY;
+                    lightHighlight = Uicolor.LIGHT_GREY;
+                    focus = Uicolor.GREY;
+                }
+            });
+
+        } catch (IOException fileFucked) {
+            fileFucked.printStackTrace();
         }
-    }
-
-    private static void setStyles() {
-        // set styles
 
     }
-
-
-    private boolean getSaved() {
-        return this.hasSaved;
-    }
-
-    private void setSaved(Boolean saved) {
-        this.hasSaved = saved;
-    }
-
 
 }
 

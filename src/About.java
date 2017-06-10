@@ -31,14 +31,14 @@ public class About extends JDialog   {
         jt= new JLabel();
 
         jt.setFont(Uicolor.plain);
-        jt.setBackground(Uicolor.DEFAULT_PRIMARY);
+        jt.setBackground(Uicolor.GREY);
         jt.setForeground(Uicolor.TEXT_PRIMARY);
 
 
 
         jt.setText("         Ed-it text editor beta V0.1  : Aurthor William March - moduspc@gmail.com");
 
-        jt.setBackground(Uicolor.LIGHT_PRIMARY);
+        jt.setBackground(Uicolor.LIGHT_GREY);
 
         this.add(jt, SwingConstants.CENTER);
     }

@@ -25,6 +25,10 @@ public  class Io {
     static String syntaxFromFile = "PLAIN";
     static String toSave;
 
+    // gets styles from file on launch
+
+
+
     /**
      * Save - saves gets text from current Pane - saves text to file.
      */
@@ -67,7 +71,7 @@ public  class Io {
 
         fileChooser = new JFileChooser("c:");
         fileChooser.setDialogType(1);
-        fileChooser.setBorder(new BasicBorders.SplitPaneBorder(Uicolor.DEFAULT_PRIMARY, Uicolor.ACCENT_COLOR));
+        fileChooser.setBorder(new BasicBorders.SplitPaneBorder(Uicolor.GREY, Uicolor.BOLD_GREY));
 
 
         if (fileChooser.showOpenDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
@@ -108,7 +112,7 @@ public  class Io {
             } else if (path.contains(".txt")) {
                 syntaxFromFile = "SYNTAX_STYLE_PLAIN";
 
-            } else if (path.contains(".h")) {
+            } else if (path.contains(".c")) {
                 syntaxFromFile = "SYNTAX_STYLE_C";
             }
 
@@ -124,6 +128,8 @@ public  class Io {
     static void cliboardToTab() throws IOException, UnsupportedFlavorException {
         String temp = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.
                 stringFlavor);
+
+
         MainScreen.tabbedPane.add("from clipboard", new Note(temp, "JAVA", false));
 
     }

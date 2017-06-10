@@ -32,6 +32,23 @@ public class Menu extends JMenuBar{
         JMenuItem nMenui = new JMenu(" New");
         nMenui.setMnemonic(KeyEvent.VK_N);
 
+
+        JMenuItem fromclipSyntax = new JMenuItem("From clipboard");
+        fromclipSyntax.addActionListener((e) -> {
+            try {
+                Io.cliboardToTab();
+
+            } catch (IOException io) {
+                // never happens
+            } catch (UnsupportedFlavorException fl) {
+                // ^^
+            }
+        });
+
+
+        nMenui.add(fromclipSyntax);
+        nMenui.add(new JSeparator());
+
         JMenuItem plainItem = new JMenuItem("Text file");
         nMenui.add(plainItem);
         plainItem.addActionListener((e -> MainScreen.handle("file.txt", "SYNTAX_STYLE_PLAIN", "")));
@@ -146,19 +163,7 @@ public class Menu extends JMenuBar{
         nMenui.add(xmlItem);
         xmlItem.addActionListener((e -> MainScreen.handle("schema.xml", "SYNTAX_STYLE_XML", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>")));
 
-        JMenuItem fromclipSyntax = new JMenuItem("From clipboard");
-        fromclipSyntax.addActionListener((e) -> {
-            try {
-                Io.cliboardToTab();
 
-            } catch (IOException io) {
-                // never happens
-            } catch (UnsupportedFlavorException fl) {
-                // ^^
-            }
-        });
-        nMenui.add(new JSeparator());
-        nMenui.add(fromclipSyntax);
 
 
         // add
