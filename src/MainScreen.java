@@ -87,6 +87,15 @@ public class MainScreen extends JFrame  {
 
                 current = pane.getSelectedIndex();
 
+            JInternalFrame je;
+
+            je = (JInternalFrame) tabbedPane.getComponentAt(current);
+
+            RSyntaxTextArea rsc;
+
+            rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
+
+            currentR = rsc;
 
             if (current == -1) current = current + 1;
 
@@ -110,16 +119,6 @@ public class MainScreen extends JFrame  {
 
     }
 
-    // return reference to the current syntax pane in focus
-    static RSyntaxTextArea getRarea() {
-        // get current tab
-
-        JInternalFrame je;
-        je = (JInternalFrame) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
-        RSyntaxTextArea rsc;
-        rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
-        return rsc;
-    }
 
 
     public static void main(String[] args) {

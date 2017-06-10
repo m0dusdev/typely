@@ -2,12 +2,17 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.plaf.basic.BasicBorders;
 
 
 /**
@@ -26,7 +31,6 @@ public  class Io {
 
     static void save() {
 
-        // obtain reference of currently selected RSyntax
         toSave = MainScreen.currentR.getText();
         System.out.print(toSave);
 
@@ -61,6 +65,7 @@ public  class Io {
 
         fileChooser = new JFileChooser("c:");
         fileChooser.setDialogType(1);
+        fileChooser.setBorder(new BasicBorders.SplitPaneBorder(Uicolor.DEFAULT_PRIMARY, Uicolor.ACCENT_COLOR));
 
 
         if (fileChooser.showOpenDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
@@ -86,19 +91,19 @@ public  class Io {
 
             System.err.print(buffer);
 
-            if(path.contains(".py")){
+            if (path.contains(".py")) {
                 syntaxFromFile = "SYNTAX_STYLE_PYTHON";
 
-            }else if(path.contains(".java")){
+            } else if (path.contains(".java")) {
                 syntaxFromFile = "SYNTAX_STYLE_JAVA";
 
-            }else if(path.contains(".html")){
+            } else if (path.contains(".html")) {
                 syntaxFromFile = "SYNTAX_STYLE_HTML";
 
-            }else if(path.contains(".css")){
+            } else if (path.contains(".css")) {
                 syntaxFromFile = "SYNTAX_STYLE_CSS";
 
-            }else if(path.contains(".txt")){
+            } else if (path.contains(".txt")) {
                 syntaxFromFile = "SYNTAX_STYLE_PLAIN";
 
             } else if (path.contains(".h")) {
@@ -111,7 +116,16 @@ public  class Io {
             MainScreen.justAddedTab = true;
 
 
-
-
         }
-}}
+    }
+
+    static void cliboardToTab() throws IOException, UnsupportedFlavorException {
+        String temp = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.
+                stringFlavor);
+        MainScreen.tabbedPane.add("from clipboard", new Note(temp, "JAVA", false));
+
+    }
+
+
+}
+

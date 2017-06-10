@@ -3,6 +3,7 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import sun.applet.Main;
 
 import javax.swing.*;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
@@ -145,6 +146,20 @@ public class Menu extends JMenuBar{
         nMenui.add(xmlItem);
         xmlItem.addActionListener((e -> MainScreen.handle("schema.xml", "SYNTAX_STYLE_XML", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>")));
 
+        JMenuItem fromclipSyntax = new JMenuItem("From clipboard");
+        fromclipSyntax.addActionListener((e) -> {
+            try {
+                Io.cliboardToTab();
+
+            } catch (IOException io) {
+                // never happens
+            } catch (UnsupportedFlavorException fl) {
+                // ^^
+            }
+        });
+        nMenui.add(new JSeparator());
+        nMenui.add(fromclipSyntax);
+
 
         // new files
 
@@ -192,7 +207,7 @@ public class Menu extends JMenuBar{
 
         // listen
         clMenui.addActionListener((e -> {
-            MainScreen.getRarea().setText("");
+            MainScreen.currentR.setText("");
         }));
 
         // add
@@ -214,7 +229,6 @@ public class Menu extends JMenuBar{
             } else if (option == 1) {
                 System.out.print(option);
                 MainScreen.tabbedPane.remove(MainScreen.current);
-                MainScreen.current--;
             } else {
 
             }
@@ -239,59 +253,43 @@ public class Menu extends JMenuBar{
         sMenu = new JMenu("Syntax");
         JMenuItem javaSyntax = new JMenuItem("Java");
         javaSyntax.addActionListener((e) -> {
-            Note frame;
-            frame = (Note) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
-            frame.setSyntax("JAVA");
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         });
         sMenu.add(javaSyntax);
 
 
         JMenuItem pythonSyntax = new JMenuItem("Python");
-        javaSyntax.addActionListener((e) -> {
-            Note frame;
-            frame = (Note) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
-            frame.setSyntax("PYTHON");
-
+        pythonSyntax.addActionListener((e) -> {
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
         });
         sMenu.add(pythonSyntax);
 
 
         JMenuItem xmlSyntax = new JMenuItem("XML");
-        javaSyntax.addActionListener((e) -> {
-            Note frame;
-            frame = (Note) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
-            frame.setSyntax("XML");
+        xmlSyntax.addActionListener((e) -> {
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
         });
         sMenu.add(xmlSyntax);
 
 
         JMenuItem latexSyntax = new JMenuItem("LaTeX");
-        javaSyntax.addActionListener((e) -> {
-            Note frame;
-            frame = (Note) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
-            frame.setSyntax("LATEX");
+        latexSyntax.addActionListener((e) -> {
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LATEX);
         });
         sMenu.add(latexSyntax);
 
 
         JMenuItem cssSyntax = new JMenuItem("CSS");
-        javaSyntax.addActionListener((e) -> {
-            Note frame;
-            frame = (Note) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
-            frame.textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS);
+        cssSyntax.addActionListener((e) -> {
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS);
         });
         sMenu.add(cssSyntax);
 
         JMenuItem htmlSyntax = new JMenuItem("HTML");
-        javaSyntax.addActionListener((e) -> {
-            Note frame;
-            frame = (Note) MainScreen.tabbedPane.getComponentAt(MainScreen.current);
-            frame.setSyntax("HTML");
+        htmlSyntax.addActionListener((e) -> {
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
         });
         sMenu.add(htmlSyntax);
-
-
-
 
 
         // add menus to bar
