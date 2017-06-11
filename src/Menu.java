@@ -287,9 +287,11 @@ public class Menu extends JMenuBar{
                 case (0):
                     Io.save();
                     MainScreen.tabbedPane.remove(MainScreen.current);
+                    MainScreen.tabbedPane.repaint();
                     break;
                 case (1):
                     MainScreen.tabbedPane.remove(MainScreen.current);
+                    MainScreen.tabbedPane.repaint();
                     break;
             }
         }));

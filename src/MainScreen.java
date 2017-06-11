@@ -40,11 +40,8 @@ public class MainScreen extends JFrame  {
 
                 if (tempResult == 1) {
                     // yes option
-                } else if (tempResult == 2) {
-                    dispose(); // no option
-                } else if (tempResult == 3) {
-
                 }
+                dispose();
             }
         });
 
@@ -112,6 +109,9 @@ public class MainScreen extends JFrame  {
            } catch (IllegalAccessException ex) {
            } catch (UnsupportedLookAndFeelException ex) {
            }
+
+           UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab.contentMargins", new Insets(100,
+                   100, 100, 100));
            JFrame frame = new MainScreen();
            frame.setSize(1280, 800);
            frame.setDefaultCloseOperation(3);

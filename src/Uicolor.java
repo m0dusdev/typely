@@ -10,7 +10,7 @@ public @interface Uicolor {
     // GREY GUI colors
     Color LIGHT_GREY = Color.decode("#FAFAFA");
     Color GREY = Color.decode("#EEEEEE");
-    Color BOLD_GREY = Color.decode("#616161");
+    Color BOLD_GREY = Color.decode("#212121");
     Color DARK_GREY = Color.decode("#9E9E9E");
 
     // BLUE GUI colors

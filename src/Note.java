@@ -168,7 +168,7 @@ public class Note extends JInternalFrame {
                  * SYNTAX PANEL BACKGROUND COLORS
                  */
 
-                // background
+                // Textarea background
                 else if (temp.contains("setBackground")) {
                     if (temp.contains(("bold-grey"))) {
                         textArea.setBackground(Uicolor.BOLD_GREY);
@@ -202,7 +202,7 @@ public class Note extends JInternalFrame {
                         textArea.setBackground(Uicolor.DARK_GREEN);
                     } else this.textArea.setForeground(Uicolor.LIGHT_GREY);
 
-                    // Foreground
+                    // TextArea Foreground
                 } else if (temp.contains("setForeground")) {
                     if (temp.contains("bold-green")) {
                         textArea.setForeground(Uicolor.GREEN);
@@ -235,8 +235,6 @@ public class Note extends JInternalFrame {
                     } else if (temp.contains("dark-green")) {
                         textArea.setForeground(Uicolor.DARK_GREEN);
                     } else textArea.setForeground(Uicolor.GREY);
-
-                    // highlight
                 } else if (temp.contains("setHighlighter")) {
                     if (temp.contains("bold-green")) {
                         textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
@@ -268,16 +266,20 @@ public class Note extends JInternalFrame {
                         textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREEN);
                     } else if (temp.contains("dark-green")) {
                         textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
-                    } else textArea.setCurrentLineHighlightColor(Uicolor.BOLD_GREY);
+                    } else textArea.setCurrentLineHighlightColor(Uicolor.GREY);
                 }
 
             }
 
-            MainScreen.tabbedPane.setBackground(Uicolor.DARK_GREY);
-            MainScreen.tabbedPane.setForeground(Uicolor.LIGHT_GREY);
+            MainScreen.tabbedPane.setBackground(Color.decode("#90A4AE"));
+            MainScreen.tabbedPane.setForeground(Color.decode("#212121"));
             MainScreen.tabbedPane.setFont(Uicolor.plain);
+
+
+            // needed
             MainScreen.tabbedPane.setFocusable(false);
             MainScreen.tabbedPane.setVisible(true);
+
 
             // TO DO : set style from file
             MainScreen.tabbedPane.setUI(new BasicTabbedPaneUI() {
