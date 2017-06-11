@@ -130,7 +130,7 @@ public  class Io {
                 stringFlavor);
 
 
-        MainScreen.tabbedPane.add("from clipboard", new Note(temp, "JAVA", false));
+        MainScreen.handle("FromClipboard", "PLAIN", temp);
 
     }
 

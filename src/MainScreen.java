@@ -17,6 +17,8 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 
 public class MainScreen extends JFrame  {
 
+    private static final long serialVersionUID = 1L;
+
     static boolean justAddedTab = false;
     static int tabCount = 1;
     static int current;

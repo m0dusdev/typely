@@ -138,6 +138,41 @@ public class Menu extends JMenuBar{
                 "    }\n" +
                 "\n" +
                 "}"));
+
+        JMenuItem javaDialogItem = new JMenuItem("Java Dialog");
+        javaDialogItem.addActionListener((e) -> {
+            MainScreen.handle("About.java", "JAVA", "import javax.swing.*;\n" +
+                    "import java.awt.*;\n" +
+                    "\n" +
+                    "/**\n" +
+                    " *      DIALOG FOR \"\"\n" +
+                    " */\n" +
+                    "\n" +
+                    "public class About extends JDialog   {\n" +
+                    "\n" +
+                    "    private JLabel jt;\n" +
+                    "\n" +
+                    "    About() {\n" +
+                    "        setLayout(new BorderLayout());\n" +
+                    "        setTitle(\"About\");\n" +
+                    "        setSize(500,150);\n" +
+                    "        setLocationRelativeTo(null);\n" +
+                    "        setVisible(true);\n" +
+                    "        setResizable(false);\n" +
+                    "        jt= new JLabel();\n" +
+                    "        this.setDefaultCloseOperation(1); // Hide on close\n" +
+                    "        jt.setFont(new Font(\"Futura\", Font.ITALIC, 25));\n" +
+                    "        jt.setBackground(Color.decode(\"#EEEEEE\"));\n" +
+                    "        jt.setForeground(Color.decode(\"#212121\"));\n" +
+                    "        jt.setText(\"\");\n" +
+                    "        add(jt, SwingConstants.CENTER);\n" +
+                    "    }\n" +
+                    "}");
+            MainScreen.currentR.setCaretPosition(599);
+        });
+        javaItem.add(javaDialogItem);
+
+
         nMenui.add(javaItem);
 
         JMenuItem htmlItem = new JMenuItem("HTML file");

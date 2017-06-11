@@ -1,16 +1,23 @@
+import org.fife.ui.rsyntaxtextarea.CodeTemplateManager;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.templates.CodeTemplate;
+import org.fife.ui.rsyntaxtextarea.templates.StaticCodeTemplate;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
+
+import static java.awt.event.KeyEvent.VK_0;
 
 /**
  * NotePad class - New instance created on each new tabbedpane Tab
@@ -44,7 +51,22 @@ public class Note extends JInternalFrame {
         sp.setViewportView(textArea);
         cp.add(sp);
         textArea.setVisible(true);
+        textArea.setTemplatesEnabled(true);
+        CodeTemplateManager ctm = textArea.getCodeTemplateManager();
+
+
+        CodeTemplate forLoop = new StaticCodeTemplate("fl", "for (int i=", "; i<; i++) {\n\t\n}\n");
+
+        CodeTemplate psvm = new StaticCodeTemplate("psvm", "public static void main (String[] args){\n\t", "\n}");
+
+        CodeTemplate aaa = new StaticCodeTemplate("aaa", "addActionListener((e)-> {\n\t", "\n" + "});\n");
+
+
         setContentPane(cp);
+
+        ctm.addTemplate(forLoop);
+        ctm.addTemplate(psvm);
+        ctm.addTemplate(aaa);
 
         // apply syntax
         if (sfi.contains("JAVA")) {
