@@ -101,7 +101,6 @@ public class Note extends JInternalFrame {
 
         try {
             java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
-            StringBuilder styleBuffer = new StringBuilder();
 
             int i = 0;
             for (String temp : lines) {
@@ -274,19 +273,13 @@ public class Note extends JInternalFrame {
 
             }
 
-
-            System.err.print(styleBuffer.toString());
-
-            String fromStyle = styleBuffer.toString();
-
-
             MainScreen.tabbedPane.setBackground(Uicolor.DARK_GREY);
             MainScreen.tabbedPane.setForeground(Uicolor.LIGHT_GREY);
             MainScreen.tabbedPane.setFont(Uicolor.plain);
             MainScreen.tabbedPane.setFocusable(false);
             MainScreen.tabbedPane.setVisible(true);
 
-
+            // TO DO : set style from file
             MainScreen.tabbedPane.setUI(new BasicTabbedPaneUI() {
                 @Override
                 protected void installDefaults() {
