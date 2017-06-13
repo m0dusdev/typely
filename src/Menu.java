@@ -24,7 +24,9 @@ public class Menu extends JMenuBar{
         JMenu fMenu;         // file
         JMenu tMenu;        //  tab
         JMenu hMenu;       //   help
-        JMenuItem sMenu;  //    syntax
+        JMenu rMenu;      //    run
+        JMenuItem sMenu; //     syntax
+
 
         // file menu
         fMenu = new JMenu(" File ");
@@ -245,16 +247,18 @@ public class Menu extends JMenuBar{
         prefItem.addActionListener((e -> {
             String stylePath = "src/styles";
             try {
-                java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
+                java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath),
+                        Charset.defaultCharset());
                 StringBuilder styleBuffer = new StringBuilder();
 
                 for (String temp : lines) {
                     styleBuffer.append(temp + "\n");
                 }
-                MainScreen.handle("prefs.css", "SYNTAX_STYLE_CSS", styleBuffer.toString());
+                MainScreen.handle("styles", "SYNTAX_STYLE_CSS",
+                        styleBuffer.toString());
 
             } catch (IOException ioe) {
-                // never thrown
+                //
             }
 
         }));
@@ -279,7 +283,8 @@ public class Menu extends JMenuBar{
         JMenuItem cMenui = new JMenuItem("Close Tab ");
         // listen
         cMenui.addActionListener((e -> {
-            CloseDialog c = new CloseDialog("Save tab", "Tab might not be saved");
+            CloseDialog c = new CloseDialog("Save tab",
+                    "Tab might not be saved");
 
             // handle close dialog
             int option = c.show();
@@ -352,6 +357,22 @@ public class Menu extends JMenuBar{
         });
         sMenu.add(htmlSyntax);
 
+        rMenu = new JMenu("Run->");
+
+        JMenuItem javaCompileAndRun = new JMenuItem("Complie and run java");
+        javaCompileAndRun.addActionListener((e -> {
+            try {
+                Io.compileJava();
+            } catch (IOException c) {
+
+            } catch (InterruptedException in) {
+                // wrong
+            } catch (Exception exp) {
+            }
+        }));
+
+        rMenu.add(javaCompileAndRun);
+
 
         // add menus to bar
         add(fMenu);
@@ -361,5 +382,7 @@ public class Menu extends JMenuBar{
         add(hMenu);
 
         add(sMenu);
+
+        add(rMenu);
     }
 }

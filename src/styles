@@ -1,0 +1,12 @@
+/**
+ * Customize look and feel / settings here in general format of "attribute : value".
+ */
+
+
+setBackground = light-grey
+
+
+setHighlighter = light-blue
+
+
+

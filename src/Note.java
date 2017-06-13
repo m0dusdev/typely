@@ -54,7 +54,7 @@ public class Note extends JInternalFrame {
         textArea.setTemplatesEnabled(true);
         CodeTemplateManager ctm = textArea.getCodeTemplateManager();
 
-
+        // add more
         CodeTemplate forLoop = new StaticCodeTemplate("fl", "for (int i=", "; i<; i++) {\n\t\n}\n");
 
         CodeTemplate psvm = new StaticCodeTemplate("psvm", "public static void main (String[] args){\n\t", "\n}");

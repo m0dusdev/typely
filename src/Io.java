@@ -25,7 +25,41 @@ public  class Io {
     static String syntaxFromFile = "PLAIN";
     static String toSave;
 
-    // gets styles from file on launch
+    static void compileJava() throws Exception, IOException, InterruptedException {
+        String toCompile = MainScreen.currentR.getText();
+        System.out.println(toCompile);
+
+        PrintWriter out = new PrintWriter("src/Frame.java");
+
+
+        out.write(toCompile);
+        out.flush();
+        out.close();
+        System.out.print("flushed\n\n");
+        String command = "javac Frame.java\n\n";
+        String command2 = "java Frame\n\n";
+        runProcess(command);
+        runProcess(command2);
+
+    }
+
+    private static void printLines(String name, InputStream ins) throws Exception {
+        String line = null;
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(ins));
+        while ((line = in.readLine()) != null) {
+            System.out.println(name + " " + line);
+        }
+    }
+
+    private static void runProcess(String command) throws Exception {
+        Process pro = Runtime.getRuntime().exec(command);
+        printLines(command + " stdout:", pro.getInputStream());
+        printLines(command + " stderr:", pro.getErrorStream());
+        pro.waitFor();
+        System.out.println(command + " exitValue() " + pro.exitValue());
+    }
+
 
 
 
