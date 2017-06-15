@@ -357,6 +357,32 @@ public class Menu extends JMenuBar{
         });
         sMenu.add(htmlSyntax);
 
+
+        JMenuItem cSyntax = new JMenuItem("C");
+        cSyntax.addActionListener((e) -> {
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_C);
+        });
+        sMenu.add(cSyntax);
+
+        JMenuItem rubySyntax = new JMenuItem("Ruby");
+        rubySyntax.addActionListener((e) -> {
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_RUBY);
+        });
+        sMenu.add(rubySyntax);
+
+        JMenuItem sqlSyntax = new JMenuItem("SQL");
+        sqlSyntax.addActionListener((e) -> {
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
+        });
+        sMenu.add(sqlSyntax);
+
+        JMenuItem bashSyntax = new JMenuItem("Bash/Unix");
+        bashSyntax.addActionListener((e) -> {
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_UNIX_SHELL);
+        });
+        sMenu.add(bashSyntax);
+
+
         rMenu = new JMenu("Run->");
 
         JMenuItem javaCompileAndRun = new JMenuItem("Complie and run java");

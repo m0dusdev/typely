@@ -3,6 +3,7 @@ import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
@@ -17,17 +18,21 @@ import org.fife.ui.rtextarea.RTextScrollPane;
 
 public class MainScreen extends JFrame  {
 
+    private static HashMap<String, JInternalFrame> editorMap = new HashMap<>();
+
     private static final long serialVersionUID = 1L;
 
     static boolean justAddedTab = false;
-    static int tabCount = 1;
+    static int tabCount = 0;
     static int current;
-    static JTabbedPane tabbedPane = new JTabbedPane();
+    static JTabbedPane tabbedPane;
     public static RSyntaxTextArea currentR = new RSyntaxTextArea();
 
     public MainScreen() {
 
         super("ed-it");
+
+        // map
 
 
         // listen for close
@@ -54,8 +59,8 @@ public class MainScreen extends JFrame  {
         setJMenuBar(new Menu());
 
 
-
-        add(tabbedPane, BorderLayout.CENTER);
+        // add
+        add(createTab(), BorderLayout.CENTER);
 
         // gets currently selected tab as index
         tabbedPane.addChangeListener((e)-> {
@@ -82,18 +87,59 @@ public class MainScreen extends JFrame  {
         pack();
     }
 
+    // get map of all editor areas k = tab title, v = RSyntaxarea
+    public static HashMap getEditorMap() {
+        return editorMap;
+    }
 
+
+    public static void setEditorMap(String index, JInternalFrame area) {
+        editorMap.put(index, area);
+    }
+
+
+    private JTabbedPane createTab() {
+        JTabbedPane temp = new JTabbedPane();
+        temp.setBackground(Color.decode("#90A4AE"));
+        temp.setForeground(Color.decode("#212121"));
+        temp.setFont(Uicolor.plain);
+
+        // needed
+        temp.setFocusable(false);
+        temp.setVisible(true);
+
+
+        // TO DO : set style from file
+        temp.setUI(new BasicTabbedPaneUI() {
+            @Override
+            protected void installDefaults() {
+                super.installDefaults();
+                highlight = Uicolor.BOLD_GREY;
+                lightHighlight = Uicolor.LIGHT_GREY;
+                focus = Uicolor.GREY;
+            }
+        });
+        tabbedPane = temp;
+
+        return temp;
+    }
     /**
      * Creates a new instance of the Note class - updates tab count set current editorpane
      * @param title set title for new tab
      */
 
-    static void handle (String title, String syntax, String send) {
-        //Note n = new Note(send, syntax);
-        tabbedPane.addTab(title, new Note(send, syntax, false));
+    public static void handle(String title, String syntax, String send) {
+
+        Note n = new Note(send, syntax, false);
+        tabbedPane.addTab(title, n);
         System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + "   Title is -  " + title);
                 tabCount++;
+        String temp = tabCount + title;
+
         tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+        setEditorMap(temp, n);
+        System.out.print(editorMap.toString());
+
 
     }
 

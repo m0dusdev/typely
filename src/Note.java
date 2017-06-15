@@ -92,9 +92,20 @@ public class Note extends JInternalFrame {
         pack();
 
         getStyle();
+        setText(tfi);
 
 
     }
+
+    private void setText(String text) {
+        textArea.setText(text);
+    }
+
+    private String getText() {
+        return textArea.getText();
+    }
+
+
 
     private void getStyle() {
         String stylePath = "src/styles";
@@ -235,7 +246,9 @@ public class Note extends JInternalFrame {
                     } else if (temp.contains("dark-green")) {
                         textArea.setForeground(Uicolor.DARK_GREEN);
                     } else textArea.setForeground(Uicolor.GREY);
+
                 } else if (temp.contains("setHighlighter")) {
+
                     if (temp.contains("bold-green")) {
                         textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
                     } else if (temp.contains("grey")) {
@@ -267,30 +280,48 @@ public class Note extends JInternalFrame {
                     } else if (temp.contains("dark-green")) {
                         textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
                     } else textArea.setCurrentLineHighlightColor(Uicolor.GREY);
+
+
+                } else if (temp.contains("setTabBack")) {
+
                 }
+                if (temp.contains("bold-green")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
+                } else if (temp.contains("grey")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.GREY);
+                } else if (temp.contains("light-grey")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREY);
+                } else if (temp.contains("dark-grey")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREY);
+                } else if (temp.contains("bold-blue")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.BOLD_BLUE);
+                } else if (temp.contains("blue")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.BLUE);
+                } else if (temp.contains("light-blue")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_BLUE);
+                } else if (temp.contains("dark-blue")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.DARK_BLUE);
+                } else if (temp.contains("bold-teal")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.BOLD_TEAL);
+                } else if (temp.contains("light-teal")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_TEAL);
+                } else if (temp.contains("teal")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.TEAL);
+                } else if (temp.contains("dark-green")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
+                } else if (temp.contains("green")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
+                } else if (temp.contains("light-green")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREEN);
+                } else if (temp.contains("dark-green")) {
+                    textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
+                } else textArea.setCurrentLineHighlightColor(Uicolor.GREY);
+
 
             }
 
-            MainScreen.tabbedPane.setBackground(Color.decode("#90A4AE"));
-            MainScreen.tabbedPane.setForeground(Color.decode("#212121"));
-            MainScreen.tabbedPane.setFont(Uicolor.plain);
 
 
-            // needed
-            MainScreen.tabbedPane.setFocusable(false);
-            MainScreen.tabbedPane.setVisible(true);
-
-
-            // TO DO : set style from file
-            MainScreen.tabbedPane.setUI(new BasicTabbedPaneUI() {
-                @Override
-                protected void installDefaults() {
-                    super.installDefaults();
-                    highlight = Uicolor.BOLD_GREY;
-                    lightHighlight = Uicolor.LIGHT_GREY;
-                    focus = Uicolor.GREY;
-                }
-            });
 
         } catch (IOException fileFucked) {
             fileFucked.printStackTrace();

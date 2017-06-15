@@ -10,6 +10,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.basic.BasicBorders;
@@ -17,7 +18,7 @@ import javax.swing.plaf.basic.BasicBorders;
 
 /**
  * A class that deals with file Io
- * @author William March s4916313
+ * 
  */
 
 public  class Io {
@@ -25,21 +26,23 @@ public  class Io {
     static String syntaxFromFile = "PLAIN";
     static String toSave;
 
-    static void compileJava() throws Exception, IOException, InterruptedException {
+    static void compileJava() throws Exception {
         String toCompile = MainScreen.currentR.getText();
         System.out.println(toCompile);
 
-        PrintWriter out = new PrintWriter("src/Frame.java");
 
+        //PrintWriter out = new PrintWriter("src/Frame.java");
+        // out.write(toCompile);
+        // out.flush();
+        // out.close();
 
-        out.write(toCompile);
-        out.flush();
-        out.close();
-        System.out.print("flushed\n\n");
-        String command = "javac Frame.java\n\n";
-        String command2 = "java Frame\n\n";
+        //System.out.print("flushed\n\n");
+        String command = "cd src";
+        String command2 = "javac Frame.java";
+        String command3 = "java Frame";
         runProcess(command);
         runProcess(command2);
+        runProcess(command3);
 
     }
 
