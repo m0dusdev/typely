@@ -9,6 +9,7 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
+import org.jetbrains.annotations.Contract;
 
 /**
  * Class that creates the form and tabbed pane
@@ -65,9 +66,6 @@ public class MainScreen extends JFrame  {
         // gets currently selected tab as index
         tabbedPane.addChangeListener((e)-> {
 
-            if (current != -1) {
-            }
-
                 JTabbedPane pane = (JTabbedPane) e.getSource();
                 current = pane.getSelectedIndex();
 
@@ -88,6 +86,7 @@ public class MainScreen extends JFrame  {
     }
 
     // get map of all editor areas k = tab title, v = RSyntaxarea
+    @Contract(pure = true)
     public static HashMap getEditorMap() {
         return editorMap;
     }
@@ -164,7 +163,7 @@ public class MainScreen extends JFrame  {
            frame.setLocationRelativeTo(null);
            frame.setVisible(true);
 
-           // kick off with a new frame
+           // kick off with a new tab
            handle("temp.txt " + tabCount, "PLAIN", null);
        });
 
