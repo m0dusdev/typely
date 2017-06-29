@@ -92,6 +92,8 @@ public class Note extends JInternalFrame {
         pack();
 
         getStyle();
+
+
         setText(tfi);
 
 
@@ -280,47 +282,8 @@ public class Note extends JInternalFrame {
                     } else if (temp.contains("dark-green")) {
                         textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
                     } else textArea.setCurrentLineHighlightColor(Uicolor.GREY);
-
-
-                } else if (temp.contains("setTabBack")) {
-
                 }
-                if (temp.contains("bold-green")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
-                } else if (temp.contains("grey")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.GREY);
-                } else if (temp.contains("light-grey")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREY);
-                } else if (temp.contains("dark-grey")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREY);
-                } else if (temp.contains("bold-blue")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.BOLD_BLUE);
-                } else if (temp.contains("blue")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.BLUE);
-                } else if (temp.contains("light-blue")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_BLUE);
-                } else if (temp.contains("dark-blue")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.DARK_BLUE);
-                } else if (temp.contains("bold-teal")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.BOLD_TEAL);
-                } else if (temp.contains("light-teal")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_TEAL);
-                } else if (temp.contains("teal")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.TEAL);
-                } else if (temp.contains("dark-green")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
-                } else if (temp.contains("green")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
-                } else if (temp.contains("light-green")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREEN);
-                } else if (temp.contains("dark-green")) {
-                    textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
-                } else textArea.setCurrentLineHighlightColor(Uicolor.GREY);
-
-
             }
-
-
 
 
         } catch (IOException fileFucked) {

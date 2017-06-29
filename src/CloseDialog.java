@@ -23,8 +23,6 @@ public class CloseDialog {
     int show() {
         int result = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
         return result;
-
-
     }
 
 }

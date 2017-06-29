@@ -4,7 +4,6 @@ import java.awt.*;
  * holds ui elements
  * @author William March
  */
-
 public @interface Uicolor {
 
     // GREY GUI colors

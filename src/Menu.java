@@ -241,7 +241,7 @@ public class Menu extends JMenuBar{
         fMenu.add(new JSeparator());
         fMenu.add(prefItem);
         prefItem.addActionListener((e -> {
-            String stylePath = "src/styles";
+            String stylePath = "C:\\Users\\pc\\Documents\\Ed-itPreferences";
             try {
                 java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath),
                         Charset.defaultCharset());
@@ -288,11 +288,11 @@ public class Menu extends JMenuBar{
                 case (0):
                     Io.save();
                     MainScreen.tabbedPane.removeTabAt(MainScreen.current);
-                    MainScreen.tabbedPane.repaint();
+
                     break;
                 case (1):
                     MainScreen.tabbedPane.removeTabAt(MainScreen.current);
-                    MainScreen.tabbedPane.repaint();
+
                     break;
             }
         }));
@@ -478,7 +478,7 @@ public class Menu extends JMenuBar{
 
 
         //RUN MENU
-        rMenu = new JMenu("Run->");
+        rMenu = new JMenu("Run ->");
 
         JMenuItem javaCompileAndRun = new JMenuItem("Complie and run java");
         javaCompileAndRun.addActionListener((e -> {

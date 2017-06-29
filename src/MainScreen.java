@@ -1,6 +1,8 @@
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
@@ -80,6 +82,27 @@ public class MainScreen extends JFrame  {
             currentR = rsc;
         });
 
+        this.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.isControlDown() && e.getKeyChar() != 'a' && e.getKeyCode() == 65) {
+                    tabbedPane.setSelectedIndex(0);
+                    System.out.print("\nalt and 1\n");
+
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+
 
         setContentPane(tabbedPane);
         pack();
@@ -131,7 +154,8 @@ public class MainScreen extends JFrame  {
 
         Note n = new Note(send, syntax, false);
         tabbedPane.addTab(title, n);
-        System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + "   Title is -  " + title);
+        System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + " " +
+                "  Title is -  " + title);
                 tabCount++;
         String temp = tabCount + title;
 
