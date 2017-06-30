@@ -153,7 +153,7 @@ public  class Io {
                 syntaxFromFile = "SYNTAX_STYLE_C";
             }
 
-            MainScreen.tabbedPane.add(path, new Note(fileText, syntaxFromFile, false));
+            MainScreen.tabbedPane.add(path, new Note(fileText, syntaxFromFile));
 
             MainScreen.tabbedPane.setSelectedIndex(MainScreen.current + 1);
             MainScreen.justAddedTab = true;
@@ -163,8 +163,7 @@ public  class Io {
     }
 
     static void cliboardToTab() throws IOException, UnsupportedFlavorException {
-        String temp = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.
-                stringFlavor);
+        String temp = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 
 
         MainScreen.handle("FromClipboard", "PLAIN", temp);

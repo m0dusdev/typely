@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 
 /**
  * This class builds a menu bar and handles the actions associated with it.
- * @author William March - s4916313
+ * @author William March -
  */
 
 public class Menu extends JMenuBar{
@@ -36,7 +36,7 @@ public class Menu extends JMenuBar{
         JMenuItem nMenui = new JMenu(" New");
         nMenui.setMnemonic(KeyEvent.VK_N);
 
-
+        // From Clipboard action listener
         JMenuItem fromclipSyntax = new JMenuItem("From clipboard");
         fromclipSyntax.addActionListener((e) -> {
             try {
@@ -44,8 +44,9 @@ public class Menu extends JMenuBar{
 
             } catch (IOException io) {
                 // never happens
+                io.printStackTrace();
             } catch (UnsupportedFlavorException fl) {
-                // ^^
+
             }
         });
 
@@ -53,9 +54,14 @@ public class Menu extends JMenuBar{
         nMenui.add(fromclipSyntax);
         nMenui.add(new JSeparator());
 
-        JMenuItem plainItem = new JMenuItem("Text file");
-        nMenui.add(plainItem);
-        plainItem.addActionListener((e -> MainScreen.handle("file.txt", "SYNTAX_STYLE_PLAIN", "")));
+        JMenuItem fileItem = new JMenuItem("File");
+        nMenui.add(fileItem);
+        fileItem.addActionListener((e -> MainScreen.handle("file", "SYNTAX_STLYE_NONE", "")));
+
+        // TEXT FILE ITEM
+        JMenuItem textItem = new JMenuItem("Text file");
+        nMenui.add(textItem);
+        textItem.addActionListener((e -> MainScreen.handle("file.txt", "SYNTAX_STYLE_PLAIN", "")));
 
 
         JMenuItem pythonItem = new JMenuItem("Python file");
@@ -190,6 +196,7 @@ public class Menu extends JMenuBar{
                 "\t</body>\n" +
                 "</html>\n")));
 
+
         JMenuItem cssItem = new JMenuItem("CSS file");
         nMenui.add(cssItem);
         cssItem.addActionListener((e -> MainScreen.handle("style.css", "SYNTAX_STYLE_CSS", "")));
@@ -241,20 +248,23 @@ public class Menu extends JMenuBar{
         fMenu.add(new JSeparator());
         fMenu.add(prefItem);
         prefItem.addActionListener((e -> {
-            String stylePath = "C:\\Users\\pc\\Documents\\Ed-itPreferences";
+            String stylePath = "C:\\Users\\pc\\Documents\\Ed-itPreferences.txt";
             try {
-                java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath),
-                        Charset.defaultCharset());
+                java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
                 StringBuilder styleBuffer = new StringBuilder();
 
+                // add lines from file to new buffer
                 for (String temp : lines) {
                     styleBuffer.append(temp + "\n");
                 }
-                MainScreen.handle("styles", "SYNTAX_STYLE_CSS",
-                        styleBuffer.toString());
 
+                // add buffer to new tab
+                MainScreen.handle("Ed-itPreferences.txt", "SYNTAX_STYLE_CSS", styleBuffer.toString());
+                MainScreen.currentR.setCaretPosition(0);
             } catch (IOException ioe) {
                 //
+                SwingUtilities.invokeLater(() -> new CloseDialog("No prefs file found", "Current path is "
+                        + stylePath, true));
             }
 
         }));
@@ -282,19 +292,21 @@ public class Menu extends JMenuBar{
             CloseDialog c = new CloseDialog("Save tab ?",
                     "Tab might not be saved");
 
-            // handle close dialog
             int option = c.show();
-            switch (option) {
-                case (0):
+            if (option == 0) {
+                // yes option
                     Io.save();
                     MainScreen.tabbedPane.removeTabAt(MainScreen.current);
+                System.out.print("\nyes\n");
 
-                    break;
-                case (1):
+            } else if (option == 1) {
+                // no
                     MainScreen.tabbedPane.removeTabAt(MainScreen.current);
-
-                    break;
+                System.out.print("\nno\n");
             }
+
+
+
         }));
 
         // add

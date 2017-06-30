@@ -8,18 +8,17 @@ import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import org.fife.ui.rtextarea.RTextScrollPane;
 import org.jetbrains.annotations.Contract;
 
 /**
  * Class that creates the form and tabbed pane
- * @author William March - s4916313
- * @version 1.0
+ * @author William March
+ * @version 0.5.1
  */
 
 public class MainScreen extends JFrame  {
+
+    public Float version = 0.5F;
 
     private static HashMap<String, JInternalFrame> editorMap = new HashMap<>();
 
@@ -43,7 +42,7 @@ public class MainScreen extends JFrame  {
             @Override
             public void windowClosed(WindowEvent e) {
                 super.windowOpened(e);
-                CloseDialog cl = new CloseDialog("test", "test");
+                CloseDialog cl = new CloseDialog("test", "test", false);
                 int tempResult = cl.show();
 
                 if (tempResult == 1) {
@@ -73,16 +72,21 @@ public class MainScreen extends JFrame  {
 
             JInternalFrame je;
 
-            je = (JInternalFrame) tabbedPane.getComponentAt(current);
+            if (current > -1) {
+                je = (JInternalFrame) tabbedPane.getComponentAt(current);
 
-            RSyntaxTextArea rsc;
+                RSyntaxTextArea rsc;
 
-            rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
+                rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
 
-            currentR = rsc;
+                currentR = rsc;
+            } else {
+                System.err.print("NO TABS");
+
+            }
         });
 
-        this.addKeyListener(new KeyListener() {
+        tabbedPane.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.isControlDown() && e.getKeyChar() != 'a' && e.getKeyCode() == 65) {
@@ -108,14 +112,14 @@ public class MainScreen extends JFrame  {
         pack();
     }
 
-    // get map of all editor areas k = tab title, v = RSyntaxarea
+    // return hash map with tab number key and RSSyntaxarea value
     @Contract(pure = true)
     public static HashMap getEditorMap() {
         return editorMap;
     }
 
-
-    public static void setEditorMap(String index, JInternalFrame area) {
+    // add to
+    public static void addEditorMap(String index, JInternalFrame area) {
         editorMap.put(index, area);
     }
 
@@ -152,15 +156,18 @@ public class MainScreen extends JFrame  {
 
     public static void handle(String title, String syntax, String send) {
 
-        Note n = new Note(send, syntax, false);
+        Note n = new Note(send, syntax);
         tabbedPane.addTab(title, n);
         System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + " " +
                 "  Title is -  " + title);
                 tabCount++;
         String temp = tabCount + title;
 
+        // change currently selected tab to new tab
         tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
-        setEditorMap(temp, n);
+
+        // add new tab  to editor hashmap to keep track of it possibly in a later build
+        addEditorMap(temp, n);
         System.out.print(editorMap.toString());
 
 

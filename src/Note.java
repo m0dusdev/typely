@@ -6,18 +6,12 @@ import org.fife.ui.rsyntaxtextarea.templates.StaticCodeTemplate;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.List;
 
-import static java.awt.event.KeyEvent.VK_0;
 
 /**
  * NotePad class - New instance created on each new tabbedpane Tab
@@ -33,16 +27,14 @@ public class Note extends JInternalFrame {
 
     public RSyntaxTextArea textArea;
 
-    public Note(String tfi, String sfi, boolean save) {
+    public Note(String tfi, String sfi) {
 
-        // remove internall frame border
-        ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
-        this.setBorder(null);
-        hasSaved = save;
         textFromIo = tfi;
         syntaxFromIo = sfi;
 
-        System.out.println("text "+ tfi + " syntax " + sfi);
+        // remove internal frame border
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        this.setBorder(null);
 
         JPanel cp = new JPanel(new BorderLayout());
         this.setVisible(true);
@@ -52,14 +44,16 @@ public class Note extends JInternalFrame {
         cp.add(sp);
         textArea.setVisible(true);
         textArea.setTemplatesEnabled(true);
+        textArea.setHyperlinksEnabled(true);
         CodeTemplateManager ctm = textArea.getCodeTemplateManager();
+
 
         // add more
         CodeTemplate forLoop = new StaticCodeTemplate("fl", "for (int i=", "; i<; i++) {\n\t\n}\n");
 
         CodeTemplate psvm = new StaticCodeTemplate("psvm", "public static void main (String[] args){\n\t", "\n}");
 
-        CodeTemplate aaa = new StaticCodeTemplate("aaa", "addActionListener((e)-> {\n\t", "\n" + "});\n");
+        CodeTemplate aaa = new StaticCodeTemplate("aal", "addActionListener((e)-> {\n\t", "\n" + "});\n");
 
 
         setContentPane(cp);
@@ -68,7 +62,7 @@ public class Note extends JInternalFrame {
         ctm.addTemplate(psvm);
         ctm.addTemplate(aaa);
 
-        // apply syntax
+        // apply syntax automatically when opening a new file
         if (sfi.contains("JAVA")) {
             textArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         } else if (sfi.contains("PYTHON")) {
@@ -88,6 +82,7 @@ public class Note extends JInternalFrame {
         }
 
         textArea.setText(tfi);
+        textArea.setMarkOccurrencesColor(Uicolor.DARK_TEAL);
 
         pack();
 
@@ -99,27 +94,36 @@ public class Note extends JInternalFrame {
 
     }
 
+
+    // set text from the constructor
     private void setText(String text) {
         textArea.setText(text);
     }
 
+    // unused
     private String getText() {
         return textArea.getText();
     }
 
 
-
+    // read and apply style from prefs file
     private void getStyle() {
-        String stylePath = "src/styles";
+        String stylePath = "C:\\Users\\pc\\Documents\\Ed-itPreferences.txt";
 
         try {
+            // new string list from $stylePath
             java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
 
             int i = 0;
             for (String temp : lines) {
+                // search each line in file for a config match - this way line order of preferences file does not impact on outcome
                 temp = lines.get(i);
                 i++;
                 System.out.print(temp + "\n");
+
+                /**
+                 * EDITOR PREFERENCES
+                 */
                 if (temp.contains("setCodeFoldingEnabled") && temp.contains("true")) {
                     // setCodeFoldingEnabled true
                     textArea.setCodeFoldingEnabled(true);
@@ -160,19 +164,48 @@ public class Note extends JInternalFrame {
                     // setDragEnabled false
                     textArea.setDragEnabled(false);
 
-
                 } else if (temp.contains("setRoundedSelectionEdges") && temp.contains("true")) {
-                    // set code folding to disabled
+                    // set rounded selection edges to enabled
                     textArea.setRoundedSelectionEdges(true);
                 } else if (temp.contains("setRoundedSelectionEdges") && temp.contains("false")) {
-                    // set code folding to disabled
+                    // set rounded selection edges to disabled
                     textArea.setRoundedSelectionEdges(false);
 
                 } else if (temp.contains("setBracketMatchingEnabled") && temp.contains("true")) {
-                    // set code folding to disabled
+                    // set bracket matching to enabled
                     textArea.setBracketMatchingEnabled(true);
                 } else if (temp.contains("setBracketMatchingEnabled") && temp.contains("false")) {
-                    // set code folding to disabled
+                    // set bracket matching to disabled
+                    textArea.setBracketMatchingEnabled(false);
+                } else if (temp.contains("setAnimateBracketMatching") && temp.contains("true")) {
+                    // set animated bracket matching to enabled
+                    textArea.setAnimateBracketMatching(true);
+                } else if (temp.contains("setAnimateBracketMatchingEnabled") && temp.contains("false")) {
+                    // set animated bracket matching to disabled
+                    textArea.setAnimateBracketMatching(false);
+                } else if (temp.contains("setCloseMarkupTags") && temp.contains("true")) {
+                    // set close markup tags to enabled
+                    textArea.setCloseMarkupTags(true);
+                } else if (temp.contains("setCloseMarkupTags") && temp.contains("false")) {
+                    // set close markup tags to disabled
+                    textArea.setCloseMarkupTags(false);
+                } else if (temp.contains("setEOLMarkersVisible") && temp.contains("true")) {
+                    // set EOL markers visible to enabled
+                    textArea.setEOLMarkersVisible(true);
+                } else if (temp.contains("setEOLMarkersVisible") && temp.contains("false")) {
+                    // set EOL Markers visible to disabled
+                    textArea.setEOLMarkersVisible(false);
+                } else if (temp.contains("setHighlightSecondaryLanguages") && temp.contains("true")) {
+                    // set set highlight secondary languages
+                    textArea.setHighlightSecondaryLanguages(true);
+                } else if (temp.contains("setHighlightSecondaryLanguages") && temp.contains("false")) {
+                    // set bracket matching to disabled
+                    textArea.setHighlightSecondaryLanguages(false);
+                } else if (temp.contains("setMarkOccurrences") && temp.contains("true")) {
+                    // set mark occurrences to enabled
+                    textArea.setMarkOccurrences(true);
+                } else if (temp.contains("setMarkOccurences") && temp.contains("false")) {
+                    // set bracket matching to disabled
                     textArea.setBracketMatchingEnabled(false);
                 }
 
@@ -279,16 +312,14 @@ public class Note extends JInternalFrame {
                         textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
                     } else if (temp.contains("light-green")) {
                         textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREEN);
-                    } else if (temp.contains("dark-green")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
                     } else textArea.setCurrentLineHighlightColor(Uicolor.GREY);
                 }
             }
 
 
         } catch (IOException fileFucked) {
+            // file io error
             fileFucked.printStackTrace();
-            CloseDialog cl = new CloseDialog("Preference file is missing", "File ");
 
         }
 
