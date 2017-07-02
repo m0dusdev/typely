@@ -1,7 +1,4 @@
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import sun.applet.Main;
-
 import javax.swing.*;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
@@ -17,9 +14,12 @@ import java.nio.file.Paths;
 
 public class Menu extends JMenuBar{
     // Create menu;
-    public  Menu() {
 
+
+    Menu() {
         // file menu icons
+
+
 
         JMenu fMenu;         // file
         JMenu tMenu;        //  tab
@@ -46,7 +46,7 @@ public class Menu extends JMenuBar{
                 // never happens
                 io.printStackTrace();
             } catch (UnsupportedFlavorException fl) {
-
+                fl.getCause();
             }
         });
 
@@ -225,9 +225,8 @@ public class Menu extends JMenuBar{
         fMenu.add(sMenui);
 
         // save listen
-        sMenui.addActionListener(event -> {
-            Io.save();
-        });
+        sMenui.addActionListener(event ->
+            Io.save());
 
         // open item
         JMenuItem oMenui = new JMenuItem(" Open ");
@@ -238,7 +237,7 @@ public class Menu extends JMenuBar{
             try{
                 Io.open();
             } catch(IOException ie){
-
+                ie.printStackTrace();
             }
 
         });
@@ -255,7 +254,8 @@ public class Menu extends JMenuBar{
 
                 // add lines from file to new buffer
                 for (String temp : lines) {
-                    styleBuffer.append(temp + "\n");
+                    styleBuffer.append(temp);
+                    styleBuffer.append("\n");
                 }
 
                 // add buffer to new tab
@@ -278,9 +278,8 @@ public class Menu extends JMenuBar{
         JMenuItem clMenui = new JMenuItem("Clear Tab");
 
         // listen
-        clMenui.addActionListener((e -> {
-            MainScreen.currentR.setText("");
-        }));
+        clMenui.addActionListener((e ->
+            MainScreen.currentR.setText("")));
 
         // add
         tMenu.add(clMenui);
@@ -304,9 +303,6 @@ public class Menu extends JMenuBar{
                     MainScreen.tabbedPane.removeTabAt(MainScreen.current);
                 System.out.print("\nno\n");
             }
-
-
-
         }));
 
         // add
@@ -318,7 +314,9 @@ public class Menu extends JMenuBar{
         JMenuItem aMenui = new JMenuItem(" About ");
 
         // listen
-        aMenui.addActionListener((e)-> new About());
+        aMenui.addActionListener((e)->
+                SwingUtilities.invokeLater(()->
+                        new About()));
 
         // add
         hMenu.add(aMenui);
@@ -326,166 +324,134 @@ public class Menu extends JMenuBar{
 
         //SYNTAX ADDED HERE
         JMenuItem actionSyntax = new JMenuItem("Actionscript");
-        actionSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_ACTIONSCRIPT);
-        });
+        actionSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_ACTIONSCRIPT));
         sMenu.add(actionSyntax);
 
-
         JMenuItem x86assSyntax = new JMenuItem("x86 Assember");
-        x86assSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_ASSEMBLER_X86);
-        });
+        x86assSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_ASSEMBLER_X86));
         sMenu.add(x86assSyntax);
 
         JMenuItem bytecodeSyntax = new JMenuItem("Bytecode");
-        bytecodeSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_BBCODE);
-        });
+        bytecodeSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_BBCODE));
         sMenu.add(bytecodeSyntax);
 
         JMenuItem bashSyntax = new JMenuItem("Bash/Unix");
-        bashSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_UNIX_SHELL);
-        });
+        bashSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_UNIX_SHELL));
         sMenu.add(bashSyntax);
 
         JMenuItem cSyntax = new JMenuItem("C");
-        cSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_C);
-        });
+        cSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_C));
         sMenu.add(cSyntax);
 
         JMenuItem cppSyntax = new JMenuItem("C++");
-        cppSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS);
-        });
+        cppSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CPLUSPLUS));
         sMenu.add(cppSyntax);
 
         JMenuItem csharpSyntax = new JMenuItem("C#");
-        cppSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSHARP);
-        });
-        sMenu.add(cppSyntax);
+        cppSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSHARP));
+        sMenu.add(csharpSyntax);
 
         JMenuItem clojureSyntax = new JMenuItem("Clojure");
-        clojureSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CLOJURE);
-        });
+        clojureSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CLOJURE));
         sMenu.add(clojureSyntax);
 
         JMenuItem cssSyntax = new JMenuItem("CSS");
-        cssSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS);
-        });
+        cssSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_CSS));
         sMenu.add(cssSyntax);
 
         JMenuItem dSyntax = new JMenuItem("D");
-        dSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_D);
-        });
+        dSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_D));
         sMenu.add(dSyntax);
 
         JMenuItem dockerSyntax = new JMenuItem("DockerFile");
-        dockerSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DOCKERFILE);
-        });
+        dockerSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DOCKERFILE));
         sMenu.add(dockerSyntax);
 
         JMenuItem dartSyntax = new JMenuItem("Dart");
-        dartSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DOCKERFILE);
-        });
+        dartSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_DOCKERFILE));
         sMenu.add(dockerSyntax);
 
-
         JMenuItem groovySyntax = new JMenuItem("Groovy");
-        groovySyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_GROOVY);
-        });
+        groovySyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_GROOVY));
         sMenu.add(groovySyntax);
 
         JMenuItem javasSyntax = new JMenuItem("JavaScript");
-        javasSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT);
-        });
+        javasSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT));
         sMenu.add(javasSyntax);
 
         JMenuItem jsonSyntax = new JMenuItem("JSON");
-        jsonSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSON_WITH_COMMENTS);
-        });
+        jsonSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JSON_WITH_COMMENTS));
         sMenu.add(jsonSyntax);
 
-
         JMenuItem javaSyntax = new JMenuItem("Java");
-        javaSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
-        });
+        javaSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA));
         sMenu.add(javaSyntax);
 
-
         JMenuItem pythonSyntax = new JMenuItem("Python");
-        pythonSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON);
-        });
+        pythonSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PYTHON));
         sMenu.add(pythonSyntax);
 
-
         JMenuItem phpSyntax = new JMenuItem("PHP");
-        phpSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PHP);
-        });
+        phpSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_PHP));
         sMenu.add(phpSyntax);
 
-
         JMenuItem xmlSyntax = new JMenuItem("XML");
-        xmlSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML);
-        });
+        xmlSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML));
         sMenu.add(xmlSyntax);
 
         JMenuItem mxmlSyntax = new JMenuItem("MXML");
-        mxmlSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_MXML);
-        });
+        mxmlSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_MXML));
         sMenu.add(mxmlSyntax);
 
         JMenuItem yamlSyntax = new JMenuItem("YAML");
-        yamlSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_YAML);
-        });
+        yamlSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_YAML));
         sMenu.add(yamlSyntax);
 
         JMenuItem latexSyntax = new JMenuItem("LaTeX");
-        latexSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LATEX);
-        });
+        latexSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_LATEX));
         sMenu.add(latexSyntax);
 
         JMenuItem htmlSyntax = new JMenuItem("HTML");
-        htmlSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML);
-        });
+        htmlSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML));
         sMenu.add(htmlSyntax);
 
         JMenuItem rubySyntax = new JMenuItem("Ruby");
-        rubySyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_RUBY);
-        });
+        rubySyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_RUBY));
         sMenu.add(rubySyntax);
 
         JMenuItem sqlSyntax = new JMenuItem("SQL");
-        sqlSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
-        });
+        sqlSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL));
         sMenu.add(sqlSyntax);
 
 
         JMenuItem plainSyntax = new JMenuItem("Plain/Text");
-        plainSyntax.addActionListener((e) -> {
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
-        });
+        plainSyntax.addActionListener((e) ->
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE));
         sMenu.add(plainSyntax);
 
 
@@ -497,10 +463,11 @@ public class Menu extends JMenuBar{
             try {
                 Io.compileJava();
             } catch (IOException c) {
-
+                c.printStackTrace();
             } catch (InterruptedException in) {
                 // wrong
             } catch (Exception exp) {
+                exp.printStackTrace();
             }
         }));
 

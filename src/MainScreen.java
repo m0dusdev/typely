@@ -18,6 +18,8 @@ import org.jetbrains.annotations.Contract;
 
 public class MainScreen extends JFrame  {
 
+
+
     public Float version = 0.5F;
 
     private static HashMap<String, JInternalFrame> editorMap = new HashMap<>();
@@ -32,9 +34,12 @@ public class MainScreen extends JFrame  {
 
     public MainScreen() {
 
+
         super("ed-it");
 
-        // map
+        // get os
+        getOs();
+
 
 
         // listen for close
@@ -112,8 +117,22 @@ public class MainScreen extends JFrame  {
         pack();
     }
 
+
+    // helper function for Util.getOs
+    void getOs(){
+        // get user OS
+        switch (Util.getOS()) {
+            case WINDOWS:
+                break;
+            case LINUX:
+                break;
+            case MAC:
+                break;
+            case SOLARIS:
+                break;
+    }}
+
     // return hash map with tab number key and RSSyntaxarea value
-    @Contract(pure = true)
     public static HashMap getEditorMap() {
         return editorMap;
     }
