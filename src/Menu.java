@@ -247,14 +247,16 @@ public class Menu extends JMenuBar{
         fMenu.add(new JSeparator());
         fMenu.add(prefItem);
         prefItem.addActionListener((e -> {
+
             String stylePath = "";
             // set path depending on system type
             if (MainScreen.isLinux){
-                stylePath = "/home/user/Edit-prefrences.txt";
+                String unixHome = System.getProperty("user.home");
+                stylePath = unixHome+"/Edit-Preferences.txt";
             }else if (MainScreen.isOsx){
-                stylePath = "src/Ed-itPreferences.txt";
+                //stylePath = "src/Ed-itPreferences.txt";
             }else if (MainScreen.isWin){
-                stylePath = "src/Ed-itPreferences.txt";
+                //stylePath = "src/Ed-itPreferences.txt";
             }
 
 
@@ -269,7 +271,7 @@ public class Menu extends JMenuBar{
                 }
 
                 // add buffer to new tab
-                MainScreen.handle("Ed-itPreferences.txt", "SYNTAX_STYLE_CSS", styleBuffer.toString());
+                MainScreen.handle("Edit-Preferences.txt", "SYNTAX_STYLE_CSS", styleBuffer.toString());
                 MainScreen.currentR.setCaretPosition(0);
             } catch (IOException ioe) {
                 //

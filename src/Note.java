@@ -36,7 +36,9 @@ public class Note extends JInternalFrame {
         if(MainScreen.isOsx){
             path = "";
         }else if (MainScreen.isLinux){
-            path = "/home/user/Edit-prefrences.txt";
+            String unixHome = System.getProperty("user.home");
+            System.err.print(unixHome);
+            path = unixHome+"/Edit-Preferences.txt";
         }else path =""; // windows
 
         textFromIo = tfi;

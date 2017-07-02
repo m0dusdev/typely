@@ -42,6 +42,8 @@ public class MainScreen extends JFrame {
         // get os
         getOs();
 
+        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab.contentMargins", new Insets(170, 0, 0, 0));
+
 
 
         // listen for close
@@ -188,25 +190,49 @@ public class MainScreen extends JFrame {
         // add new tab  to editor hashmap to keep track of it possibly in a later build
         addEditorMap(temp, n);
         System.out.print(editorMap.toString());
-
-
     }
 
 
 
     public static void main(String[] args) {
        SwingUtilities.invokeLater(() -> {
-           // set appropriate look and feel
-           try {
-               UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-           } catch (ClassNotFoundException ex) {
-           } catch (InstantiationException ex) {
-           } catch (IllegalAccessException ex) {
-           } catch (UnsupportedLookAndFeelException ex) {
+           // set appropriate look and feel for each system type
+           if (isWin){ // windows look and feel
+               try {
+                   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+               } catch (ClassNotFoundException ex) {
+               } catch (InstantiationException ex) {
+               } catch (IllegalAccessException ex) {
+               } catch (UnsupportedLookAndFeelException ex) {
+               }
+
+           }else if (isLinux){ // linux look and feel
+               try {
+                   for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                       if ("com.sun.java.swing.plaf.gtk.GTKLookAndFeel".equals(info.getClassName())) {
+                           javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                           break;
+                       }
+                   }
+               } catch (ClassNotFoundException ex) {
+               } catch (InstantiationException ex) {
+               } catch (IllegalAccessException ex) {
+               } catch (UnsupportedLookAndFeelException ex) {
+               }
+
+           }else if (isOsx){
+               try { // osx look and feel
+                   System.setProperty("com.apple.mrj.application.apple.menu.about.name", "typley");
+                   System.setProperty("apple.laf.useScreenMenuBar", "true");
+                   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+               } catch (ClassNotFoundException ex) {
+               } catch (InstantiationException ex) {
+               } catch (IllegalAccessException ex) {
+               } catch (UnsupportedLookAndFeelException ex) {
+               }
            }
 
-           UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab.contentMargins", new Insets(100,
-                   100, 100, 100));
+
            JFrame frame = new MainScreen();
            frame.setSize(1280, 800);
            frame.setDefaultCloseOperation(3);
