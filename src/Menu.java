@@ -77,7 +77,7 @@ public class Menu extends JMenuBar{
 
         JMenuItem javaSwingItem = new JMenuItem("Swing template");
         javaItem.add(javaSwingItem);
-        javaSwingItem.addActionListener((e) -> MainScreen.handle("Frame.java", "SYNTAX_STYLE_JAVA", "\n" +
+        javaSwingItem.addActionListener((e) -> MainScreen.handle("Frame.java", "SYNTAX_STYLE_JAVA",
                 "import java.awt.event.WindowAdapter;\n" +
                 "import java.awt.event.WindowEvent;\n" +
                 "import javax.swing.*;\n" +
@@ -207,7 +207,8 @@ public class Menu extends JMenuBar{
 
         JMenuItem xmlItem = new JMenuItem("XML file");
         nMenui.add(xmlItem);
-        xmlItem.addActionListener((e -> MainScreen.handle("schema.xml", "SYNTAX_STYLE_XML", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>")));
+        xmlItem.addActionListener((e -> MainScreen.handle("schema.xml", "SYNTAX_STYLE_XML",
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>")));
 
         // add
         fMenu.add(nMenui);
@@ -239,7 +240,6 @@ public class Menu extends JMenuBar{
             } catch(IOException ie){
                 ie.printStackTrace();
             }
-
         });
 
         // Preferences
@@ -247,7 +247,17 @@ public class Menu extends JMenuBar{
         fMenu.add(new JSeparator());
         fMenu.add(prefItem);
         prefItem.addActionListener((e -> {
-            String stylePath = "C:\\Users\\pc\\Documents\\Ed-itPreferences.txt";
+            String stylePath = "";
+            // set path depending on system type
+            if (MainScreen.isLinux){
+                stylePath = "/home/user/Edit-prefrences.txt";
+            }else if (MainScreen.isOsx){
+                stylePath = "src/Ed-itPreferences.txt";
+            }else if (MainScreen.isWin){
+                stylePath = "src/Ed-itPreferences.txt";
+            }
+
+
             try {
                 java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
                 StringBuilder styleBuffer = new StringBuilder();
@@ -264,7 +274,7 @@ public class Menu extends JMenuBar{
             } catch (IOException ioe) {
                 //
                 SwingUtilities.invokeLater(() -> new CloseDialog("No prefs file found", "Current path is "
-                        + stylePath, true));
+                        , true));
             }
 
         }));

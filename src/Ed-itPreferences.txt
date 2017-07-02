@@ -1,0 +1,2 @@
+setHighlighter = light-blue
+setBackground = light-green

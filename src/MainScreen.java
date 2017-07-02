@@ -16,9 +16,11 @@ import org.jetbrains.annotations.Contract;
  * @version 0.5.1
  */
 
-public class MainScreen extends JFrame  {
+public class MainScreen extends JFrame {
 
-
+    static boolean isOsx = false;
+    static boolean isWin = false;
+    static boolean isLinux = false;
 
     public Float version = 0.5F;
 
@@ -91,45 +93,43 @@ public class MainScreen extends JFrame  {
             }
         });
 
-        tabbedPane.addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.isControlDown() && e.getKeyChar() != 'a' && e.getKeyCode() == 65) {
-                    tabbedPane.setSelectedIndex(0);
-                    System.out.print("\nalt and 1\n");
-
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        });
-
-
         setContentPane(tabbedPane);
         pack();
     }
 
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        switch( keyCode ) {
+            case KeyEvent.VK_UP:
+                // handle up
+                break;
+            case KeyEvent.VK_DOWN:
+                // handle down
+                break;
+            case KeyEvent.VK_LEFT:
+                // handle left
+                break;
+            case KeyEvent.VK_RIGHT :
+                // handle right
+                break;
+        }
+    }
 
-    // helper function for Util.getOs
-    void getOs(){
+
+    // helper function for Util.getOs - - add more later
+    private void getOs(){
         // get user OS
         switch (Util.getOS()) {
             case WINDOWS:
+                isWin = true;
                 break;
             case LINUX:
+                isLinux = true;
                 break;
             case MAC:
+                isOsx = true;
                 break;
-            case SOLARIS:
-                break;
+
     }}
 
     // return hash map with tab number key and RSSyntaxarea value

@@ -1,6 +1,6 @@
 public class Util {
     public enum OS {
-        WINDOWS, LINUX, MAC, SOLARIS
+        WINDOWS, LINUX, MAC
     };// Operating systems.
 
     private static OS os = null;
@@ -15,8 +15,6 @@ public class Util {
                 os = OS.LINUX;
             } else if (operSys.contains("mac")) {
                 os = OS.MAC;
-            } else if (operSys.contains("sunos")) {
-                os = OS.SOLARIS;
             }
         }
         return os;

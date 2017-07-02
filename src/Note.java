@@ -20,6 +20,8 @@ import java.nio.file.Paths;
 
 public class Note extends JInternalFrame {
 
+
+    private String path;
     private String textFromIo;
     private String syntaxFromIo;
     public boolean hasSaved = false;
@@ -28,6 +30,14 @@ public class Note extends JInternalFrame {
     public RSyntaxTextArea textArea;
 
     public Note(String tfi, String sfi) {
+
+
+        // check system type and set path
+        if(MainScreen.isOsx){
+            path = "";
+        }else if (MainScreen.isLinux){
+            path = "/home/user/Edit-prefrences.txt";
+        }else path =""; // windows
 
         textFromIo = tfi;
         syntaxFromIo = sfi;
@@ -88,11 +98,10 @@ public class Note extends JInternalFrame {
 
         getStyle();
 
-
         setText(tfi);
-
-
     }
+
+
 
 
     // set text from the constructor
@@ -105,10 +114,9 @@ public class Note extends JInternalFrame {
         return textArea.getText();
     }
 
-
     // read and apply style from prefs file
     private void getStyle() {
-        String stylePath = "C:\\Users\\pc\\Documents\\Ed-itPreferences.txt";
+        String stylePath = path;
 
         try {
             // new string list from $stylePath
@@ -318,7 +326,6 @@ public class Note extends JInternalFrame {
 
 
         } catch (IOException fileFucked) {
-            // file io error
             fileFucked.printStackTrace();
 
         }

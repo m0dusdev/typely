@@ -21,7 +21,7 @@ import javax.swing.plaf.basic.BasicBorders;
  *
  */
 
-public  class Io {
+public final class Io {
 
     static String syntaxFromFile = "PLAIN";
     static String toSave;
