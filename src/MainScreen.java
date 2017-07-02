@@ -42,7 +42,7 @@ public class MainScreen extends JFrame {
         // get os
         getOs();
 
-        UIManager.getLookAndFeelDefaults().put("TabbedPane:TabbedPaneTab.contentMargins", new Insets(170, 0, 0, 0));
+
 
 
 
@@ -61,12 +61,7 @@ public class MainScreen extends JFrame {
             }
         });
 
-        //tabbedPane setup
-
-
-
-
-        // set menu bar
+        // add manu bar
         setJMenuBar(new Menu());
 
 
@@ -164,6 +159,7 @@ public class MainScreen extends JFrame {
                 highlight = Uicolor.BOLD_GREY;
                 lightHighlight = Uicolor.LIGHT_GREY;
                 focus = Uicolor.GREY;
+                tabAreaInsets = new Insets(5,0,5,0);
             }
         });
         tabbedPane = temp;
@@ -196,6 +192,7 @@ public class MainScreen extends JFrame {
 
     public static void main(String[] args) {
        SwingUtilities.invokeLater(() -> {
+
            // set appropriate look and feel for each system type
            if (isWin){ // windows look and feel
                try {
@@ -211,7 +208,7 @@ public class MainScreen extends JFrame {
                    for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                        if ("com.sun.java.swing.plaf.gtk.GTKLookAndFeel".equals(info.getClassName())) {
                            javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                           break;
+                           System.err.print(isLinux);
                        }
                    }
                } catch (ClassNotFoundException ex) {
@@ -235,7 +232,7 @@ public class MainScreen extends JFrame {
 
            JFrame frame = new MainScreen();
            frame.setSize(1280, 800);
-           frame.setDefaultCloseOperation(3);
+           frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
            frame.setLocationRelativeTo(null);
            frame.setVisible(true);
 
