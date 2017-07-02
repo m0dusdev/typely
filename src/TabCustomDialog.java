@@ -16,7 +16,7 @@ public class TabCustomDialog extends JDialog {
         this.setVisible(true);
         this.setTitle("Custom tab width");
         this.setLayout(null);
-        this.setPreferredSize(new Dimension(176,90));
+        this.setPreferredSize(new Dimension(175,90));
 
         //spinner setup
         SpinnerModel model = new SpinnerNumberModel(4,0,50,1);
@@ -35,7 +35,7 @@ public class TabCustomDialog extends JDialog {
 
         // ok button creation
         okBtn = new JButton("Set");
-        okBtn.setBounds(100,13, 48,25);
+        okBtn.setBounds(92,13, 48,25);
         okBtn.setVisible(true);
         okBtn.addActionListener((e ->{
 

@@ -94,6 +94,10 @@ public final class Io {
             } catch (FileNotFoundException f){
                 f.printStackTrace();
             }
+
+            // update hashmap to set just saved tab to true
+            MainScreen.saveMap.put(MainScreen.tabbedPane.getTitleAt(MainScreen.current), true);
+
         }
     }
 

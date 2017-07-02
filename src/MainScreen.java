@@ -1,3 +1,4 @@
+import com.sun.javafx.image.impl.IntArgb;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import java.awt.*;
@@ -18,31 +19,33 @@ import org.jetbrains.annotations.Contract;
 
 public class MainScreen extends JFrame {
 
+    private static final long serialVersionUID = 1L;
+
+
+
+    // booleans for setting user system os
     static boolean isOsx = false;
     static boolean isWin = false;
     static boolean isLinux = false;
 
-    public Float version = 0.5F;
+    public static HashMap<String, Boolean> saveMap = new HashMap<>();
 
+    // K = tab title
+    // V = all instances of RSSyntax areas
     private static HashMap<String, JInternalFrame> editorMap = new HashMap<>();
 
-    private static final long serialVersionUID = 1L;
-
     static boolean justAddedTab = false;
-    static int tabCount = 0;
     static int current;
     static JTabbedPane tabbedPane;
     public static RSyntaxTextArea currentR = new RSyntaxTextArea();
 
     public MainScreen() {
 
-
-        super("ed-it");
+        // initial title
+        super(" |  typely - ALPHA  V0.5.5 - Unlicensed  ");
 
         // get os
         getOs();
-
-
 
 
 
@@ -84,6 +87,9 @@ public class MainScreen extends JFrame {
                 rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
 
                 currentR = rsc;
+
+                this.setTitle(tabbedPane.getTitleAt(current) +    " |  typely - ALPHA  V0.5.5 - Unlicensed  ");
+
             } else {
                 System.err.print("NO TABS");
 
@@ -128,6 +134,8 @@ public class MainScreen extends JFrame {
                 break;
 
     }}
+
+
 
     // return hash map with tab number key and RSSyntaxarea value
     public static HashMap getEditorMap() {
@@ -177,17 +185,23 @@ public class MainScreen extends JFrame {
         tabbedPane.addTab(title, n);
         System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + " " +
                 "  Title is -  " + title);
-                tabCount++;
-        String temp = tabCount + title;
+
+        String temp = title;
+
+
+
+
 
         // change currently selected tab to new tab
         tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+
+        saveMap.put(title, false);
+
 
         // add new tab  to editor hashmap to keep track of it possibly in a later build
         addEditorMap(temp, n);
         System.out.print(editorMap.toString());
     }
-
 
 
     public static void main(String[] args) {
@@ -211,7 +225,7 @@ public class MainScreen extends JFrame {
            frame.setVisible(true);
 
            // kick off with a new tab
-           handle("temp.txt " + tabCount, "PLAIN", null);
+           handle("temp.txt ", "PLAIN", null);
        });
 
     }

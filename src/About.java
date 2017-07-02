@@ -18,14 +18,14 @@ public class About extends JDialog   {
         }finally {
             setLayout(new BorderLayout());
             setTitle("About");
-            setSize(500, 150);
+            setSize(170, 90);
             setLocationRelativeTo(null);
             setVisible(true);
             setResizable(false);
             jt= new JLabel();
 
             this.setDefaultCloseOperation(1); // Hide on close
-            jt.setFont(new Font("Futura", Font.ITALIC, 25));
+            jt.setFont(new Font("Futura", Font.ITALIC, 18));
             jt.setBackground(Color.decode("#EEEEEE"));
             jt.setForeground(Color.decode("#212121"));
             jt.setText("          edit - v0.5.2");

@@ -305,20 +305,27 @@ public class Menu extends JMenuBar{
         JMenuItem cMenui = new JMenuItem("Close Tab ");
         // listen
         cMenui.addActionListener((e -> {
-            CloseDialog c = new CloseDialog("Save tab ?",
-                    "Tab might not be saved");
 
-            int option = c.show();
-            if (option == 0) {
-                // yes option
+            // see if current tab has been saved, if it has no then show a warning
+            if (!MainScreen.saveMap.get(MainScreen.tabbedPane.getTitleAt(MainScreen.current))){
+                CloseDialog c = new CloseDialog("Save tab ?",
+                        "Tab might not be saved");
+                int option = c.show();
+                if (option == 0) {
+                    // yes option
                     Io.save();
                     MainScreen.tabbedPane.removeTabAt(MainScreen.current);
-                System.out.print("\nyes\n");
+                    System.out.print("\nyes\n");
+                    MainScreen.saveMap.put(MainScreen.tabbedPane.getTitleAt(MainScreen.current), true);
 
-            } else if (option == 1) {
-                // no
+                } else if (option == 1) {
+                    // no
                     MainScreen.tabbedPane.removeTabAt(MainScreen.current);
-                System.out.print("\nno\n");
+                    System.out.print("\nno\n");
+                }
+
+            }else {
+                MainScreen.tabbedPane.removeTabAt(MainScreen.current);
             }
         }));
 
