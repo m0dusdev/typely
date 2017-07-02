@@ -1,4 +1,6 @@
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import sun.applet.Main;
+
 import javax.swing.*;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
@@ -24,8 +26,11 @@ public class Menu extends JMenuBar{
         JMenu fMenu;         // file
         JMenu tMenu;        //  tab
         JMenu hMenu;       //   help
-        JMenu rMenu;      //    run
-        JMenuItem sMenu; //     syntax
+        JMenuItem sMenu;  //    syntax
+        JMenu rMenu;     //     run
+        JMenu tsMenu;   //      tab spaces
+
+
 
 
         // file menu
@@ -77,7 +82,7 @@ public class Menu extends JMenuBar{
 
         JMenuItem javaSwingItem = new JMenuItem("Swing template");
         javaItem.add(javaSwingItem);
-        javaSwingItem.addActionListener((e) -> MainScreen.handle("Frame.java", "SYNTAX_STYLE_JAVA",
+        javaSwingItem.addActionListener((e) -> MainScreen.handle("Frame.java", "JAVA",
                 "import java.awt.event.WindowAdapter;\n" +
                 "import java.awt.event.WindowEvent;\n" +
                 "import javax.swing.*;\n" +
@@ -486,6 +491,25 @@ public class Menu extends JMenuBar{
         rMenu.add(javaCompileAndRun);
 
 
+        // tab space menu
+        tsMenu = new JMenu("Tab spaces");
+
+        JMenuItem fourItem = new JMenuItem("4");
+        tsMenu.add(fourItem);
+        fourItem.addActionListener((e -> MainScreen.currentR.setTabSize(4)));
+
+        JMenuItem eightItem = new JMenuItem("8");
+        tsMenu.add(eightItem);
+        eightItem.addActionListener((e -> MainScreen.currentR.setTabSize(8)));
+
+        JMenuItem userDefineItem = new JMenuItem("Custom");
+        userDefineItem.addActionListener((e -> new TabCustomDialog()));
+
+        tsMenu.add(userDefineItem);
+
+
+
+
         // add menus to bar
         add(fMenu);
 
@@ -495,6 +519,11 @@ public class Menu extends JMenuBar{
 
         add(sMenu);
 
+        add(tsMenu);
+
         add(rMenu);
+
+
+
     }
 }

@@ -159,7 +159,7 @@ public class MainScreen extends JFrame {
                 highlight = Uicolor.BOLD_GREY;
                 lightHighlight = Uicolor.LIGHT_GREY;
                 focus = Uicolor.GREY;
-                tabAreaInsets = new Insets(5,0,5,0);
+                tabAreaInsets = new Insets(5,5,5,2);
             }
         });
         tabbedPane = temp;
@@ -194,45 +194,19 @@ public class MainScreen extends JFrame {
        SwingUtilities.invokeLater(() -> {
 
            // set appropriate look and feel for each system type
-           if (isWin){ // windows look and feel
-               try {
-                   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+           try {
+               UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                } catch (ClassNotFoundException ex) {
                } catch (InstantiationException ex) {
                } catch (IllegalAccessException ex) {
                } catch (UnsupportedLookAndFeelException ex) {
                }
 
-           }else if (isLinux){ // linux look and feel
-               try {
-                   for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                       if ("com.sun.java.swing.plaf.gtk.GTKLookAndFeel".equals(info.getClassName())) {
-                           javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                           System.err.print(isLinux);
-                       }
-                   }
-               } catch (ClassNotFoundException ex) {
-               } catch (InstantiationException ex) {
-               } catch (IllegalAccessException ex) {
-               } catch (UnsupportedLookAndFeelException ex) {
-               }
-
-           }else if (isOsx){
-               try { // osx look and feel
-                   System.setProperty("com.apple.mrj.application.apple.menu.about.name", "typley");
-                   System.setProperty("apple.laf.useScreenMenuBar", "true");
-                   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-               } catch (ClassNotFoundException ex) {
-               } catch (InstantiationException ex) {
-               } catch (IllegalAccessException ex) {
-               } catch (UnsupportedLookAndFeelException ex) {
-               }
-           }
 
 
            JFrame frame = new MainScreen();
            frame.setSize(1280, 800);
-           frame.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+           frame.setDefaultCloseOperation(3);
            frame.setLocationRelativeTo(null);
            frame.setVisible(true);
 

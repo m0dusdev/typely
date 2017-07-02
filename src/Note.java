@@ -44,13 +44,14 @@ public class Note extends JInternalFrame {
         textFromIo = tfi;
         syntaxFromIo = sfi;
 
+
         // remove internal frame border
         ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         this.setBorder(null);
 
         JPanel cp = new JPanel(new BorderLayout());
         this.setVisible(true);
-        textArea = new RSyntaxTextArea(20, 300);
+        textArea = new RSyntaxTextArea(20, 150);
         RTextScrollPane sp = new RTextScrollPane(textArea);
         sp.setViewportView(textArea);
         cp.add(sp);
@@ -58,6 +59,8 @@ public class Note extends JInternalFrame {
         textArea.setTemplatesEnabled(true);
         textArea.setHyperlinksEnabled(true);
         CodeTemplateManager ctm = textArea.getCodeTemplateManager();
+
+        textArea.setTabLineColor(Color.WHITE);
 
 
         // add more
@@ -105,7 +108,6 @@ public class Note extends JInternalFrame {
 
 
 
-
     // set text from the constructor
     private void setText(String text) {
         textArea.setText(text);
@@ -119,6 +121,7 @@ public class Note extends JInternalFrame {
     // read and apply style from prefs file
     private void getStyle() {
         String stylePath = path;
+        System.err.print(path);
 
         try {
             // new string list from $stylePath
