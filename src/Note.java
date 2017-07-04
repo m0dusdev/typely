@@ -31,16 +31,6 @@ public class Note extends JInternalFrame {
 
     public Note(String tfi, String sfi) {
 
-
-        // check system type and set path
-        if(MainScreen.isOsx){
-            path = "";
-        }else if (MainScreen.isLinux){
-            String unixHome = System.getProperty("user.home");
-            System.err.print(unixHome);
-            path = unixHome+"/Edit-Preferences.txt";
-        }else path =""; // windows
-
         textFromIo = tfi;
         syntaxFromIo = sfi;
 
@@ -125,7 +115,7 @@ public class Note extends JInternalFrame {
 
         try {
             // new string list from $stylePath
-            java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
+            java.util.List<String> lines = Files.readAllLines(Paths.get(MainScreen.prefPath), Charset.defaultCharset());
 
             int i = 0;
             for (String temp : lines) {

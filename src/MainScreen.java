@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Contract;
 public class MainScreen extends JFrame {
 
     private static final long serialVersionUID = 1L;
-
+    public static String prefPath = "";
 
 
     // booleans for setting user system os
@@ -28,6 +28,8 @@ public class MainScreen extends JFrame {
     static boolean isWin = false;
     static boolean isLinux = false;
 
+    // K = tab title - String
+    // V = tab saved status - boolean
     public static HashMap<String, Boolean> saveMap = new HashMap<>();
 
     // K = tab title
@@ -48,7 +50,6 @@ public class MainScreen extends JFrame {
         getOs();
 
 
-
         // listen for close
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -64,7 +65,7 @@ public class MainScreen extends JFrame {
             }
         });
 
-        // add manu bar
+        // add menu bar
         setJMenuBar(new Menu());
 
 
@@ -79,15 +80,15 @@ public class MainScreen extends JFrame {
 
             JInternalFrame je;
 
+            // if tabs are left then obtain reference of new tab
             if (current > -1) {
                 je = (JInternalFrame) tabbedPane.getComponentAt(current);
-
                 RSyntaxTextArea rsc;
-
                 rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
-
                 currentR = rsc;
 
+
+                // set title
                 this.setTitle(tabbedPane.getTitleAt(current) +    " |  typely - ALPHA  V0.5.5 - Unlicensed  ");
 
             } else {
@@ -100,6 +101,8 @@ public class MainScreen extends JFrame {
         pack();
     }
 
+
+    // keyboard shortcuts
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         switch( keyCode ) {
@@ -119,18 +122,21 @@ public class MainScreen extends JFrame {
     }
 
 
-    // helper function for Util.getOs - - add more later
+    // get os and set appropriate path for preferences file
     private void getOs(){
         // get user OS
         switch (Util.getOS()) {
             case WINDOWS:
                 isWin = true;
+                MainScreen.prefPath = System.getProperty("user.home") + "/Desktop/Edit-Preferences.txt";
                 break;
             case LINUX:
                 isLinux = true;
+                MainScreen.prefPath = System.getProperty("user.home") + "/Edit-Preferences.txt";
                 break;
             case MAC:
                 isOsx = true;
+                prefPath = System.getProperty("user.home") + "/Desktop/Edit-Preferences.txt";
                 break;
 
     }}
@@ -142,24 +148,27 @@ public class MainScreen extends JFrame {
         return editorMap;
     }
 
-    // add to
+    //
     public static void addEditorMap(String index, JInternalFrame area) {
         editorMap.put(index, area);
     }
 
 
+    /**
+     * @return - a styled tabbed pane
+     */
     private JTabbedPane createTab() {
         JTabbedPane temp = new JTabbedPane();
         temp.setBackground(Color.decode("#90A4AE"));
         temp.setForeground(Color.decode("#212121"));
         temp.setFont(Uicolor.plain);
 
-        // needed
+
         temp.setFocusable(false);
         temp.setVisible(true);
 
 
-        // TO DO : set style from file
+        // Ui hacking
         temp.setUI(new BasicTabbedPaneUI() {
             @Override
             protected void installDefaults() {
@@ -174,11 +183,14 @@ public class MainScreen extends JFrame {
 
         return temp;
     }
-    /**
-     * Creates a new instance of the Note class - updates tab count set current editorpane
-     * @param title set title for new tab
-     */
 
+
+    /**
+     * Creates a new instance of the Note class - updates tab count set current RSStntaxarea
+     * @param title - set title for new tab
+     * @param syntax - the syntax for the new tab
+     * @param send - text to send to the new tab
+     */
     public static void handle(String title, String syntax, String send) {
 
         Note n = new Note(send, syntax);
@@ -187,9 +199,6 @@ public class MainScreen extends JFrame {
                 "  Title is -  " + title);
 
         String temp = title;
-
-
-
 
 
         // change currently selected tab to new tab

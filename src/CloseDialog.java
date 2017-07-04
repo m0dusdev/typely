@@ -25,6 +25,7 @@ public class CloseDialog {
     CloseDialog(String msg, String ttl) {
         message = msg;
         title = ttl;
+
     }
 
 

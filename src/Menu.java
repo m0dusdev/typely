@@ -4,10 +4,13 @@ import sun.applet.Main;
 import javax.swing.*;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 /**
  * This class builds a menu bar and handles the actions associated with it.
@@ -253,20 +256,9 @@ public class Menu extends JMenuBar{
         fMenu.add(prefItem);
         prefItem.addActionListener((e -> {
 
-            String stylePath = "";
-            // set path depending on system type
-            if (MainScreen.isLinux){
-                String unixHome = System.getProperty("user.home");
-                stylePath = unixHome+"/Edit-Preferences.txt";
-            }else if (MainScreen.isOsx){
-                //stylePath = "src/Ed-itPreferences.txt";
-            }else if (MainScreen.isWin){
-                //stylePath = "src/Ed-itPreferences.txt";
-            }
-
 
             try {
-                java.util.List<String> lines = Files.readAllLines(Paths.get(stylePath), Charset.defaultCharset());
+                java.util.List<String> lines = Files.readAllLines(Paths.get(MainScreen.prefPath), Charset.defaultCharset());
                 StringBuilder styleBuffer = new StringBuilder();
 
                 // add lines from file to new buffer
@@ -278,10 +270,46 @@ public class Menu extends JMenuBar{
                 // add buffer to new tab
                 MainScreen.handle("Edit-Preferences.txt", "SYNTAX_STYLE_CSS", styleBuffer.toString());
                 MainScreen.currentR.setCaretPosition(0);
+
+                // if no preferences file was found, open a dialog and create a new preferences file
             } catch (IOException ioe) {
-                //
-                SwingUtilities.invokeLater(() -> new CloseDialog("No prefs file found", "Current path is "
-                        , true));
+                SwingUtilities.invokeLater(()-> {
+                    CloseDialog cl = new CloseDialog("No preferences file found, would you like to create one ?",
+                            "Error");
+
+                    if (cl.show() == 0) {
+                        try{
+                            PrintWriter writer = new PrintWriter(MainScreen.prefPath, "UTF-8");
+                            writer.println("/*COLORS*/\n" +
+                                    "setBackground = light-grey\n" +
+                                    "setHighlighter = green\n" +
+                                    "\n" +
+                                    "\n" +
+                                    "/*PREFERENCES*/\n" +
+                                    "setCodeFoldingEnabled = true\n" +
+                                    "setAnimateBracketMatching = true\n" +
+                                    "setCloseCurlyBraces = true\n" +
+                                    "setAutoIndentEnabled = true\n" +
+                                    "setAntiAliasingEnabled = true\n" +
+                                    "setDragEnabled = true\n" +
+                                    "setRoundedSelectionEdges = false\n" +
+                                    "setBracketMatchingEnabled = true\n" +
+                                    "setAnimateBracketMatching = true\n" +
+                                    "setCloseMarkupTags = true\n" +
+                                    "setEOLMarkersVisible = false\n" +
+                                    "setHighlightSecondaryLanguages = true\n" +
+                                    "setMarkOccurrences = true\n");
+                            writer.close();
+                        } catch (IOException ioex) {
+                            // do something
+                        }
+
+                    }
+
+
+                });
+
+
             }
 
         }));
