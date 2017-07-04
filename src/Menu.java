@@ -271,7 +271,7 @@ public class Menu extends JMenuBar{
                 MainScreen.handle("Edit-Preferences.txt", "SYNTAX_STYLE_CSS", styleBuffer.toString());
                 MainScreen.currentR.setCaretPosition(0);
 
-                // if no preferences file was found, open a dialog and create a new preferences file
+                // if no preferences file was found, open a dialog and create a new preferences file if the user chooses yes
             } catch (IOException ioe) {
                 SwingUtilities.invokeLater(()-> {
                     CloseDialog cl = new CloseDialog("No preferences file found, would you like to create one ?",
@@ -299,19 +299,22 @@ public class Menu extends JMenuBar{
                                     "setEOLMarkersVisible = false\n" +
                                     "setHighlightSecondaryLanguages = true\n" +
                                     "setMarkOccurrences = true\n");
+                            writer.flush();
                             writer.close();
+
+
+                            // inform user of new file creation and its location
+                            SwingUtilities.invokeLater(()-> new CloseDialog("File was created at "+
+                                    MainScreen.prefPath,"New preferences file created" , true));
+
+
                         } catch (IOException ioex) {
                             // do something
                         }
-
                     }
 
-
                 });
-
-
             }
-
         }));
 
 
@@ -525,7 +528,6 @@ public class Menu extends JMenuBar{
 
         rMenu.add(javaCompileAndRun);
 
-
         // tab space menu
         tsMenu = new JMenu("Tab spaces");
 
@@ -541,9 +543,6 @@ public class Menu extends JMenuBar{
         userDefineItem.addActionListener((e -> new TabCustomDialog()));
 
         tsMenu.add(userDefineItem);
-
-
-
 
         // add menus to bar
         add(fMenu);

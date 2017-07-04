@@ -35,7 +35,7 @@ public class CloseDialog {
     }
 
     int warning() {
-        int result = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.WARNING_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(MainScreen.tabbedPane, message, title, JOptionPane.DEFAULT_OPTION);
         return result;
     }
 
