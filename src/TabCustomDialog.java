@@ -5,7 +5,7 @@ import java.awt.*;
  * Class for setting a custom tab width via a JSpinner
  */
 
-public class TabCustomDialog extends JDialog {
+final class TabCustomDialog extends JDialog {
 
     private JButton okBtn;
     private JSpinner jt;
@@ -21,7 +21,7 @@ public class TabCustomDialog extends JDialog {
         //spinner setup
         SpinnerModel model = new SpinnerNumberModel(4,0,50,1);
         jt = new JSpinner(model);
-        jt.setBounds(20,10,40,30);
+        jt.setBounds(20,10,50,30);
         jt.setVisible(true);
         jt.addChangeListener((e -> {
             try {

@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="rsyntaxtextarea-3.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="rsyntaxtextarea-3.0.0-SNAPSHOT" level="project" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>

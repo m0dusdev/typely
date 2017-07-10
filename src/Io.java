@@ -1,18 +1,12 @@
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.plaf.basic.BasicBorders;
 
 
@@ -23,8 +17,9 @@ import javax.swing.plaf.basic.BasicBorders;
 
 public final class Io {
 
-    static String syntaxFromFile = "PLAIN";
-    static String toSave;
+    private static String syntaxFromFile = "PLAIN";
+    private static String toSave;
+
 
     static void compileJava() throws Exception {
         String toCompile = MainScreen.currentR.getText();
@@ -47,7 +42,7 @@ public final class Io {
     }
 
     private static void printLines(String name, InputStream ins) throws Exception {
-        String line = null;
+        String line;
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(ins));
         while ((line = in.readLine()) != null) {
@@ -70,12 +65,13 @@ public final class Io {
      * Save - saves gets text from current Pane - saves text to file.
      */
 
-    static void save() {
+    static void saveAs() {
 
         toSave = MainScreen.currentR.getText();
         System.out.print(toSave);
 
-        String path = MainScreen.tabbedPane.getTitleAt(MainScreen.current);
+        String path = MainScreen.tabbedPane.getTitleAt(MainScreen.current).
+                replace("-", "");
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setSelectedFile(new File(path));
@@ -103,7 +99,7 @@ public final class Io {
 
     /**
      * Open File, pass to a new Note object
-     * @throws IOException
+     * @throws IOException - invalid file type or other file error
      */
     static void open() throws IOException{
 
@@ -130,7 +126,8 @@ public final class Io {
 
             StringBuilder buffer = new StringBuilder();
             for (String Final : lines) {
-                buffer.append(Final + "\n");
+                buffer.append(Final);
+                buffer.append("\n");
             }
 
 
@@ -166,14 +163,10 @@ public final class Io {
         }
     }
 
+    // used to get user clipboard string content and add it to a new tab
     static void cliboardToTab() throws IOException, UnsupportedFlavorException {
         String temp = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-
-
-        MainScreen.handle("FromClipboard", "PLAIN", temp);
-
+        MainScreen.newTab("FromClipboard", "PLAIN", temp);
     }
-
-
 }
 

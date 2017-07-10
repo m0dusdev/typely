@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 
 /**
  * NotePad class - New instance created on each new tabbedpane Tab
- * @author William March - s4916313
+ * @author William March -
  */
 
 public class Note extends JInternalFrame {
@@ -27,7 +27,7 @@ public class Note extends JInternalFrame {
     public boolean hasSaved = false;
 
 
-    public RSyntaxTextArea textArea;
+    private RSyntaxTextArea textArea;
 
     public Note(String tfi, String sfi) {
 

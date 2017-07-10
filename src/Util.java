@@ -1,10 +1,17 @@
-public class Util {
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Timer;
+
+class Util {
+    // Operating systems.
     public enum OS {
         WINDOWS, LINUX, MAC
-    };// Operating systems.
+    }
 
     private static OS os = null;
 
+    // get user os for various tweaks at runtime
     public static OS getOS() {
         if (os == null) {
             String operSys = System.getProperty("os.name").toLowerCase();
@@ -18,5 +25,46 @@ public class Util {
             }
         }
         return os;
+    }
+
+
+    // create and add 20 tabs to the editor
+    private static void perfTest(){
+        for (int i = 0; i < 20; i++) {
+            MainScreen.newTab("Tab Test  "+ i, "JAVA", "i = "+ i);
+        }
+
+    }
+
+    // loop and time test - siaply result to user
+    public static void perfLooper() {
+
+        // start time
+        long startTime = System.currentTimeMillis();
+
+        // loop tests
+        for (int i = 0; i < 1; i++){
+            perfTest();
+        }
+
+        // stop the clock
+        long stopTime = System.currentTimeMillis();
+
+        // calculate run time
+        long diff = stopTime - startTime;
+        String result = "\n Created 20 tabs in " + (stopTime - startTime) + " milliseconds - - - ";
+
+        // some arbitrary performance rules
+        if (diff <= 2000 && diff >= 1500) {
+            MainScreen.currentR.setText(result + "RATING -> POOR");
+        } else if (diff <= 1500 && diff >= 1000) {
+            MainScreen.currentR.setText(result + "RATING -> OK");
+        } else if (diff <= 1000 && diff >= 500) {
+            MainScreen.currentR.setText(result + "RATING -> GOOD");
+        } else if (diff <= 500 && diff >= 200) {
+            MainScreen.currentR.setText(result + "RATING -> VERY GOOD");
+        }else if (diff <= 200) {
+            MainScreen.currentR.setText(result + "RATING -> GREAT");
+        }
     }
 }

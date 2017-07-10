@@ -1,15 +1,13 @@
-import com.sun.javafx.image.impl.IntArgb;
+
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
-import org.jetbrains.annotations.Contract;
 
 /**
  * Class that creates the form and tabbed pane
@@ -32,8 +30,8 @@ public class MainScreen extends JFrame {
     // V = tab saved status - boolean
     public static HashMap<String, Boolean> saveMap = new HashMap<>();
 
-    // K = tab title
-    // V = all instances of RSSyntax areas
+    // K = tab title - String
+    // V = Instance of Note class representing each editor area - JInternalFrame
     private static HashMap<String, JInternalFrame> editorMap = new HashMap<>();
 
     static boolean justAddedTab = false;
@@ -89,7 +87,8 @@ public class MainScreen extends JFrame {
 
 
                 // set title
-                this.setTitle(tabbedPane.getTitleAt(current) +    " |  typely - ALPHA  V0.5.5 - Unlicensed  ");
+                this.setTitle(tabbedPane.getTitleAt(current).replace("-", "") +
+                        " |  typely - ALPHA  V0.5.5 - Unlicensed  ");
 
             } else {
                 System.err.print("NO TABS");
@@ -107,16 +106,16 @@ public class MainScreen extends JFrame {
         int keyCode = e.getKeyCode();
         switch( keyCode ) {
             case KeyEvent.VK_UP:
-                // handle up
+                // newTab up
                 break;
             case KeyEvent.VK_DOWN:
-                // handle down
+                // newTab down
                 break;
             case KeyEvent.VK_LEFT:
-                // handle left
+                // newTab left
                 break;
             case KeyEvent.VK_RIGHT :
-                // handle right
+                // newTab right
                 break;
         }
     }
@@ -176,7 +175,7 @@ public class MainScreen extends JFrame {
                 highlight = Uicolor.BOLD_GREY;
                 lightHighlight = Uicolor.LIGHT_GREY;
                 focus = Uicolor.GREY;
-                tabAreaInsets = new Insets(5,5,5,2);
+                tabAreaInsets = new Insets(0,0,0,0);
             }
         });
         tabbedPane = temp;
@@ -186,29 +185,39 @@ public class MainScreen extends JFrame {
 
 
     /**
-     * Creates a new instance of the Note class - updates tab count set current RSStntaxarea
+     * Creates a new instance of the Note class - updates tab count set currentR to the newly created
+     * RSSyntaxArea
+     *
      * @param title - set title for new tab
      * @param syntax - the syntax for the new tab
      * @param send - text to send to the new tab
      */
-    public static void handle(String title, String syntax, String send) {
+    public static void newTab(String title, String syntax, String send) {
 
         Note n = new Note(send, syntax);
-        tabbedPane.addTab(title, n);
+        if (title.length() < 20){
+            tabbedPane.addTab("-----"+title +"-----",  n);
+        }else if (title.length() < 10){
+            tabbedPane.addTab("-------------"+title+"-------------",  n);
+
+        }else {
+            tabbedPane.addTab(title,  n);
+        }
         System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + " " +
                 "  Title is -  " + title);
 
-        String temp = title;
+
 
 
         // change currently selected tab to new tab
         tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
 
+
         saveMap.put(title, false);
 
 
         // add new tab  to editor hashmap to keep track of it possibly in a later build
-        addEditorMap(temp, n);
+        addEditorMap(title, n);
         System.out.print(editorMap.toString());
     }
 
@@ -216,16 +225,22 @@ public class MainScreen extends JFrame {
     public static void main(String[] args) {
        SwingUtilities.invokeLater(() -> {
 
-           // set appropriate look and feel for each system type
-           try {
-               UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-               } catch (ClassNotFoundException ex) {
-               } catch (InstantiationException ex) {
-               } catch (IllegalAccessException ex) {
-               } catch (UnsupportedLookAndFeelException ex) {
+               try {
+                   System.setProperty("apple.laf.useScreenMenuBar", "true");
+                   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                   UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+                   //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.WindowsLookAndFeel");
+
+
+               }catch (ClassNotFoundException cl) {
+
+               }catch (InstantiationException in) {
+
+               }catch (IllegalAccessException ile) {
+
+               }catch (UnsupportedLookAndFeelException unsup) {
+
                }
-
-
 
            JFrame frame = new MainScreen();
            frame.setSize(1280, 800);
@@ -234,7 +249,7 @@ public class MainScreen extends JFrame {
            frame.setVisible(true);
 
            // kick off with a new tab
-           handle("temp.txt ", "PLAIN", null);
+           newTab("temp.txt ", "PLAIN", null);
        });
 
     }

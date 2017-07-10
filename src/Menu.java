@@ -1,16 +1,13 @@
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 /**
  * This class builds a menu bar and handles the actions associated with it.
@@ -62,19 +59,19 @@ public class Menu extends JMenuBar{
         nMenui.add(fromclipSyntax);
         nMenui.add(new JSeparator());
 
-        JMenuItem fileItem = new JMenuItem("File");
+        JMenuItem fileItem = new JMenuItem("  File  ");
         nMenui.add(fileItem);
-        fileItem.addActionListener((e -> MainScreen.handle("file", "SYNTAX_STLYE_NONE", "")));
+        fileItem.addActionListener((e -> MainScreen.newTab("file", "SYNTAX_STLYE_NONE", "")));
 
         // TEXT FILE ITEM
         JMenuItem textItem = new JMenuItem("Text file");
         nMenui.add(textItem);
-        textItem.addActionListener((e -> MainScreen.handle("file.txt", "SYNTAX_STYLE_PLAIN", "")));
+        textItem.addActionListener((e -> MainScreen.newTab("file.txt", "SYNTAX_STYLE_PLAIN", "")));
 
 
         JMenuItem pythonItem = new JMenuItem("Python file");
         nMenui.add(pythonItem);
-        pythonItem.addActionListener((e)-> MainScreen.handle("temp.py", "SYNTAX_STYLE_PYTHON", "#!/usr/bin/env python\n\n" +
+        pythonItem.addActionListener((e)-> MainScreen.newTab("temp.py", "SYNTAX_STYLE_PYTHON", "#!/usr/bin/env python\n\n" +
                 "# -*- coding: utf-8 -*-\n" +
                 "\n" +
                 "\"\"\"This is a awesome\n" +
@@ -85,7 +82,7 @@ public class Menu extends JMenuBar{
 
         JMenuItem javaSwingItem = new JMenuItem("Swing template");
         javaItem.add(javaSwingItem);
-        javaSwingItem.addActionListener((e) -> MainScreen.handle("Frame.java", "JAVA",
+        javaSwingItem.addActionListener((e) -> MainScreen.newTab("Frame.java", "JAVA",
                 "import java.awt.event.WindowAdapter;\n" +
                 "import java.awt.event.WindowEvent;\n" +
                 "import javax.swing.*;\n" +
@@ -157,7 +154,7 @@ public class Menu extends JMenuBar{
 
         JMenuItem javaDialogItem = new JMenuItem("Java Dialog");
         javaDialogItem.addActionListener((e) -> {
-            MainScreen.handle("About.java", "JAVA", "import javax.swing.*;\n" +
+            MainScreen.newTab("About.java", "JAVA", "import javax.swing.*;\n" +
                     "import java.awt.*;\n" +
                     "\n" +
                     "/**\n" +
@@ -193,7 +190,7 @@ public class Menu extends JMenuBar{
 
         JMenuItem htmlItem = new JMenuItem("HTML file");
         nMenui.add(htmlItem);
-        htmlItem.addActionListener((e -> MainScreen.handle("index.html", "SYNTAX_STYLE_HTML", "<!DOCTYPE html>\n" +
+        htmlItem.addActionListener((e -> MainScreen.newTab("index.html", "SYNTAX_STYLE_HTML", "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "\t<body>\n" +
                 "\n" +
@@ -207,15 +204,15 @@ public class Menu extends JMenuBar{
 
         JMenuItem cssItem = new JMenuItem("CSS file");
         nMenui.add(cssItem);
-        cssItem.addActionListener((e -> MainScreen.handle("style.css", "SYNTAX_STYLE_CSS", "")));
+        cssItem.addActionListener((e -> MainScreen.newTab("style.css", "SYNTAX_STYLE_CSS", "")));
 
         JMenuItem latexItem = new JMenuItem("LaTeX file");
         nMenui.add(latexItem);
-        latexItem.addActionListener((e -> MainScreen.handle("page.tex", "SYNTAX_STYLE_LATEX", "/begin document")));
+        latexItem.addActionListener((e -> MainScreen.newTab("page.tex", "SYNTAX_STYLE_LATEX", "/begin document")));
 
         JMenuItem xmlItem = new JMenuItem("XML file");
         nMenui.add(xmlItem);
-        xmlItem.addActionListener((e -> MainScreen.handle("schema.xml", "SYNTAX_STYLE_XML",
+        xmlItem.addActionListener((e -> MainScreen.newTab("schema.xml", "SYNTAX_STYLE_XML",
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>")));
 
         // add
@@ -229,13 +226,17 @@ public class Menu extends JMenuBar{
         // exit menu listen
         eMenuI.addActionListener((e)-> System.exit(0));
 
-        // save  item
+        // saveAs  item
         JMenuItem sMenui = new JMenuItem(" Save ");
         fMenu.add(sMenui);
 
-        // save listen
-        sMenui.addActionListener(event ->
-            Io.save());
+        // saveAs listen
+        sMenui.addActionListener(event -> {
+            // if file has not been saved then show to saveAs as dialog
+            Io.saveAs();
+
+
+        });
 
         // open item
         JMenuItem oMenui = new JMenuItem(" Open ");
@@ -268,7 +269,7 @@ public class Menu extends JMenuBar{
                 }
 
                 // add buffer to new tab
-                MainScreen.handle("Edit-Preferences.txt", "SYNTAX_STYLE_CSS", styleBuffer.toString());
+                MainScreen.newTab("Edit-Preferences.txt", "SYNTAX_STYLE_CSS", styleBuffer.toString());
                 MainScreen.currentR.setCaretPosition(0);
 
                 // if no preferences file was found, open a dialog and create a new preferences file if the user chooses yes
@@ -319,7 +320,7 @@ public class Menu extends JMenuBar{
 
 
         // Tab menu
-        tMenu = new JMenu("Tab");
+        tMenu = new JMenu("  Tab  ");
         tMenu.setMnemonic(KeyEvent.VK_T);
 
         // clear tab menu item
@@ -344,7 +345,7 @@ public class Menu extends JMenuBar{
                 int option = c.show();
                 if (option == 0) {
                     // yes option
-                    Io.save();
+                    Io.saveAs();
                     MainScreen.tabbedPane.removeTabAt(MainScreen.current);
                     System.out.print("\nyes\n");
                     MainScreen.saveMap.put(MainScreen.tabbedPane.getTitleAt(MainScreen.current), true);
@@ -363,19 +364,20 @@ public class Menu extends JMenuBar{
         // add
         tMenu.add(cMenui);
 
-        hMenu = new JMenu("Help");
+        hMenu = new JMenu(" Help ");
 
         //about item
         JMenuItem aMenui = new JMenuItem(" About ");
 
         // listen
         aMenui.addActionListener((e)->
-                SwingUtilities.invokeLater(()->
-                        new About()));
+                SwingUtilities.invokeLater(About::new)
+        );
 
         // add
         hMenu.add(aMenui);
-        sMenu = new JMenu("Syntax");
+
+        sMenu = new JMenu(" Syntax ");
 
         //SYNTAX ADDED HERE
         JMenuItem actionSyntax = new JMenuItem("Actionscript");
@@ -511,7 +513,7 @@ public class Menu extends JMenuBar{
 
 
         //RUN MENU
-        rMenu = new JMenu("Run ->");
+        rMenu = new JMenu("  Run ->"  );
 
         JMenuItem javaCompileAndRun = new JMenuItem("Complie and run java");
         javaCompileAndRun.addActionListener((e -> {
@@ -529,7 +531,7 @@ public class Menu extends JMenuBar{
         rMenu.add(javaCompileAndRun);
 
         // tab space menu
-        tsMenu = new JMenu("Tab spaces");
+        tsMenu = new JMenu("  Tab spaces  ");
 
         JMenuItem fourItem = new JMenuItem("4");
         tsMenu.add(fourItem);
@@ -540,9 +542,13 @@ public class Menu extends JMenuBar{
         eightItem.addActionListener((e -> MainScreen.currentR.setTabSize(8)));
 
         JMenuItem userDefineItem = new JMenuItem("Custom");
-        userDefineItem.addActionListener((e -> new TabCustomDialog()));
+        userDefineItem.addActionListener((e -> SwingUtilities.invokeLater(TabCustomDialog::new)));
 
         tsMenu.add(userDefineItem);
+
+        JMenuItem testItem = new JMenuItem("test");
+        testItem.addActionListener((e)-> Util.perfLooper());
+        rMenu.add(testItem);
 
         // add menus to bar
         add(fMenu);
