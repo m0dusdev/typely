@@ -1,4 +1,5 @@
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import sun.applet.Main;
 
 import javax.swing.*;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -338,8 +339,6 @@ public class Menu extends JMenuBar{
         // listen
         cMenui.addActionListener((e -> {
 
-            // see if current tab has been saved, if it has no then show a warning
-            if (!MainScreen.saveMap.get(MainScreen.tabbedPane.getTitleAt(MainScreen.current))){
                 CloseDialog c = new CloseDialog("Save tab ?",
                         "Tab might not be saved");
                 int option = c.show();
@@ -348,7 +347,6 @@ public class Menu extends JMenuBar{
                     Io.saveAs();
                     MainScreen.tabbedPane.removeTabAt(MainScreen.current);
                     System.out.print("\nyes\n");
-                    MainScreen.saveMap.put(MainScreen.tabbedPane.getTitleAt(MainScreen.current), true);
 
                 } else if (option == 1) {
                     // no
@@ -356,9 +354,7 @@ public class Menu extends JMenuBar{
                     System.out.print("\nno\n");
                 }
 
-            }else {
-                MainScreen.tabbedPane.removeTabAt(MainScreen.current);
-            }
+
         }));
 
         // add

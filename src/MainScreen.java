@@ -2,6 +2,7 @@
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -39,6 +40,34 @@ public class MainScreen extends JFrame {
     static JTabbedPane tabbedPane;
     public static RSyntaxTextArea currentR = new RSyntaxTextArea();
 
+    public JComponent makeUI() {
+        UIManager.put("TabbedPane.tabInsets", new Insets(2, 2, 2, 50));
+        final JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.addTab("aaaaaaaaaaaaaaaa", new JPanel());
+        tabbedPane.addTab("bbbbbbbb", new JPanel());
+        tabbedPane.addTab("ccc", new JPanel());
+
+        JPanel p = new JPanel(new BorderLayout());
+        //p.setBorder(BorderFactory.createLineBorder(Color.RED, 10));
+        p.add(tabbedPane);
+        p.add(new JButton(new AbstractAction("add tab") {
+            @Override public void actionPerformed(ActionEvent e) {
+                tabbedPane.addTab("test", new JScrollPane(new JTree()));
+            }
+        }), BorderLayout.SOUTH);
+
+        EventQueue.invokeLater(new Runnable() {
+            @Override public void run() {
+                JPanel gp = new CloseableTabbedPaneGlassPane(tabbedPane);
+                tabbedPane.getRootPane().setGlassPane(gp);
+                gp.setOpaque(false);
+                gp.setVisible(true);
+            }
+        });
+
+        return p;
+    }
+
     public MainScreen() {
 
         // initial title
@@ -46,6 +75,7 @@ public class MainScreen extends JFrame {
 
         // get os
         getOs();
+
 
 
         // listen for close
@@ -119,7 +149,6 @@ public class MainScreen extends JFrame {
                 break;
         }
     }
-
 
     // get os and set appropriate path for preferences file
     private void getOs(){
@@ -210,7 +239,7 @@ public class MainScreen extends JFrame {
 
 
         // change currently selected tab to new tab
-        tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
+        tabbedPane.setSelectedIndex(tabbedPane.getTabCount() -1);
 
 
         saveMap.put(title, false);

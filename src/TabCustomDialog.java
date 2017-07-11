@@ -14,7 +14,7 @@ final class TabCustomDialog extends JDialog {
     TabCustomDialog() {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        this.setTitle("Custom tab width");
+        this.setTitle("Tabs");
         this.setLayout(null);
         this.setPreferredSize(new Dimension(175,90));
 
