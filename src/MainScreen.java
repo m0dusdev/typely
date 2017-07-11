@@ -2,10 +2,7 @@
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
@@ -16,7 +13,7 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
  * @version 0.5.1
  */
 
-public class MainScreen extends JFrame {
+final class MainScreen extends JFrame {
 
     private static final long serialVersionUID = 1L;
     public static String prefPath = "";
@@ -40,38 +37,12 @@ public class MainScreen extends JFrame {
     static JTabbedPane tabbedPane;
     public static RSyntaxTextArea currentR = new RSyntaxTextArea();
 
-    public JComponent makeUI() {
-        UIManager.put("TabbedPane.tabInsets", new Insets(2, 2, 2, 50));
-        final JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("aaaaaaaaaaaaaaaa", new JPanel());
-        tabbedPane.addTab("bbbbbbbb", new JPanel());
-        tabbedPane.addTab("ccc", new JPanel());
-
-        JPanel p = new JPanel(new BorderLayout());
-        //p.setBorder(BorderFactory.createLineBorder(Color.RED, 10));
-        p.add(tabbedPane);
-        p.add(new JButton(new AbstractAction("add tab") {
-            @Override public void actionPerformed(ActionEvent e) {
-                tabbedPane.addTab("test", new JScrollPane(new JTree()));
-            }
-        }), BorderLayout.SOUTH);
-
-        EventQueue.invokeLater(new Runnable() {
-            @Override public void run() {
-                JPanel gp = new CloseableTabbedPaneGlassPane(tabbedPane);
-                tabbedPane.getRootPane().setGlassPane(gp);
-                gp.setOpaque(false);
-                gp.setVisible(true);
-            }
-        });
-
-        return p;
-    }
 
     public MainScreen() {
 
         // initial title
         super(" |  typely - ALPHA  V0.5.5 - Unlicensed  ");
+        addKeyListener(new KeyListen());
 
         // get os
         getOs();
@@ -131,24 +102,56 @@ public class MainScreen extends JFrame {
     }
 
 
-    // keyboard shortcuts
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        switch( keyCode ) {
-            case KeyEvent.VK_UP:
-                // newTab up
-                break;
-            case KeyEvent.VK_DOWN:
-                // newTab down
-                break;
-            case KeyEvent.VK_LEFT:
-                // newTab left
-                break;
-            case KeyEvent.VK_RIGHT :
-                // newTab right
-                break;
+    // HANDLE KEY PRESSES
+    class KeyListen implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                System.out.println("Right key typed");
+            }
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                System.out.println("Left key typed");
+            }
+
+        }
+
+
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                System.out.println("Right key Released");
+            }
+            if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                System.out.println("Left key Released");
+            }
+        }
+
+
+
+        // keyboard shortcuts
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int keyCode = e.getKeyCode();
+            switch( keyCode ) {
+                case KeyEvent.VK_1:
+                    System.out.print("\njpressed\n");
+                    break;
+                case KeyEvent.VK_DOWN:
+                    // newTab down
+                    break;
+                case KeyEvent.VK_LEFT:
+                    // newTab left
+                    break;
+                case KeyEvent.VK_RIGHT :
+                    // newTab right
+                    break;
+            }
         }
     }
+
 
     // get os and set appropriate path for preferences file
     private void getOs(){

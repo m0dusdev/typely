@@ -36,7 +36,8 @@ public class Note extends JInternalFrame {
 
 
         // remove internal frame border
-        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).
+                setNorthPane(null);
         this.setBorder(null);
 
         JPanel cp = new JPanel(new BorderLayout());
@@ -54,11 +55,14 @@ public class Note extends JInternalFrame {
 
 
         // add more
-        CodeTemplate forLoop = new StaticCodeTemplate("fl", "for (int i=", "; i<; i++) {\n\t\n}\n");
+        CodeTemplate forLoop = new StaticCodeTemplate("fl",
+                "for (int i=", "; i<; i++) {\n\t\n}\n");
 
-        CodeTemplate psvm = new StaticCodeTemplate("psvm", "public static void main (String[] args){\n\t", "\n}");
+        CodeTemplate psvm = new StaticCodeTemplate("psvm",
+                "public static void main (String[] args){\n\t", "\n}");
 
-        CodeTemplate aaa = new StaticCodeTemplate("aal", "addActionListener((e)-> {\n\t", "\n" + "});\n");
+        CodeTemplate aaa = new StaticCodeTemplate("aal",
+                "addActionListener((e)-> {\n\t", "\n" + "});\n");
 
 
         setContentPane(cp);
@@ -115,11 +119,13 @@ public class Note extends JInternalFrame {
 
         try {
             // new string list from $stylePath
-            java.util.List<String> lines = Files.readAllLines(Paths.get(MainScreen.prefPath), Charset.defaultCharset());
+            java.util.List<String> lines = Files.readAllLines(Paths.get(MainScreen.prefPath),
+                    Charset.defaultCharset());
 
             int i = 0;
             for (String temp : lines) {
-                // search each line in file for a config match - this way line order of preferences file does not impact on outcome
+                // search each line in file for a config match
+                // - this way line order of preferences file does not impact on outcome
                 temp = lines.get(i);
                 i++;
                 System.out.print(temp + "\n");

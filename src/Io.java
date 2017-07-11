@@ -15,7 +15,7 @@ import javax.swing.plaf.basic.BasicBorders;
  *
  */
 
-public final class Io {
+final class Io {
 
     private static String syntaxFromFile = "PLAIN";
     private static String toSave;
@@ -163,7 +163,7 @@ public final class Io {
         }
     }
 
-    // used to get user clipboard string content and add it to a new tab
+    // get user clipboard string content and add it to a new tab
     static void cliboardToTab() throws IOException, UnsupportedFlavorException {
         String temp = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
         MainScreen.newTab("FromClipboard", "PLAIN", temp);

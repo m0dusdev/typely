@@ -1,7 +1,3 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Timer;
 
 class Util {
     // Operating systems.
@@ -36,7 +32,7 @@ class Util {
 
     }
 
-    // loop and time test - siaply result to user
+    // loop and time test - display result to user
     public static void perfLooper() {
 
         // start time

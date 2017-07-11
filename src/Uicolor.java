@@ -1,10 +1,10 @@
 import java.awt.*;
 
 /**
- * holds ui elements
+ * holds colors for ui
  * @author William March
  */
-public @interface Uicolor {
+@interface Uicolor {
 
     // GREY GUI colors
     Color LIGHT_GREY = Color.decode("#FAFAFA");

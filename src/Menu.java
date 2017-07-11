@@ -72,7 +72,8 @@ public class Menu extends JMenuBar{
 
         JMenuItem pythonItem = new JMenuItem("Python file");
         nMenui.add(pythonItem);
-        pythonItem.addActionListener((e)-> MainScreen.newTab("temp.py", "SYNTAX_STYLE_PYTHON", "#!/usr/bin/env python\n\n" +
+        pythonItem.addActionListener((e)-> MainScreen.newTab("temp.py", "SYNTAX_STYLE_PYTHON",
+                "#!/usr/bin/env python\n\n" +
                 "# -*- coding: utf-8 -*-\n" +
                 "\n" +
                 "\"\"\"This is a awesome\n" +
@@ -191,7 +192,8 @@ public class Menu extends JMenuBar{
 
         JMenuItem htmlItem = new JMenuItem("HTML file");
         nMenui.add(htmlItem);
-        htmlItem.addActionListener((e -> MainScreen.newTab("index.html", "SYNTAX_STYLE_HTML", "<!DOCTYPE html>\n" +
+        htmlItem.addActionListener((e -> MainScreen.newTab("index.html", "SYNTAX_STYLE_HTML",
+                "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "\t<body>\n" +
                 "\n" +
@@ -205,11 +207,13 @@ public class Menu extends JMenuBar{
 
         JMenuItem cssItem = new JMenuItem("CSS file");
         nMenui.add(cssItem);
-        cssItem.addActionListener((e -> MainScreen.newTab("style.css", "SYNTAX_STYLE_CSS", "")));
+        cssItem.addActionListener((e -> MainScreen.newTab("style.css", "SYNTAX_STYLE_CSS",
+                "")));
 
         JMenuItem latexItem = new JMenuItem("LaTeX file");
         nMenui.add(latexItem);
-        latexItem.addActionListener((e -> MainScreen.newTab("page.tex", "SYNTAX_STYLE_LATEX", "/begin document")));
+        latexItem.addActionListener((e -> MainScreen.newTab("page.tex", "SYNTAX_STYLE_LATEX",
+                "/begin document")));
 
         JMenuItem xmlItem = new JMenuItem("XML file");
         nMenui.add(xmlItem);
@@ -260,7 +264,8 @@ public class Menu extends JMenuBar{
 
 
             try {
-                java.util.List<String> lines = Files.readAllLines(Paths.get(MainScreen.prefPath), Charset.defaultCharset());
+                java.util.List<String> lines = Files.readAllLines(Paths.get(MainScreen.prefPath),
+                        Charset.defaultCharset());
                 StringBuilder styleBuffer = new StringBuilder();
 
                 // add lines from file to new buffer
@@ -270,13 +275,16 @@ public class Menu extends JMenuBar{
                 }
 
                 // add buffer to new tab
-                MainScreen.newTab("Edit-Preferences.txt", "SYNTAX_STYLE_CSS", styleBuffer.toString());
+                MainScreen.newTab("Edit-Preferences.txt", "SYNTAX_STYLE_CSS",
+                        styleBuffer.toString());
                 MainScreen.currentR.setCaretPosition(0);
 
-                // if no preferences file was found, open a dialog and create a new preferences file if the user chooses yes
+                // if no preferences file was found, open a dialog and create a new preferences
+                // file if the user chooses yes
             } catch (IOException ioe) {
                 SwingUtilities.invokeLater(()-> {
-                    CloseDialog cl = new CloseDialog("No preferences file found, would you like to create one ?",
+                    CloseDialog cl = new CloseDialog("No preferences file found, would you like " +
+                            "to create one ?",
                             "Error");
 
                     if (cl.show() == 0) {
@@ -335,7 +343,13 @@ public class Menu extends JMenuBar{
         tMenu.add(clMenui);
 
         // Close tab item
-        JMenuItem cMenui = new JMenuItem("Close Tab ");
+
+
+
+        JMenuItem cMenui = new JMenuItem("Close Tab", KeyEvent.VK_T);
+        KeyStroke ctrlXKeyStroke = KeyStroke.getKeyStroke("control X");
+        cMenui.setAccelerator(ctrlXKeyStroke);
+
         // listen
         cMenui.addActionListener((e -> {
 

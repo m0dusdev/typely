@@ -8,8 +8,7 @@ import java.net.URISyntaxException;
 /**
  *      DIALOG FOR ""
  */
-
-public class About extends JDialog  {
+ final class About extends JDialog  {
 
     private final JEditorPane jEditorPane;
 
