@@ -60,7 +60,7 @@ public class Menu extends JMenuBar{
         nMenui.add(fromclipSyntax);
         nMenui.add(new JSeparator());
 
-        JMenuItem fileItem = new JMenuItem("  File  ");
+        JMenuItem fileItem = new JMenuItem("File");
         nMenui.add(fileItem);
         fileItem.addActionListener((e -> MainScreen.newTab("file", "SYNTAX_STLYE_NONE", "")));
 
@@ -72,12 +72,13 @@ public class Menu extends JMenuBar{
 
         JMenuItem pythonItem = new JMenuItem("Python file");
         nMenui.add(pythonItem);
-        pythonItem.addActionListener((e)-> MainScreen.newTab("temp.py", "SYNTAX_STYLE_PYTHON",
+        pythonItem.addActionListener((e)-> MainScreen.newTab("main.py", "SYNTAX_STYLE_PYTHON",
                 "#!/usr/bin/env python\n\n" +
                 "# -*- coding: utf-8 -*-\n" +
-                "\n" +
-                "\"\"\"This is a awesome\n" +
-                "        python script!\"\"\"\n\n" ));
+                "def main():\n" +
+                        "\n" +
+                        "if __name__ == \"__main__\":\n" +
+                        "    main()"));
 
 
         JMenu javaItem = new JMenu("Java file");
@@ -262,7 +263,7 @@ public class Menu extends JMenuBar{
         fMenu.add(prefItem);
         prefItem.addActionListener((e -> {
 
-
+            // try to get existing preferences file from user
             try {
                 java.util.List<String> lines = Files.readAllLines(Paths.get(MainScreen.prefPath),
                         Charset.defaultCharset());
@@ -290,7 +291,8 @@ public class Menu extends JMenuBar{
                     if (cl.show() == 0) {
                         try{
                             PrintWriter writer = new PrintWriter(MainScreen.prefPath, "UTF-8");
-                            writer.println("/*COLORS*/\n" +
+                            writer.println("/*COLORS (Light grey, grey, bold grey, dark grey, light blue, blue, bold blue," +
+                                    " dark blue, light teal, teal, bold teal, dark teal, light green, bold green, dark green)*/\n" +
                                     "setBackground = light-grey\n" +
                                     "setHighlighter = green\n" +
                                     "\n" +
@@ -331,10 +333,11 @@ public class Menu extends JMenuBar{
         // Tab menu
         tMenu = new JMenu("  Tab  ");
         tMenu.setMnemonic(KeyEvent.VK_T);
+        tMenu.setToolTipText("Apply operations to the currently selected tab");
 
         // clear tab menu item
-        JMenuItem clMenui = new JMenuItem("Clear Tab");
-
+        JMenuItem clMenui = new JMenuItem("Clear");
+        clMenui.setToolTipText("Clear tabs contents");
         // listen
         clMenui.addActionListener((e ->
             MainScreen.currentR.setText("")));
@@ -346,29 +349,31 @@ public class Menu extends JMenuBar{
 
 
 
-        JMenuItem cMenui = new JMenuItem("Close Tab", KeyEvent.VK_T);
-        KeyStroke ctrlXKeyStroke = KeyStroke.getKeyStroke("control X");
+
+
+        // close tabe without saving
+        JMenuItem fcMenui = new JMenuItem("Close", KeyEvent.VK_T);
+        KeyStroke ctrlXKeyStrokeforce = KeyStroke.getKeyStroke("control f");
+        fcMenui.setAccelerator(ctrlXKeyStrokeforce);
+        fcMenui.setToolTipText("Close tab without saving");
+
+        // listen
+        fcMenui.addActionListener((e -> MainScreen.tabbedPane.remove(MainScreen.current)));
+
+        // add
+        tMenu.add(fcMenui);
+
+        // close and save current tab
+        JMenuItem cMenui = new JMenuItem("Close and save", KeyEvent.VK_T);
+        KeyStroke ctrlXKeyStroke = KeyStroke.getKeyStroke("control c");
         cMenui.setAccelerator(ctrlXKeyStroke);
+        cMenui.setToolTipText("Close and save tab");
 
         // listen
         cMenui.addActionListener((e -> {
-
-                CloseDialog c = new CloseDialog("Save tab ?",
-                        "Tab might not be saved");
-                int option = c.show();
-                if (option == 0) {
-                    // yes option
-                    Io.saveAs();
-                    MainScreen.tabbedPane.removeTabAt(MainScreen.current);
-                    System.out.print("\nyes\n");
-
-                } else if (option == 1) {
-                    // no
-                    MainScreen.tabbedPane.removeTabAt(MainScreen.current);
-                    System.out.print("\nno\n");
-                }
-
-
+            Io.saveAs();
+            MainScreen.tabbedPane.removeTabAt(MainScreen.current);
+            System.out.print("\nyes\n");
         }));
 
         // add
@@ -380,9 +385,7 @@ public class Menu extends JMenuBar{
         JMenuItem aMenui = new JMenuItem(" About ");
 
         // listen
-        aMenui.addActionListener((e)->
-                SwingUtilities.invokeLater(About::new)
-        );
+        aMenui.addActionListener((e)-> SwingUtilities.invokeLater(About::new));
 
         // add
         hMenu.add(aMenui);

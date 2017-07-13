@@ -1,6 +1,7 @@
 import org.fife.ui.rsyntaxtextarea.CodeTemplateManager;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rsyntaxtextarea.Theme;
 import org.fife.ui.rsyntaxtextarea.templates.CodeTemplate;
 import org.fife.ui.rsyntaxtextarea.templates.StaticCodeTemplate;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -65,6 +66,7 @@ public class Note extends JInternalFrame {
                 "addActionListener((e)-> {\n\t", "\n" + "});\n");
 
 
+
         setContentPane(cp);
 
         ctm.addTemplate(forLoop);
@@ -114,8 +116,6 @@ public class Note extends JInternalFrame {
 
     // read and apply style from prefs file
     private void getStyle() {
-        String stylePath = path;
-        System.err.print(path);
 
         try {
             // new string list from $stylePath
@@ -253,8 +253,8 @@ public class Note extends JInternalFrame {
                         textArea.setBackground(Uicolor.GREEN);
                     } else if (temp.contains("light-green")) {
                         textArea.setBackground(Uicolor.LIGHT_GREEN);
-                    } else if (temp.contains("dark-green")) {
-                        textArea.setBackground(Uicolor.DARK_GREEN);
+                    } else if (temp.contains("bold-green")) {
+                        textArea.setBackground(Uicolor.BOLD_GREEN);
                     } else this.textArea.setForeground(Uicolor.LIGHT_GREY);
 
                     // TextArea Foreground
