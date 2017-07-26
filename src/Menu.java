@@ -39,7 +39,7 @@ public class Menu extends JMenuBar{
         fMenu.setMnemonic(KeyEvent.VK_F);
 
         // new item
-        JMenuItem nMenui = new JMenu(" New");
+        JMenuItem nMenui = new JMenu(" New ");
         nMenui.setMnemonic(KeyEvent.VK_N);
 
         // From Clipboard action listener
@@ -193,7 +193,7 @@ public class Menu extends JMenuBar{
 
         JMenuItem htmlItem = new JMenuItem("HTML file");
         nMenui.add(htmlItem);
-        htmlItem.addActionListener((e -> MainScreen.newTab("index.html", "SYNTAX_STYLE_HTML",
+        htmlItem.addActionListener((e -> MainScreen.newTab("index.html", "SYNTAX_STYLE_XML",
                 "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "\t<body>\n" +
@@ -291,12 +291,9 @@ public class Menu extends JMenuBar{
                     if (cl.show() == 0) {
                         try{
                             PrintWriter writer = new PrintWriter(MainScreen.prefPath, "UTF-8");
-                            writer.println("/*COLORS (Light grey, grey, bold grey, dark grey, light blue, blue, bold blue," +
-                                    " dark blue, light teal, teal, bold teal, dark teal, light green, bold green, dark green)*/\n" +
-                                    "setBackground = light-grey\n" +
-                                    "setHighlighter = green\n" +
-                                    "\n" +
-                                    "\n" +
+                            writer.println(
+                                    "/*LOOK AND FEEL*/\n" +
+                                            "Theme = dark\n\n"+
                                     "/*PREFERENCES*/\n" +
                                     "setCodeFoldingEnabled = true\n" +
                                     "setAnimateBracketMatching = true\n" +
@@ -328,7 +325,6 @@ public class Menu extends JMenuBar{
                 });
             }
         }));
-
 
         // Tab menu
         tMenu = new JMenu("  Tab  ");
@@ -505,7 +501,7 @@ public class Menu extends JMenuBar{
 
         JMenuItem htmlSyntax = new JMenuItem("HTML");
         htmlSyntax.addActionListener((e) ->
-            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_HTML));
+            MainScreen.currentR.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_XML));
         sMenu.add(htmlSyntax);
 
         JMenuItem rubySyntax = new JMenuItem("Ruby");

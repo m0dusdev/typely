@@ -21,6 +21,12 @@ import java.nio.file.Paths;
 
 public class Note extends JInternalFrame {
 
+    // additional item for usefull functions
+    private JMenuItem closeTabitem;
+    private JMenuItem clearTabitem;
+    private JMenuItem saveTabitem;
+
+
 
     private String path;
     private String textFromIo;
@@ -53,6 +59,23 @@ public class Note extends JInternalFrame {
         CodeTemplateManager ctm = textArea.getCodeTemplateManager();
 
         textArea.setTabLineColor(Color.WHITE);
+
+        // close the current tab
+        closeTabitem = new JMenuItem("Close tab");
+        closeTabitem.addActionListener((e)-> MainScreen.tabbedPane.remove(MainScreen.current));
+        JPopupMenu popup = textArea.getPopupMenu();
+        popup.addSeparator();
+        popup.add(closeTabitem);
+
+        // clear the current tabs contents
+        clearTabitem = new JMenuItem("Clear");
+        clearTabitem.addActionListener((e)-> MainScreen.currentR.setText(""));
+        popup.add(clearTabitem);
+
+        //open the save dialog for the current tab
+        saveTabitem = new JMenuItem("Save");
+        saveTabitem.addActionListener((e)-> Io.saveAs());
+        popup.add(saveTabitem);
 
 
         // add more
@@ -93,26 +116,50 @@ public class Note extends JInternalFrame {
         }
 
         textArea.setText(tfi);
-        textArea.setMarkOccurrencesColor(Uicolor.DARK_TEAL);
+
 
         pack();
 
         getPrefs();
 
-        getXMLStyle();
-
         setText(tfi);
     }
 
+    // take key from preferences file and apply apropriate styling
+    private void getXMLStyle(String type) throws IOException{
+        if (type == "dark") {
+            Theme theme = Theme.load(getClass().getResourceAsStream(
+                    "/org/fife/ui/rsyntaxtextarea/themes/dark.xml"));
+            theme.apply(textArea);
+        } else if (type == "default") {
+            Theme theme = Theme.load(getClass().getResourceAsStream(
+                    "/org/fife/ui/rsyntaxtextarea/themes/default.xml"));
+            theme.apply(textArea);
+        } else if (type == "default-alt") {
+            Theme theme = Theme.load(getClass().getResourceAsStream(
+                    "/org/fife/ui/rsyntaxtextarea/themes/default-alt.xml"));
+            theme.apply(textArea);
+        } else if (type == "eclipse") {
+            Theme theme = Theme.load(getClass().getResourceAsStream(
+                    "/org/fife/ui/rsyntaxtextarea/themes/eclipse.xml"));
+            theme.apply(textArea);
+        } else if (type == "idea") {
+            Theme theme = Theme.load(getClass().getResourceAsStream(
+                    "/org/fife/ui/rsyntaxtextarea/themes/idea.xml"));
+            theme.apply(textArea);
+        }else if (type == "monokai") {
+            Theme theme = Theme.load(getClass().getResourceAsStream(
+                    "/org/fife/ui/rsyntaxtextarea/themes/monokai.xml"));
+            theme.apply(textArea);
+        }else if (type == "vs") {
+            Theme theme = Theme.load(getClass().getResourceAsStream(
+                    "/org/fife/ui/rsyntaxtextarea/themes/vs.xml"));
+            theme.apply(textArea);
+        }
 
-    private void getXMLStyle(){
-            try {
-                Theme theme = Theme.load(getClass().getResourceAsStream(
-                        "/org/fife/ui/rsyntaxtextarea/themes/dark.xml"));
-                theme.apply(textArea);
-            } catch (IOException ioe) { // Never happens
-                ioe.printStackTrace();
-            }
+
+
+
     }
 
     // set text from the constructor
@@ -227,113 +274,32 @@ public class Note extends JInternalFrame {
                 } else if (temp.contains("setMarkOccurences") && temp.contains("false")) {
                     // set bracket matching to disabled
                     textArea.setBracketMatchingEnabled(false);
+
+                    // get user theme choice
+                } else if (temp.contains("Theme")) {
+                    if (temp.contains("dark")){
+                        getXMLStyle("dark");
+
+                    } else if (temp.contains("default")){
+                        getXMLStyle("default");
+                    } else if (temp.contains("default-alt")){
+                        getXMLStyle("default-alt");
+                    } else if (temp.contains("eclipse")){
+                        getXMLStyle("eclipse");
+                    } else if (temp.contains("idea")){
+                        getXMLStyle("idea");
+                    } else if (temp.contains("monokai")){
+                        getXMLStyle("monokai");
+                    } else if (temp.contains("vs")){
+                        getXMLStyle("vs");
+                    }
+
+
+
+
                 }
 
 
-                /**
-                 * SYNTAX PANEL BACKGROUND COLORS
-                 */
-
-                // Textarea background
-                else if (temp.contains("setBackground")) {
-                    if (temp.contains(("bold-grey"))) {
-                        textArea.setBackground(Uicolor.BOLD_GREY);
-                    } else if (temp.contains("grey")) {
-                        textArea.setBackground(Uicolor.GREY);
-                    } else if (temp.contains("light-grey")) {
-                        textArea.setBackground(Uicolor.LIGHT_GREY);
-                    } else if (temp.contains("dark-grey")) {
-                        textArea.setBackground(Uicolor.DARK_GREY);
-                    } else if (temp.contains("bold-blue")) {
-                        textArea.setBackground(Uicolor.BOLD_BLUE);
-                    } else if (temp.contains("blue")) {
-                        textArea.setBackground(Uicolor.BLUE);
-                    } else if (temp.contains("light-blue")) {
-                        textArea.setBackground(Uicolor.LIGHT_BLUE);
-                    } else if (temp.contains("dark-blue")) {
-                        textArea.setBackground(Uicolor.DARK_BLUE);
-                    } else if (temp.contains("bold-teal")) {
-                        textArea.setBackground(Uicolor.BOLD_TEAL);
-                    } else if (temp.contains("light-teal")) {
-                        textArea.setBackground(Uicolor.LIGHT_TEAL);
-                    } else if (temp.contains("teal")) {
-                        textArea.setBackground(Uicolor.TEAL);
-                    } else if (temp.contains("dark-green")) {
-                        textArea.setBackground(Uicolor.DARK_GREEN);
-                    } else if (temp.contains("green")) {
-                        textArea.setBackground(Uicolor.GREEN);
-                    } else if (temp.contains("light-green")) {
-                        textArea.setBackground(Uicolor.LIGHT_GREEN);
-                    } else if (temp.contains("bold-green")) {
-                        textArea.setBackground(Uicolor.BOLD_GREEN);
-                    } else this.textArea.setForeground(Uicolor.LIGHT_GREY);
-
-                    // TextArea Foreground
-                } else if (temp.contains("setForeground")) {
-                    if (temp.contains("bold-green")) {
-                        textArea.setForeground(Uicolor.GREEN);
-                    } else if (temp.contains("grey")) {
-                        textArea.setForeground(Uicolor.GREY);
-                    } else if (temp.contains("light-grey")) {
-                        textArea.setForeground(Uicolor.LIGHT_GREY);
-                    } else if (temp.contains("dark-grey")) {
-                        textArea.setForeground(Uicolor.DARK_GREY);
-                    } else if (temp.contains("bold-blue")) {
-                        textArea.setForeground(Uicolor.BOLD_BLUE);
-                    } else if (temp.contains("blue")) {
-                        textArea.setForeground(Uicolor.BLUE);
-                    } else if (temp.contains("light-blue")) {
-                        textArea.setForeground(Uicolor.LIGHT_BLUE);
-                    } else if (temp.contains("dark-blue")) {
-                        textArea.setForeground(Uicolor.DARK_BLUE);
-                    } else if (temp.contains("bold-teal")) {
-                        textArea.setForeground(Uicolor.BOLD_TEAL);
-                    } else if (temp.contains("light-teal")) {
-                        textArea.setForeground(Uicolor.LIGHT_TEAL);
-                    } else if (temp.contains("teal")) {
-                        textArea.setForeground(Uicolor.TEAL);
-                    } else if (temp.contains("dark-green")) {
-                        textArea.setForeground(Uicolor.DARK_GREEN);
-                    } else if (temp.contains("green")) {
-                        textArea.setForeground(Uicolor.GREEN);
-                    } else if (temp.contains("light-green")) {
-                        textArea.setForeground(Uicolor.LIGHT_GREEN);
-                    } else if (temp.contains("dark-green")) {
-                        textArea.setForeground(Uicolor.DARK_GREEN);
-                    } else textArea.setForeground(Uicolor.GREY);
-
-                } else if (temp.contains("setHighlighter")) {
-
-                    if (temp.contains("bold-green")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
-                    } else if (temp.contains("grey")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.GREY);
-                    } else if (temp.contains("light-grey")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREY);
-                    } else if (temp.contains("dark-grey")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREY);
-                    } else if (temp.contains("bold-blue")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.BOLD_BLUE);
-                    } else if (temp.contains("blue")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.BLUE);
-                    } else if (temp.contains("light-blue")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_BLUE);
-                    } else if (temp.contains("dark-blue")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.DARK_BLUE);
-                    } else if (temp.contains("bold-teal")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.BOLD_TEAL);
-                    } else if (temp.contains("light-teal")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_TEAL);
-                    } else if (temp.contains("teal")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.TEAL);
-                    } else if (temp.contains("dark-green")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.DARK_GREEN);
-                    } else if (temp.contains("green")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.GREEN);
-                    } else if (temp.contains("light-green")) {
-                        textArea.setCurrentLineHighlightColor(Uicolor.LIGHT_GREEN);
-                    } else textArea.setCurrentLineHighlightColor(Uicolor.GREY);
-                }
             }
 
 

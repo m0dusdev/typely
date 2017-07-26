@@ -159,11 +159,11 @@ final class MainScreen extends JFrame {
         switch (Util.getOS()) {
             case WINDOWS:
                 isWin = true;
-                MainScreen.prefPath = System.getProperty("user.home") + "/Desktop/Edit-Preferences.txt";
+                MainScreen.prefPath = System.getProperty("user.home") + "/Documents/typelySettings/typely-Preferences.txt";
                 break;
             case LINUX:
                 isLinux = true;
-                MainScreen.prefPath = System.getProperty("user.home") + "/Edit-Preferences.txt";
+                MainScreen.prefPath = System.getProperty("user.home") + "typelySettings/typely-Preferences.txt";
                 break;
             case MAC:
                 isOsx = true;
