@@ -97,12 +97,23 @@ public class Note extends JInternalFrame {
 
         pack();
 
-        getStyle();
+        getPrefs();
+
+        getXMLStyle();
 
         setText(tfi);
     }
 
 
+    private void getXMLStyle(){
+            try {
+                Theme theme = Theme.load(getClass().getResourceAsStream(
+                        "/org/fife/ui/rsyntaxtextarea/themes/dark.xml"));
+                theme.apply(textArea);
+            } catch (IOException ioe) { // Never happens
+                ioe.printStackTrace();
+            }
+    }
 
     // set text from the constructor
     private void setText(String text) {
@@ -115,7 +126,7 @@ public class Note extends JInternalFrame {
     }
 
     // read and apply style from prefs file
-    private void getStyle() {
+    private void getPrefs() {
 
         try {
             // new string list from $stylePath
