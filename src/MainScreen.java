@@ -38,7 +38,7 @@ final class MainScreen extends JFrame {
     public static RSyntaxTextArea currentR = new RSyntaxTextArea();
 
 
-    public MainScreen() {
+    private MainScreen() {
 
         // initial title
         super(" |  typely - ALPHA  V0.5.5 - Unlicensed  ");
@@ -159,15 +159,18 @@ final class MainScreen extends JFrame {
         switch (Util.getOS()) {
             case WINDOWS:
                 isWin = true;
-                MainScreen.prefPath = System.getProperty("user.home") + "/Documents/typelySettings/typely-Preferences.txt";
+                MainScreen.prefPath = System.getProperty("user.home") +
+                        "/Documents" + "/typely-Preferences.txt";
                 break;
             case LINUX:
                 isLinux = true;
-                MainScreen.prefPath = System.getProperty("user.home") + "typelySettings/typely-Preferences.txt";
+                MainScreen.prefPath = System.getProperty("user.home") +
+                        "/typely-Preferences.txt";
                 break;
             case MAC:
                 isOsx = true;
-                prefPath = System.getProperty("user.home") + "/Desktop/Edit-Preferences.txt";
+                prefPath = System.getProperty("user.home") +
+                        "/Desktop/Edit-Preferences.txt";
                 break;
 
     }}
@@ -180,7 +183,7 @@ final class MainScreen extends JFrame {
     }
 
     //
-    public static void addEditorMap(String index, JInternalFrame area) {
+    private static void addEditorMap(String index, JInternalFrame area) {
         editorMap.put(index, area);
     }
 
@@ -227,9 +230,9 @@ final class MainScreen extends JFrame {
     public static void newTab(String title, String syntax, String send) {
 
         Note n = new Note(send, syntax);
-        if (title.length() < 20){
+        if (title.length() >= 20){
             tabbedPane.addTab("-----"+title +"-----",  n);
-        }else if (title.length() < 10){
+        }else if (title.length() <= 10){
             tabbedPane.addTab("-------------"+title+"-------------",  n);
 
         }else {

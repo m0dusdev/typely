@@ -166,7 +166,7 @@ final class Io {
     // get user clipboard string content and add it to a new tab
     static void cliboardToTab() throws IOException, UnsupportedFlavorException {
         String temp = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-        MainScreen.newTab("FromClipboard", "PLAIN", temp);
+        MainScreen.newTab("----FromClipboard----", "PLAIN", temp);
     }
 }
 
