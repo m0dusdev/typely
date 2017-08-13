@@ -1,5 +1,6 @@
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.jetbrains.annotations.Contract;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -8,7 +9,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 /**
- * Class that creates the form and tabbed pane
+ * Class that represents the frame and tabbed pane
  * @author William March
  * @version 0.5.1
  */
@@ -20,9 +21,9 @@ final class MainScreen extends JFrame {
 
 
     // booleans for setting user system os
-    static boolean isOsx = false;
-    static boolean isWin = false;
-    static boolean isLinux = false;
+    private static boolean isOsx = false;
+    private static boolean isWin = false;
+    private static boolean isLinux = false;
 
     // K = tab title - String
     // V = tab saved status - boolean
@@ -35,7 +36,9 @@ final class MainScreen extends JFrame {
     static boolean justAddedTab = false;
     static int current;
     static JTabbedPane tabbedPane;
-    public static RSyntaxTextArea currentR = new RSyntaxTextArea();
+
+    //
+    private static RSyntaxTextArea rsc;
 
 
     private MainScreen() {
@@ -46,6 +49,8 @@ final class MainScreen extends JFrame {
 
         // get os
         getOs();
+
+
 
 
 
@@ -84,7 +89,8 @@ final class MainScreen extends JFrame {
                 je = (JInternalFrame) tabbedPane.getComponentAt(current);
                 RSyntaxTextArea rsc;
                 rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
-                currentR = rsc;
+
+                setRSSyntaxarea(rsc);
 
 
                 // set title
@@ -153,6 +159,7 @@ final class MainScreen extends JFrame {
     }
 
 
+
     // get os and set appropriate path for preferences file
     private void getOs(){
         // get user OS
@@ -175,7 +182,15 @@ final class MainScreen extends JFrame {
 
     }}
 
+    private static void setRSSyntaxarea(RSyntaxTextArea rs){
+        rsc = rs;
+    }
 
+    // return refrence the currently selected RSSytanxarea
+    @Contract(pure = true)
+    public static RSyntaxTextArea getRSSyntaxarea(){
+        return rsc;
+    }
 
     // return hash map with tab number key and RSSyntaxarea value
     public static HashMap getEditorMap() {

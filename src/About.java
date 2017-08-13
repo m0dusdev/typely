@@ -36,7 +36,8 @@ import java.net.URISyntaxException;
         jEditorPane.setBackground(Color.decode("#EEEEEE"));
         jEditorPane.setForeground(Color.decode("#212121"));
         jEditorPane.setFont(Uicolor.plain);
-        jEditorPane.setText("      typely - v0.6.2\n <a href=\\\"http://www.typely.net/About:C\\\">    typely.net</a>");
+        jEditorPane.setText("      typely - v0.6.2\n <a href=\\\"http://www.typely.net/About:C\\\"> " +
+                "   typely.net</a>");
         add(jEditorPane, SwingConstants.CENTER);
 
         // hyper link listener for website

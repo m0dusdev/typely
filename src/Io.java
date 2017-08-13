@@ -22,7 +22,7 @@ final class Io {
 
 
     static void compileJava() throws Exception {
-        String toCompile = MainScreen.currentR.getText();
+        String toCompile = MainScreen.getRSSyntaxarea().getText();
         System.out.println(toCompile);
 
 
@@ -67,7 +67,7 @@ final class Io {
 
     static void saveAs() {
 
-        toSave = MainScreen.currentR.getText();
+        toSave = MainScreen.getRSSyntaxarea().getText();
         System.out.print(toSave);
 
         String path = MainScreen.tabbedPane.getTitleAt(MainScreen.current).
@@ -116,8 +116,6 @@ final class Io {
             // get selected file location  - add to String type list - strip "[]" - add to text area
             String path = fileChooser.getSelectedFile().getPath();
 
-            File tempFile = fileChooser.getSelectedFile();
-
             System.out.println(path);
 
 
@@ -154,7 +152,7 @@ final class Io {
                 syntaxFromFile = "SYNTAX_STYLE_C";
             }
 
-            MainScreen.tabbedPane.add(path, new Note(fileText, syntaxFromFile));
+            MainScreen.newTab(path, syntaxFromFile, fileText );
 
             MainScreen.tabbedPane.setSelectedIndex(MainScreen.current + 1);
             MainScreen.justAddedTab = true;

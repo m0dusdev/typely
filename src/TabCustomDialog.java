@@ -40,7 +40,8 @@ final class TabCustomDialog extends JDialog {
         okBtn.addActionListener((e ->{
 
             // set current tabs tab width
-            MainScreen.currentR.setTabSize(selection);
+            MainScreen.getRSSyntaxarea()
+                    .setTabSize(selection);
 
             // close dialog
             dispose();

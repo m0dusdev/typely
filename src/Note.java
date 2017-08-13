@@ -15,7 +15,10 @@ import java.nio.file.Paths;
 
 
 /**
- * NotePad class - New instance created on each new tabbedpane Tab
+ * Class extending JInternalframe, instances of this class are added to the JTabbedPane.
+ * This class contains an instance of RSSyntaxarea witch is the editor interface the
+ * user interacts with.
+ *
  * @author William March -
  */
 
@@ -34,6 +37,7 @@ public class Note extends JInternalFrame {
     public boolean hasSaved = false;
 
 
+    // the editor the user types in ...
     private RSyntaxTextArea textArea;
 
     public Note(String tfi, String sfi) {
@@ -47,18 +51,28 @@ public class Note extends JInternalFrame {
                 setNorthPane(null);
         this.setBorder(null);
 
+
+        // internal JPanel holding RSSyntaxarea instance
         JPanel cp = new JPanel(new BorderLayout());
+
         this.setVisible(true);
         textArea = new RSyntaxTextArea(20, 150);
         RTextScrollPane sp = new RTextScrollPane(textArea);
+
         sp.setViewportView(textArea);
+
         cp.add(sp);
+
+
         textArea.setVisible(true);
         textArea.setTemplatesEnabled(true);
         textArea.setHyperlinksEnabled(true);
+        textArea.setTabLineColor(Color.WHITE);
+
+
         CodeTemplateManager ctm = textArea.getCodeTemplateManager();
 
-        textArea.setTabLineColor(Color.WHITE);
+
 
         // close the current tab
         closeTabitem = new JMenuItem("Close tab");
@@ -69,7 +83,9 @@ public class Note extends JInternalFrame {
 
         // clear the current tabs contents
         clearTabitem = new JMenuItem("Clear");
-        clearTabitem.addActionListener((e)-> MainScreen.currentR.setText(""));
+        clearTabitem.addActionListener((e)-> MainScreen.getRSSyntaxarea()
+                .setText(""));
+
         popup.add(clearTabitem);
 
         //open the save dialog for the current tab
@@ -125,33 +141,39 @@ public class Note extends JInternalFrame {
         setText(tfi);
     }
 
-    // take key from preferences file and apply apropriate styling
+    // take key from preferences file and apply appropriate styling
     private void getXMLStyle(String type) throws IOException{
-        if (type == "dark") {
+        if (type.equals("dark")) {
             Theme theme = Theme.load(getClass().getResourceAsStream(
                     "/org/fife/ui/rsyntaxtextarea/themes/dark.xml"));
             theme.apply(textArea);
-        } else if (type == "default") {
+
+        } else if (type.equals("default")) {
             Theme theme = Theme.load(getClass().getResourceAsStream(
                     "/org/fife/ui/rsyntaxtextarea/themes/default.xml"));
             theme.apply(textArea);
-        } else if (type == "default-alt") {
+
+        } else if (type.equals("default-alt")) {
             Theme theme = Theme.load(getClass().getResourceAsStream(
                     "/org/fife/ui/rsyntaxtextarea/themes/default-alt.xml"));
             theme.apply(textArea);
-        } else if (type == "eclipse") {
+
+        } else if (type.equals("eclipse")) {
             Theme theme = Theme.load(getClass().getResourceAsStream(
                     "/org/fife/ui/rsyntaxtextarea/themes/eclipse.xml"));
             theme.apply(textArea);
-        } else if (type == "idea") {
+
+        } else if (type.equals("idea")) {
             Theme theme = Theme.load(getClass().getResourceAsStream(
                     "/org/fife/ui/rsyntaxtextarea/themes/idea.xml"));
             theme.apply(textArea);
-        }else if (type == "monokai") {
+
+        }else if (type.equals("monokai")) {
             Theme theme = Theme.load(getClass().getResourceAsStream(
                     "/org/fife/ui/rsyntaxtextarea/themes/monokai.xml"));
             theme.apply(textArea);
-        }else if (type == "vs") {
+
+        }else if (type.equals("vs")) {
             Theme theme = Theme.load(getClass().getResourceAsStream(
                     "/org/fife/ui/rsyntaxtextarea/themes/vs.xml"));
             theme.apply(textArea);
@@ -188,7 +210,7 @@ public class Note extends JInternalFrame {
                 i++;
                 System.out.print(temp + "\n");
 
-                /**
+                /*
                  * EDITOR PREFERENCES
                  */
                 if (temp.contains("setCodeFoldingEnabled") && temp.contains("true")) {

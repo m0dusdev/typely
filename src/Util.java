@@ -52,15 +52,24 @@ class Util {
 
         // some arbitrary performance rules
         if (diff <= 2000 && diff >= 1500) {
-            MainScreen.currentR.setText(result + "RATING -> POOR");
+            MainScreen.getRSSyntaxarea()
+                    .setText(result + "RATING -> POOR");
+
         } else if (diff <= 1500 && diff >= 1000) {
-            MainScreen.currentR.setText(result + "RATING -> OK");
+            MainScreen.getRSSyntaxarea()
+                    .setText(result + "RATING -> OK");
+
         } else if (diff <= 1000 && diff >= 500) {
-            MainScreen.currentR.setText(result + "RATING -> GOOD");
+            MainScreen.getRSSyntaxarea()
+                    .setText(result + "RATING -> GOOD");
+
         } else if (diff <= 500 && diff >= 200) {
-            MainScreen.currentR.setText(result + "RATING -> VERY GOOD");
+            MainScreen.getRSSyntaxarea()
+                    .setText(result + "RATING -> VERY GOOD");
+
         }else if (diff <= 200) {
-            MainScreen.currentR.setText(result + "RATING -> GREAT");
+            MainScreen.getRSSyntaxarea()
+                    .setText(result + "RATING -> GREAT");
         }
     }
 }
