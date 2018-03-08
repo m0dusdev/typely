@@ -35,7 +35,7 @@ import java.awt.*;
     Color TEXT_PRIMARY = Color.decode("#212121");
 
     // fonts
-    Font plain = new Font(Font.SANS_SERIF, Font.ITALIC, 13);
+    Font plain = new Font(Font.SANS_SERIF, Font.ITALIC, 25);
 
 
 }

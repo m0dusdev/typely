@@ -38,7 +38,7 @@ final class MainScreen extends JFrame {
     static JTabbedPane tabbedPane;
 
     //
-    private static RSyntaxTextArea rsc;
+    private static JEditorPane rsc;
 
 
     private MainScreen() {
@@ -87,10 +87,10 @@ final class MainScreen extends JFrame {
             // if tabs are left then obtain reference of new tab
             if (current > -1) {
                 je = (JInternalFrame) tabbedPane.getComponentAt(current);
-                RSyntaxTextArea rsc;
-                rsc = (RSyntaxTextArea) je.getMostRecentFocusOwner();
+                JEditorPane rsc;
+                rsc = (JEditorPane) je.getMostRecentFocusOwner();
 
-                setRSSyntaxarea(rsc);
+                setEditorPane(rsc);
 
 
                 // set title
@@ -182,13 +182,13 @@ final class MainScreen extends JFrame {
 
     }}
 
-    private static void setRSSyntaxarea(RSyntaxTextArea rs){
+    private static void setEditorPane(JEditorPane rs){
         rsc = rs;
     }
 
     // return refrence the currently selected RSSytanxarea
     @Contract(pure = true)
-    public static RSyntaxTextArea getRSSyntaxarea(){
+    public static JEditorPane getRSSyntaxarea(){
         return rsc;
     }
 
@@ -225,7 +225,8 @@ final class MainScreen extends JFrame {
                 highlight = Uicolor.BOLD_GREY;
                 lightHighlight = Uicolor.LIGHT_GREY;
                 focus = Uicolor.GREY;
-                tabAreaInsets = new Insets(0,0,0,0);
+                //tabAreaInsets = new Insets(20,10,20,10);
+                tabInsets = new Insets(20,10,20,10);
             }
         });
         tabbedPane = temp;
@@ -245,17 +246,7 @@ final class MainScreen extends JFrame {
     public static void newTab(String title, String syntax, String send) {
 
         Note n = new Note(send, syntax);
-        if (title.length() >= 20){
-            tabbedPane.addTab("-----"+title +"-----",  n);
-        }else if (title.length() <= 10){
-            tabbedPane.addTab("-------------"+title+"-------------",  n);
-
-        }else {
             tabbedPane.addTab(title,  n);
-        }
-        System.out.println("text from file -    " + send + "   Syntax is -   " + syntax + " " +
-                "  Title is -  " + title);
-
 
 
 
@@ -276,8 +267,8 @@ final class MainScreen extends JFrame {
        SwingUtilities.invokeLater(() -> {
 
                try {
-                   System.setProperty("apple.laf.useScreenMenuBar", "true");
-                   UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                   //System.setProperty("apple.laf.useScreenMenuBar", "true");
+                   //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
                    //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.WindowsLookAndFeel");
 
