@@ -153,8 +153,8 @@ import java.nio.file.Paths;
 
         addBtn.addActionListener((e -> {
             int tabCount =0;
-            MainScreen.newTab("New note " + tabCount, "");
-            tabCount++;
+            MainScreen.newTab("New note " + tabCount++, "");
+
         }));
         add(addBtn);
 
