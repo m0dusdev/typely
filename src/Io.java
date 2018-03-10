@@ -131,7 +131,7 @@ final class Io {
             System.err.print(buffer);
 
 
-            MainScreen.newTab(path, fileText);
+            MainScreen.newTab(path, fileText, false);
 
             MainScreen.getTabPane().setSelectedIndex(MainScreen.current);
             MainScreen.justAddedTab = true;
@@ -143,7 +143,7 @@ final class Io {
     // get user clipboard string content and add it to a new tab
     static void cliboardToTab() throws IOException, UnsupportedFlavorException {
         String temp = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-        MainScreen.newTab("----FromClipboard----",  temp);
+        MainScreen.newTab("----FromClipboard----",  temp, false);
     }
 }
 

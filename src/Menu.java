@@ -34,7 +34,12 @@ import java.nio.file.Paths;
         exitMenuItem.setToolTipText("Exit");
         exitMenuItem.addActionListener((e)-> System.exit(0));
 
-        fMenu.add(exitMenuItem);
+        // open menu item
+        JMenuItem newDrawingMenuItem = new JMenuItem("New Drawing");
+        newDrawingMenuItem.setToolTipText("New Drawing");
+        newDrawingMenuItem.addActionListener((e)-> MainScreen.newTab("Drawing", "", true));
+
+        fMenu.add(newDrawingMenuItem);
 
         // open menu item
         JMenuItem openMenuItem = new JMenuItem("Open");
@@ -64,7 +69,7 @@ import java.nio.file.Paths;
         // new tab menu item
         JMenuItem newMenui = new JMenuItem("New Tab");
         newMenui.setToolTipText("New Tab");
-        newMenui.addActionListener((e)-> MainScreen.newTab("Note",  ""));
+        newMenui.addActionListener((e)-> MainScreen.newTab("Note",  "", true));
         tMenu.add(newMenui);
 
         // clear tab menu item
@@ -153,7 +158,7 @@ import java.nio.file.Paths;
 
         addBtn.addActionListener((e -> {
             int tabCount =0;
-            MainScreen.newTab("New note " + tabCount++, "");
+            MainScreen.newTab("New note " + tabCount++, "", false);
 
         }));
         add(addBtn);

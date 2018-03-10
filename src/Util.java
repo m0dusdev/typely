@@ -27,7 +27,7 @@ class Util {
     // create and add 20 tabs to the editor
     private static void perfTest(){
         for (int i = 0; i < 20; i++) {
-            MainScreen.newTab("Tab Test", Integer.toString(i));
+            MainScreen.newTab("Tab Test", Integer.toString(i), false);
         }
 
     }

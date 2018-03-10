@@ -244,24 +244,31 @@ final class MainScreen extends JFrame {
      *
      * @param title - set title for new tab
      * @param send - text to send to the new tab
+     * @param type - false = notepad, true = drawing
      */
-    public static void newTab(String title, String send) {
+    public static void newTab(String title, String send, boolean type) {
 
-        Note n = new Note(send);
+        if (!type) {
+            Note n = new Note(send);
             getTabPane.addTab(title,  n);
 
 
 
-        // change currently selected tab to new tab
-        getTabPane.setSelectedIndex(getTabPane.getTabCount() -1);
+            // change currently selected tab to new tab
+            getTabPane.setSelectedIndex(getTabPane.getTabCount() -1);
 
 
-        saveMap.put(title, false);
+            saveMap.put(title, false);
 
 
-        // add new tab  to editor hashmap to keep track of it possibly in a later build
-        addEditorMap(title, n);
-        System.out.print(editorMap.toString());
+            // add new tab  to editor hashmap to keep track of it possibly in a later build
+            addEditorMap(title, n);
+            System.out.print(editorMap.toString());
+        } else {
+            Drawing temp = new Drawing();
+            getTabPane().addTab("Drawing",temp);
+        }
+
     }
 
 
@@ -292,7 +299,7 @@ final class MainScreen extends JFrame {
            frame.setVisible(true);
 
            // kick off with a new tab
-           newTab("temp.txt ",  "");
+           newTab("temp.txt ",  "", false);
        });
 
     }
