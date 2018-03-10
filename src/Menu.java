@@ -19,15 +19,9 @@ import java.nio.file.Paths;
 
     Menu() {
         // file menu icons
-
-
-
         JMenu fMenu;         // file
         JMenu tMenu;        //  tab
         JMenu hMenu;       //   help
-        JMenu tsMenu;       //      tab spaces
-
-
 
 
         // file menu
@@ -37,9 +31,7 @@ import java.nio.file.Paths;
         // open menu item
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.setToolTipText("Exit");
-        exitMenuItem.addActionListener((e)-> {
-           System.exit(0);
-        });
+        exitMenuItem.addActionListener((e)-> System.exit(0));
 
         fMenu.add(exitMenuItem);
 
@@ -132,5 +124,10 @@ import java.nio.file.Paths;
         add(tMenu);
 
         add(hMenu);
+
+        // add new button
+        JButton addBtn = new JButton("+");
+        addBtn.addActionListener((e -> MainScreen.newTab("New note", "")));
+        add(addBtn);
     }
 }
