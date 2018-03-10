@@ -240,12 +240,11 @@ final class MainScreen extends JFrame {
      * RSSyntaxArea
      *
      * @param title - set title for new tab
-     * @param syntax - the syntax for the new tab
      * @param send - text to send to the new tab
      */
-    public static void newTab(String title, String syntax, String send) {
+    public static void newTab(String title, String send) {
 
-        Note n = new Note(send, syntax);
+        Note n = new Note(send);
             tabbedPane.addTab(title,  n);
 
 
@@ -290,7 +289,7 @@ final class MainScreen extends JFrame {
            frame.setVisible(true);
 
            // kick off with a new tab
-           newTab("temp.txt ", "PLAIN", null);
+           newTab("temp.txt ",  "");
        });
 
     }

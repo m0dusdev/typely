@@ -70,10 +70,10 @@ final class Io {
         toSave = MainScreen.getRSSyntaxarea().getText();
         System.out.print(toSave);
 
-        String path = MainScreen.tabbedPane.getTitleAt(MainScreen.current).
-                replace("-", "");
+        String path = MainScreen.tabbedPane.getTitleAt(MainScreen.current);
 
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogType(2);
         fileChooser.setSelectedFile(new File(path));
         if (fileChooser.showSaveDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
 
@@ -91,9 +91,6 @@ final class Io {
                 f.printStackTrace();
             }
 
-            // update hashmap to set just saved tab to true
-            MainScreen.saveMap.put(MainScreen.tabbedPane.getTitleAt(MainScreen.current), true);
-
         }
     }
 
@@ -107,7 +104,7 @@ final class Io {
 
 
         fileChooser = new JFileChooser("c:");
-        fileChooser.setDialogType(1);
+        fileChooser.setDialogType(2);
         fileChooser.setBorder(new BasicBorders.SplitPaneBorder(Uicolor.GREY, Uicolor.BOLD_GREY));
 
 
@@ -133,28 +130,10 @@ final class Io {
 
             System.err.print(buffer);
 
-            if (path.contains(".py")) {
-                syntaxFromFile = "SYNTAX_STYLE_PYTHON";
 
-            } else if (path.contains(".java")) {
-                syntaxFromFile = "SYNTAX_STYLE_JAVA";
+            MainScreen.newTab(path, fileText);
 
-            } else if (path.contains(".html")) {
-                syntaxFromFile = "SYNTAX_STYLE_HTML";
-
-            } else if (path.contains(".css")) {
-                syntaxFromFile = "SYNTAX_STYLE_CSS";
-
-            } else if (path.contains(".txt")) {
-                syntaxFromFile = "SYNTAX_STYLE_PLAIN";
-
-            } else if (path.contains(".c")) {
-                syntaxFromFile = "SYNTAX_STYLE_C";
-            }
-
-            MainScreen.newTab(path, syntaxFromFile, fileText );
-
-            MainScreen.tabbedPane.setSelectedIndex(MainScreen.current + 1);
+            MainScreen.tabbedPane.setSelectedIndex(MainScreen.current);
             MainScreen.justAddedTab = true;
 
 
@@ -164,7 +143,7 @@ final class Io {
     // get user clipboard string content and add it to a new tab
     static void cliboardToTab() throws IOException, UnsupportedFlavorException {
         String temp = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-        MainScreen.newTab("----FromClipboard----", "PLAIN", temp);
+        MainScreen.newTab("----FromClipboard----",  temp);
     }
 }
 

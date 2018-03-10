@@ -26,26 +26,18 @@ import java.nio.file.Paths;
 
 public class Note extends JInternalFrame {
 
-    // additional item for usefull functions
-    private JMenuItem closeTabitem;
-    private JMenuItem clearTabitem;
-    private JMenuItem saveTabitem;
-
-
-
     private String path;
     private String textFromIo;
-    private String syntaxFromIo;
     public boolean hasSaved = false;
 
 
     // the editor the user types in ...
     private JEditorPane textArea;
 
-    public Note(String tfi, String sfi) {
+    public Note(String textFromIo) {
 
-        textFromIo = tfi;
-        syntaxFromIo = sfi;
+        this.textFromIo = textFromIo;
+
 
 
 
@@ -63,32 +55,19 @@ public class Note extends JInternalFrame {
         textArea = new JEditorPane();
 
         Document doc = textArea.getDocument();
-        if (doc instanceof PlainDocument) {
-            doc.putProperty(PlainDocument.tabSizeAttribute, 4);
-        }
-
+        doc.putProperty(PlainDocument.tabSizeAttribute, 4);
 
         cp.add(new JScrollPane(textArea));
 
-
         textArea.setVisible(true);
-
-
-
-
-
-
-
 
         setContentPane(cp);
 
-        textArea.setText(tfi);
+        textArea.setText(textFromIo);
 
         pack();
     }
-
-
-}
+} // end of note
 
 
 

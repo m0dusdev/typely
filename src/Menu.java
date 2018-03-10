@@ -34,67 +34,45 @@ import java.nio.file.Paths;
         fMenu = new JMenu(" File ");
         fMenu.setMnemonic(KeyEvent.VK_F);
 
-        // Preferences
-        JMenuItem prefItem = new JMenuItem("Preferences");
-        fMenu.add(new JSeparator());
-        fMenu.add(prefItem);
-        prefItem.addActionListener((e -> {
+        // open menu item
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.setToolTipText("Exit");
+        exitMenuItem.addActionListener((e)-> {
+           System.exit(0);
+        });
 
-            // try to get existing preferences file from user
-            try {
-                java.util.List<String> lines = Files.readAllLines(Paths.get(MainScreen.prefPath),
-                        Charset.defaultCharset());
-                StringBuilder styleBuffer = new StringBuilder();
+        fMenu.add(exitMenuItem);
 
-                // add lines from file to new buffer
-                for (String temp : lines) {
-                    styleBuffer.append(temp);
-                    styleBuffer.append("\n");
-                }
-
-                // add buffer to new tab
-                MainScreen.newTab("Edit-Preferences.txt", "SYNTAX_STYLE_CSS",
-                        styleBuffer.toString());
-                MainScreen.getRSSyntaxarea().setCaretPosition(0);
-
-                // if no preferences file was found, open a dialog and create a new preferences
-                // file if the user chooses yes
-            } catch (IOException ioe) {
-                SwingUtilities.invokeLater(()-> {
-                    CloseDialog cl = new CloseDialog("No preferences file found, would you like " +
-                            "to create one ?",
-                            "Error");
-
-                    if (cl.show() == 0) {
-                        try{
-                            PrintWriter writer = new PrintWriter(MainScreen.prefPath, "UTF-8");
-                            writer.println(
-                                    "/*LOOK AND FEEL*/\n" +
-                                            "Theme = dark\n\n"+
-                                    "/*PREFERENCES*/\n"
-                                    );
-                            writer.flush();
-                            writer.close();
-
-
-                            // inform user of new file creation and its location
-                            SwingUtilities.invokeLater(()-> new CloseDialog("File was created at "+
-                                    MainScreen.prefPath,"New preferences file created" , true));
-
-
-                        } catch (IOException ioex) {
-                            // do something
-                        }
-                    }
-
-                });
+        // open menu item
+        JMenuItem openMenuItem = new JMenuItem("Open");
+        openMenuItem.setToolTipText("Open a file");
+        openMenuItem.addActionListener((e)-> {
+            try{
+                Io.open();
+            }catch (IOException io) {
+                io.printStackTrace();
             }
-        }));
+        });
+
+        fMenu.add(openMenuItem);
+
+        // saveAs Menu item
+        JMenuItem saveAsMenuItem = new JMenuItem("Save As");
+        saveAsMenuItem.setToolTipText("Save a file in a location");
+        saveAsMenuItem.addActionListener((e)-> Io.saveAs());
+
+        fMenu.add(saveAsMenuItem);
 
         // Tab menu
         tMenu = new JMenu("  Tab  ");
         tMenu.setMnemonic(KeyEvent.VK_T);
         tMenu.setToolTipText("Apply operations to the currently selected tab");
+
+        // new tab menu item
+        JMenuItem newMenui = new JMenuItem("New Tab");
+        newMenui.setToolTipText("New Tab");
+        newMenui.addActionListener((e)-> MainScreen.newTab("Note",  ""));
+        tMenu.add(newMenui);
 
         // clear tab menu item
         JMenuItem clMenui = new JMenuItem("Clear");
@@ -154,9 +132,5 @@ import java.nio.file.Paths;
         add(tMenu);
 
         add(hMenu);
-
-
-
-
     }
 }
