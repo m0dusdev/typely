@@ -70,12 +70,12 @@ final class Io {
         toSave = MainScreen.getRSSyntaxarea().getText();
         System.out.print(toSave);
 
-        String path = MainScreen.tabbedPane.getTitleAt(MainScreen.current);
+        String path = MainScreen.getTabPane().getTitleAt(MainScreen.current);
 
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogType(2);
         fileChooser.setSelectedFile(new File(path));
-        if (fileChooser.showSaveDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
+        if (fileChooser.showSaveDialog(MainScreen.getTabPane()) == JFileChooser.APPROVE_OPTION) {
 
             try {
                 File file = fileChooser.getSelectedFile();
@@ -108,7 +108,7 @@ final class Io {
         fileChooser.setBorder(new BasicBorders.SplitPaneBorder(Uicolor.GREY, Uicolor.BOLD_GREY));
 
 
-        if (fileChooser.showOpenDialog(MainScreen.tabbedPane) == JFileChooser.APPROVE_OPTION) {
+        if (fileChooser.showOpenDialog(MainScreen.getTabPane()) == JFileChooser.APPROVE_OPTION) {
 
             // get selected file location  - add to String type list - strip "[]" - add to text area
             String path = fileChooser.getSelectedFile().getPath();
@@ -133,7 +133,7 @@ final class Io {
 
             MainScreen.newTab(path, fileText);
 
-            MainScreen.tabbedPane.setSelectedIndex(MainScreen.current);
+            MainScreen.getTabPane().setSelectedIndex(MainScreen.current);
             MainScreen.justAddedTab = true;
 
 

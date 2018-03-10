@@ -30,7 +30,7 @@ class CloseDialog {
   }
 
   def warning: Int = {
-    val result = JOptionPane.showConfirmDialog(MainScreen.tabbedPane, message, title, JOptionPane.DEFAULT_OPTION)
+    val result = JOptionPane.showConfirmDialog(MainScreen.getTabPane, message, title, JOptionPane.DEFAULT_OPTION)
     result
   }
 }

@@ -1,5 +1,4 @@
 
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.jetbrains.annotations.Contract;
 
 import java.awt.*;
@@ -35,7 +34,7 @@ final class MainScreen extends JFrame {
 
     static boolean justAddedTab = false;
     static int current;
-    static JTabbedPane tabbedPane;
+    private static JTabbedPane getTabPane;
 
     //
     private static JEditorPane rsc;
@@ -77,7 +76,7 @@ final class MainScreen extends JFrame {
         add(createTab(), BorderLayout.CENTER);
 
         // gets currently selected tab as index
-        tabbedPane.addChangeListener((e)-> {
+        getTabPane.addChangeListener((e)-> {
 
                 JTabbedPane pane = (JTabbedPane) e.getSource();
                 current = pane.getSelectedIndex();
@@ -86,7 +85,7 @@ final class MainScreen extends JFrame {
 
             // if tabs are left then obtain reference of new tab
             if (current > -1) {
-                je = (JInternalFrame) tabbedPane.getComponentAt(current);
+                je = (JInternalFrame) getTabPane.getComponentAt(current);
                 JEditorPane rsc;
                 rsc = (JEditorPane) je.getMostRecentFocusOwner();
 
@@ -94,7 +93,7 @@ final class MainScreen extends JFrame {
 
 
                 // set title
-                this.setTitle(tabbedPane.getTitleAt(current).replace("-", "") +
+                this.setTitle(getTabPane.getTitleAt(current).replace("-", "") +
                         " |  typely - ALPHA  V0.5.5 - Unlicensed  ");
 
             } else {
@@ -103,7 +102,7 @@ final class MainScreen extends JFrame {
             }
         });
 
-        setContentPane(tabbedPane);
+        setContentPane(getTabPane);
         pack();
     }
 
@@ -203,6 +202,11 @@ final class MainScreen extends JFrame {
     }
 
 
+    public static JTabbedPane getTabPane(){
+        return getTabPane;
+    }
+
+
     /**
      * @return - a styled tabbed pane
      */
@@ -229,8 +233,7 @@ final class MainScreen extends JFrame {
                 tabInsets = new Insets(20,10,20,10);
             }
         });
-        tabbedPane = temp;
-
+        getTabPane = temp;
         return temp;
     }
 
@@ -245,12 +248,12 @@ final class MainScreen extends JFrame {
     public static void newTab(String title, String send) {
 
         Note n = new Note(send);
-            tabbedPane.addTab(title,  n);
+            getTabPane.addTab(title,  n);
 
 
 
         // change currently selected tab to new tab
-        tabbedPane.setSelectedIndex(tabbedPane.getTabCount() -1);
+        getTabPane.setSelectedIndex(getTabPane.getTabCount() -1);
 
 
         saveMap.put(title, false);

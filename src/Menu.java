@@ -1,3 +1,4 @@
+import com.sun.tools.javac.Main;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 import javax.swing.*;
@@ -77,6 +78,16 @@ import java.nio.file.Paths;
         tMenu.add(clMenui);
 
 
+        // close all  tab menu item
+        JMenuItem clAllMenui = new JMenuItem("Close all");
+        clAllMenui.setToolTipText("Close all tabs");
+        // listen
+        clAllMenui.addActionListener((e -> MainScreen.getTabPane().removeAll()));
+        // add
+        tMenu.add(clAllMenui);
+
+
+
 
         // close tab without saving
         JMenuItem fcMenui = new JMenuItem("Close", KeyEvent.VK_T);
@@ -85,7 +96,7 @@ import java.nio.file.Paths;
         fcMenui.setToolTipText("Close tab without saving");
 
         // listen
-        fcMenui.addActionListener((e -> MainScreen.tabbedPane.remove(MainScreen.current)));
+        fcMenui.addActionListener((e -> MainScreen.getTabPane().remove(MainScreen.current)));
 
         // add
         tMenu.add(fcMenui);
@@ -99,7 +110,7 @@ import java.nio.file.Paths;
         // listen
         cMenui.addActionListener((e -> {
             Io.saveAs();
-            MainScreen.tabbedPane.removeTabAt(MainScreen.current);
+            MainScreen.getTabPane().removeTabAt(MainScreen.current);
             System.out.print("\nyes\n");
         }));
 
@@ -125,9 +136,30 @@ import java.nio.file.Paths;
 
         add(hMenu);
 
-        // add new button
-        JButton addBtn = new JButton("+");
-        addBtn.addActionListener((e -> MainScreen.newTab("New note", "")));
+
+
+
+        // Close current tab button
+        JButton closeBtn = new JButton("Close Tab");
+        closeBtn.addActionListener((e -> MainScreen.getTabPane().removeTabAt(MainScreen.current)));
+        add(closeBtn);
+
+        JMenu spaceMenu = new JMenu("  ");
+        add(spaceMenu);
+
+        // add new tab button
+        JButton addBtn = new JButton(" + ");
+        addBtn.setSize(20,20);
+
+        addBtn.addActionListener((e -> {
+            int tabCount =0;
+            MainScreen.newTab("New note " + tabCount, "");
+            tabCount++;
+        }));
         add(addBtn);
+
+
+
+
     }
 }
