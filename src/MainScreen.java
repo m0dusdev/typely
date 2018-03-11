@@ -83,16 +83,7 @@ final class MainScreen extends JFrame {
 
             JInternalFrame je;
 
-            // if tabs are left then obtain reference of new tab
-            if (current > -1) {
-                je = (JInternalFrame) getTabPane.getComponentAt(current);
-                JEditorPane rsc;
-                rsc = (JEditorPane) je.getMostRecentFocusOwner();
 
-                setEditorPane(rsc);
-
-
-                // set title
                 this.setTitle(getTabPane.getTitleAt(current).replace("-", "") +
                         " |  typely - ALPHA  V0.5.5 - Unlicensed  ");
 
