@@ -87,10 +87,6 @@ final class MainScreen extends JFrame {
                 this.setTitle(getTabPane.getTitleAt(current).replace("-", "") +
                         " |  typely - ALPHA  V0.5.5 - Unlicensed  ");
 
-            } else {
-                System.err.print("NO TABS");
-
-            }
         });
 
         setContentPane(getTabPane);
@@ -225,7 +221,13 @@ final class MainScreen extends JFrame {
             }
         });
         getTabPane = temp;
+
+
+
+
+
         return temp;
+
     }
 
 

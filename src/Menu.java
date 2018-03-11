@@ -17,8 +17,10 @@ import java.nio.file.Paths;
  class Menu extends JMenuBar{
     // Create menu;
 
+    private int tabCount = 0; // the amount of tabs
 
     Menu() {
+
         // file menu icons
         JMenu fMenu;         // file
         JMenu tMenu;        //  tab
@@ -28,6 +30,19 @@ import java.nio.file.Paths;
         // file menu
         fMenu = new JMenu(" File ");
         fMenu.setMnemonic(KeyEvent.VK_F);
+
+
+        // add new tab button
+        JButton addBtn = new JButton(" + ");
+        addBtn.setSize(40,50);
+        addBtn.addActionListener((e -> {
+
+            MainScreen.newTab("New note " ,"", false);
+            updateTabCount();
+        }));
+
+        add(addBtn);
+
 
         // open menu item
         JMenuItem exitMenuItem = new JMenuItem("Exit");
@@ -142,7 +157,7 @@ import java.nio.file.Paths;
         add(hMenu);
 
 
-
+        this.setSize(this.getWidth(), 100);
 
         // Close current tab button
         JButton closeBtn = new JButton("Close Tab");
@@ -152,19 +167,14 @@ import java.nio.file.Paths;
         JMenu spaceMenu = new JMenu("  ");
         add(spaceMenu);
 
-        // add new tab button
-        JButton addBtn = new JButton(" + ");
-        addBtn.setSize(20,20);
-
-        addBtn.addActionListener((e -> {
-            int tabCount =0;
-            MainScreen.newTab("New note " + tabCount++, "", false);
-
-        }));
-        add(addBtn);
 
 
 
 
+
+    }
+
+    private void updateTabCount(){
+        this.tabCount++;
     }
 }
