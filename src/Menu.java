@@ -44,6 +44,18 @@ import java.nio.file.Paths;
         add(addBtn);
 
 
+        // add new drawing button
+        JButton addDrawingBtn = new JButton(" `~/ ");
+        addDrawingBtn.setSize(40,50);
+        addDrawingBtn.addActionListener((e -> {
+
+            MainScreen.newTab("New Drawing " ,"", true);
+            updateTabCount();
+        }));
+
+        add(addDrawingBtn);
+
+
         // open menu item
         JMenuItem exitMenuItem = new JMenuItem("Exit");
         exitMenuItem.setToolTipText("Exit");
